@@ -1,3 +1,12 @@
 <header>
   <span class="logo-mark">営業アポ管理</span>
+  <%=
+    if current_account.present?
+      link_to "ログアウト", :session, method: :delete, class: "bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+    else
+      link_to "ログイン", :login, class: "bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+    end
+  %>
+
+  <%# <a class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">ボタン</a> %>
 </header>

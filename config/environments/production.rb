@@ -1,6 +1,16 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # ¥ 20231008 安全でないかも
+  # config.secret_key_base = '9b88f0e9062e7d3611ea26a3cb14a0cfdeb98c3679b1b62a729df178fd8be75d26d2abee26310af288965df718c72c11f8450587efec2af82c3d757eb9b51995'
+  # ! rails aborted!
+  # ! ArgumentError: Missing `secret_key_base` for 'production' environment, set this string with `bin/rails credentials:edit`
+  # ! /Users/aokihirotaka/Documents/_programming/my_devs/sales_appointment/config/environment.rb:5:in `<main>'
+  # ! Tasks: TOP => db:migrate => db:load_config => environment
+  # ! (See full trace by running task with --trace)
+  # ! (base) aokihirotaka@aokihiroshikennoMacBook-Pro sales_appointment %
+  config.secret_key_base = Rails.application.credentials[:secret_key_base]
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -18,7 +28,7 @@ Rails.application.configure do
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
+  config.require_master_key = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.

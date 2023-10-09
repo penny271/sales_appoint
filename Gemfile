@@ -12,6 +12,10 @@ gem "sprockets-rails"
 # Use mysql as the database for Active Record
 gem "mysql2", "~> 0.5"
 
+group :development, :test do
+  gem "planetscale_rails"
+end
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
@@ -43,7 +47,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 # Use Sass to process CSS
-gem "sassc-rails"
+# gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -76,3 +80,17 @@ gem "tailwindcss-rails", "~> 2.0"
 gem "dartsass-rails", "~> 0.5.0"
 
 gem "foreman"
+gem "dockerfile-rails", ">= 1.5", :group => :development
+
+gem "sentry-ruby", "~> 5.11"
+
+gem "sentry-rails", "~> 5.11"
+
+gem 'sassc'
+
+# ERB Formatter/Beautify
+gem 'htmlbeautifier'
+
+group :development, :test do
+  gem 'rubocop', require: false
+end

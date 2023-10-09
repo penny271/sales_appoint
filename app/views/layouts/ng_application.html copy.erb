@@ -8,18 +8,46 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+<%
+=begin
+%>
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag params[:controller].tr('/', '_') %>
+
+
+<%
+=end
+%>
+
+    <%# - 個別にcssを読み込む %>
+    <p>params[:controller]: <%= params[:controller] %></p>
+
+    <%
+=begin
+%>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+<%
+=end
+%>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+
 
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+    <%# <main class="container mx-auto mt-28 px-5 flex"> %>
     <main class="main__container">
       <div id="application__wrapper">
         <%= render "shared/header" %>
         <%= yield %>
       </div>
-      <%= render "shared/footer" %>
+    <%= render "shared/footer" %>
     </main>
   </body>
 </html>

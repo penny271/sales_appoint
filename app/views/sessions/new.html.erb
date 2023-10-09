@@ -1,0 +1,25 @@
+<% @title = "ログイン" %>
+<div id="login_form">
+  <h1 class="bg-slate-900 text-slate-50	"><%= @title %></h1>
+  <%= form_with model: @form, url: :session do |f| %>
+    <div>
+      <%= f.label :email, "メールアドレス" %>
+      <%= f.text_field :email %>
+    </div>
+    <div>
+      <%= f.label :password, "パスワード" %>
+      <%= f.password_field :password %>
+    </div>
+    <div>
+      <%= f.submit "ログイン", class: "apl-btn-blue" %>
+    </div>
+  <% end %>
+</div>
+<%# * login_form[email]、これらの値を パラメータ（parameters）と呼びます。パラメータに角括弧（[]）が含まれている場合、角括弧の前にある部分（login_form）を プレフィックス(prefix)と呼び、角括弧の内側にある部分（ email や password）をフィールド名(fieldname)と呼びます。プレフィックスはform_withメソッドのmodelオプションに指定したオブジェクトのクラス名から導き出されます。ここでのクラス名はStaff::LoginFormですので、クラス名を構成する単語を分解して、すべて小文字に変え、アンダースコア（_）で連結したlogin_formがプレフィックスとなります。なお、form_withメソッドのscopeオプションを用いれば、プレフィックスを変更できます%>
+<%
+=begin
+%>
+<input type="text" name="login_form[email]" id="login_form_email">
+<%
+=end
+%>

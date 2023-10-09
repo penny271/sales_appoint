@@ -67,4 +67,12 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # ¥ update 20231003
+  # - アセット設定： 共有された設定ファイルには、config.assets.debugに関する明示的な設定はありません。開発環境では、config.assets.debugを設定するのが一般的です
+  config.assets.debug = true
+
+  # ¥ update 20231009
+  config.assets.compile = true
+
 end
