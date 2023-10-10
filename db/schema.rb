@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_08_063304) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_10_204537) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "name_kana", default: ""
-    t.string "email", default: ""
+    t.string "email", default: "", null: false
     t.string "tel", default: ""
-    t.string "hashed_password", default: ""
+    t.string "hashed_password"
     t.boolean "suspended", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at"
   end
 
 end
