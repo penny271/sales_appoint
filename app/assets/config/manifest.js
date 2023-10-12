@@ -4,3 +4,5 @@
 //= link_tree ../builds
 //= link application.css
 //= link login.css
+//= link header.css
+//= link footer.css

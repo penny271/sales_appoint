@@ -16,6 +16,12 @@ Rails.application.routes.draw do
     delete 'session', action: :destroy
   end
 
+  # # - 20231013 上記の書き換え 厳密には Prefix と URI-Patternが変わる
+  # * Prefix: login => login_session   |   Uri-Pattern: /login  =>   /session/login
+  # resource :session, only: [:new, :create, :destroy], controller: :sessions do
+  #   get 'login', action: :new, as: :login
+  # end
+
   # root "top#index"
   # get 'top/index', to: 'top#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -30,3 +36,17 @@ Rails.application.routes.draw do
     root "top#index"
   end
 end
+
+# - 20231013 - ルーティングに名前を与えるメリット:
+# * シンボルでURLパスを表現することには、主に2つのメリットがあります。1つは、プログラマが名前を書き間違えたときにエラーになることです。たとえば、URLパスを文字列で指定した場合"/stuff/login" と書き間違えても、Railsはエラーを出しません。私たちが実際にリンクをクリックし「404 Not Found」のページを見て、はじめてミスに気づくことになります。しかし、URLパスにシンボル:stuff_login を指定した場合は、リンク元のページを表示しただけでエラーが発生します。間違いはなるべく早く発見されるべきですので、これは大きな利点です。
+
+# ¥ 名前を与えることで login_path / login_url といったヘルパーメソッドが定義される
+# ¥ => ヘルパーメソッドを用いるとurlにクエリパラメータを付与できる
+# * 前者はURLのパス部分を返し、後者はURL全体を返します。　ヘルパーメソッド login_path を用いれば、次のようにしてERBテンプレートにリンクを埋め込むことができます。
+# - <%= link_to "ログイン", login_path %>
+# login_path の部分は:login とも書けるのでヘルパーメソッドの出番はなさそうにも思えますが、ヘルパーメソッドを用いるとURLにクエリパラメータを付加することが可能になります。
+# - <%= link_to "ログイン", login_path(tracking: "001") %>
+# この場合、次のようなHTMLコードが生成されます。
+# - <a href="/login?tracking=001">ログイン</a>
+
+

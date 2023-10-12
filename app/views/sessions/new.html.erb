@@ -3,28 +3,13 @@
 <% @title = "ログイン" %>
 <div id="login_form">
   <h1 class="bg-slate-900 text-slate-50	"><%= @title %></h1>
-  <%= form_with model: @form, url: :session do |f| %>
-    <div>
-      <%= f.label :email, "メールアドレス" %>
-      <%# プレフィックス: login_form / フィールド名: email %>
-      <%# - <input type="text" name="login_form[email]" id="login_form_email"> %>
-      <%= f.text_field :email %>
-    </div>
-    <div>
-      <%= f.label :password, "パスワード" %>
-      <%= f.password_field :password %>
-    </div>
-    <div>
-      <%= f.submit "ログイン", class: "apl-btn-blue" %>
-    </div>
-  <% end %>
 </div>
 <%# ---------------------------------- %>
 <div class="log-form">
   <h2>Login to your account</h2>
   <%= form_with model: @form, url: :session do |f| %>
     <%= f.text_field :email, placeholder: "username", title: "username" %>
-    <%= f.password_field :password, placeholder: "password", title: "username" %>
+    <%= f.password_field :password, placeholder: "password", title: "password" %>
     <%= f.submit "Login", class: "btn" %>
     <a class="forgot" href="#">Forgot Username?</a>
   <% end %>
