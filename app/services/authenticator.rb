@@ -12,5 +12,3 @@ class Authenticator
     @current_account && !@current_account.suspended? && @current_account.hashed_password && BCrypt::Password.new(@current_account.hashed_password) == raw_password
   end
 end
-
-

@@ -42,4 +42,3 @@ class SessionsController < Base
   end
 
 end
-

@@ -1,0 +1,44 @@
+<%# - 青木 要更新- 20231015 SPA %>
+<%# ¥ 操作後、表示させたいもの - 置き換えるもの %>
+<%= turbo_frame_tag "new_commodity_category" do %>
+  <%# ! scssのみ使用する %>
+  <%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <% @title = "商材カテゴリ" %>
+  <div id="commodity_form">
+    <h1 class="bg-slate-900 text-slate-50"><%= @title %></h1>
+  </div>
+  <%# ---------------------------------- %>
+  <div class="log-form">
+    <h2><%= @title %>を作成</h2>
+    <%= form_with model: @form, url: :session do |f| %>
+      <%= f.text_field :name, placeholder: "例: アパレル", title: "name" %>
+      <%= f.submit "作成", class: "btn" %>
+      <%# <a class="forgot" href="#">Forgot Username?</a> %>
+      <%= link_to "Back", "/commodity_categories", class: "forgot" %>
+    <% end %>
+  </div>
+<% end %>
+<%# ---------------------------------- %>
+<%
+=begin
+%>
+<%= turbo_frame_tag @form do %>
+  <%# ! scssのみ使用する %>
+  <%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <% @title = "商材カテゴリ" %>
+  <div id="commodity_form">
+    <h1 class="bg-slate-900 text-slate-50	"><%= @title %></h1>
+  </div>
+  <%# ---------------------------------- %>
+  <div id="new_commodity_category" class="log-form">
+    <h2><%= @title %>を作成</h2>
+    <%= form_with model: @form, url: :session do |f| %>
+      <%= f.text_field :name, placeholder: "例: アパレル", title: "name" %>
+      <%= f.submit "作成", class: "btn" %>
+    <% end %>
+  </div>
+<% end %>
+<%# ---------------------------------- %>
+<%
+=end
+%>

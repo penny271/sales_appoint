@@ -91,6 +91,8 @@ gem 'sassc'
 # ERB Formatter/Beautify
 gem 'htmlbeautifier'
 
+gem 'erb_lint', require: false
+
 group :development, :test do
   gem 'rubocop', require: false
 end

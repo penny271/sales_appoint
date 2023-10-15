@@ -1,3 +1,10 @@
+<%# - 20231014 htmlbeautifierが動かなくなったときの対処法 %>
+<%# - VSCode Shell Environment: %>
+<%# ! Sometimes VSCode might not source your shell profile correctly. To ensure it does: %>
+<%# Close all VSCode instances. %>
+<%# Open a regular terminal. %>
+<%# ¥ Launch VSCode from this terminal by typing code and hit enter. This will inherit the shell's environment variables. %>
+<%# encoding: UTF-8 %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,11 +21,15 @@
   <body>
     <main class="main__container">
       <div id="application__wrapper">
-        <%= render "shared/header" %>
+        <% unless @hide_header %>
+          <%= render "shared/header" %>
+          <%= render "shared/sidebar", page: 'not dashboard' %>
+        <% end %>
         <%= yield %>
       </div>
-      <%= render "shared/footer" %>
+      <% unless @hide_header %>
+        <%= render "shared/footer" %>
+      <% end %>
     </main>
   </body>
 </html>
-<%=  %>

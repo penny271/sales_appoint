@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'commodity_categories/index'
   # root to: 'admin/top#index'
   root to: 'top#index'
 
@@ -12,9 +13,20 @@ Rails.application.routes.draw do
 
   scope controller: :sessions do
     get 'login', action: :new, as: :login
-    post 'session', action: :create, as: :session
-    delete 'session', action: :destroy
+    # post 'session', action: :create, as: :session
+    # delete 'session', action: :destroy
+    # - 20231014 第一引数が urlにあたる
+    resource :session, only: [:create, :destroy]
   end
+
+  #^ 青木 ★要更新 - 20231014 /appointments/new => /apo/new  のように変更可能!
+  resources :appointments, path: "appo"
+
+  #^ 青木 ★要更新 - 20231014 /appointments/new => /apo/new  のように変更可能!
+  resources :service_categories, path: "service_categories"
+
+  resources :commodity_categories, path: "commodity_categories"
+
 
   # # - 20231013 上記の書き換え 厳密には Prefix と URI-Patternが変わる
   # * Prefix: login => login_session   |   Uri-Pattern: /login  =>   /session/login
