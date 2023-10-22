@@ -6,6 +6,10 @@
     per_page:      number of items to fetch per page
     remote:        data-remote
 -%>
-<span class="last">
+<span class="last <%= current_page.last? ? 'pagination_disabled' : '' %>">
   <%= link_to_unless current_page.last?, t('views.pagination.last').html_safe, url, remote: remote %>
+  <%# <%= link_to_unless current_page.first?, t('views.pagination.last').html_safe, url, remote: remote do |name|
+    content_tag(:span, name, class: "pagination_disabled" ) if "pagination_disabled"
+    end
+  %>
 </span>

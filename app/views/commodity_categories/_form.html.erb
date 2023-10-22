@@ -25,6 +25,12 @@
         <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
         <%= f.label :name, class: "sr-only" %>
         <%= f.text_field :name, class: "w-full", placeholder: "商材名を入力してください" %>
+        <%# - validationメッセージ %>
+        <% if @commodity_category.errors[:name].present? %>
+          <div class="text-red-500 mt-2">
+            <%= @commodity_category.errors.full_messages_for(:name).join(", ") %>
+          </div>
+        <% end %>
       </div>
       <!-- Icons Column - Considering these might be action buttons, I'm keeping them, adjust as needed -->
       <div class="flex-none flex justify-end gap-4 px-6 py-4 w-1/6 border-r border-b border-gray-300">

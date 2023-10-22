@@ -1,6 +1,11 @@
 ---
 ja:
   activerecord:
+    models: # モデルの属性名
+      commodity_category: 商材カテゴリ
+    attributes:
+      commodity_category:
+        name: 商材名
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
@@ -10,13 +15,6 @@ ja:
   commodity_categories: # マニュアルでテキストを登録する場合の書き方
     form:
       add_item: "登録"
-  views: # kaminariの設定
-    pagination:
-      first: "&laquo;"
-      last: "&raquo;"
-      previous: "&lsaquo;"
-      next: "&rsaquo;"
-      truncate: "..."
   date:
     abbr_day_names:
     - 日

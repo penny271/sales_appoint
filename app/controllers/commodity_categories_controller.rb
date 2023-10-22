@@ -16,8 +16,7 @@ class CommodityCategoriesController < Base
 
     # `@search.result`で検索結果となる@commodity_categoriesを取得する
     # 検索結果に対してはkaminariのpageメソッドをチェーンできる
-    @commodity_categories = @search.result.page(params[:page])
-
+    @commodity_categories = @search.result.page(params[:page]).per(params[:per_page] || Kaminari.config.default_per_page)
   end
 
   # GET /commodity_category/1
@@ -54,8 +53,9 @@ class CommodityCategoriesController < Base
       #   format.turbo_stream
       #   format.html { redirect_to "/commodity_categories" }
       # end
+      # - フォームがTurboを使用するように設定され、アクション内で応答フォーマットまたはリダイレクトを指定しない場合、Turboのデフォルトの動作はTurbo Stream応答を探すことです。見つからない場合は、次の論理ビューに対応するHTMLレスポンスを期待します。createアクションのコンテキストでは、これは通常、新しく作成されたリソースのshowビューを意味します。
     else
-      flash.now.error = "Something went wrong"
+      flash.now.alert = "Something went wrong(create)"
       render 'new', status: :unprocessable_entity
     end
   end
@@ -70,7 +70,7 @@ class CommodityCategoriesController < Base
       flash.now.notice = "CommodityCategory was successfully updated"
       # redirect_to @commodity_category
     else
-      flash.now.error = "Something went wrong"
+      flash.now.alert = "Something went wrong(update)"
       render :edit, status: :unprocessable_entity
     end
   end
@@ -82,8 +82,8 @@ class CommodityCategoriesController < Base
       flash.now.notice = 'Object was successfully deleted.'
       # redirect_to commodity_cateogrys_url
     else
-      flash.now.error = 'Something went wrong'
-      redirect_to commodity_cateogrys_url
+      flash.now.alert = 'Something went wrong(destroy)'
+      render :show, status: :unprocessable_entity
     end
   end
 
