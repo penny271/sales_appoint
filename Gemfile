@@ -98,3 +98,11 @@ group :development, :test do
 end
 
 gem 'bcrypt'
+
+#^ 青木 ★要更新 - 20231018 spa用
+gem 'hotwire-rails'
+
+# pagination
+gem "kaminari"
+
+gem "ransack"

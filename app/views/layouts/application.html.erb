@@ -25,11 +25,13 @@
           <%= render "shared/header" %>
           <%= render "shared/sidebar", page: 'not dashboard' %>
         <% end %>
+        <div id="flash">
+          <%# ¥ update.turbo_stream.erbで .updateしているため中身は不要 %>
+          <%# <%= render "flash" %>
+        </div>
         <%= yield %>
       </div>
-      <% unless @hide_header %>
-        <%= render "shared/footer" %>
-      <% end %>
+      <%# footer削除 %>
     </main>
   </body>
 </html>

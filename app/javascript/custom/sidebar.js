@@ -16,6 +16,10 @@ document.addEventListener('turbo:load', () => {
   $('.logo-mark')
     .off('click')
     .on('click', function () {
-      $('#sidebar').toggle('lg:hidden');
+      $('#sidebar').toggle(0, function () {
+        console.log('Toggle completed');
+      });
     });
+  console.log('sidebar.js');
+  console.log('#####2222');
 });

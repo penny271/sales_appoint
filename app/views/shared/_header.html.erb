@@ -1,12 +1,6 @@
 <%= stylesheet_link_tag "header", "data-turbo-track": "reload" %>
 <header>
   <span class="logo-mark">営業アポ管理</span>
-  <% if flash[:notice] %>
-    <%= render "shared/flash_notice", msg: flash[:notice]  %>
-  <% end %>
-  <% if flash[:alert] %>
-    <%= render "shared/flash_alert", msg: flash[:alert]  %>
-  <% end %>
   <span>: current_account.present?: <%= current_account.present? %></span>
   <%=
     if current_account.present?

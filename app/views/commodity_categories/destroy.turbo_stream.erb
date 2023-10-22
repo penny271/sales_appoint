@@ -1,0 +1,4 @@
+<%# CommodityCategory詳細（`#commodity_category_1`となる要素）を削除する %>
+<%= turbo_stream.remove @commodity_category %>
+<%# ¥ flashメッセージを notice か alertかを判断して turbo_streamで表示する %>
+<%= render "/shared/turbo_stream_flash" %>

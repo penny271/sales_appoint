@@ -8,3 +8,5 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 
 # ===== ここを追加 =====
 pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.7.1/dist/jquery.js"
+# pin "sidebar", to: "custom/sidebar.js"
+pin_all_from "app/javascript/custom", under: "custom"
