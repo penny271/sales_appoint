@@ -12,6 +12,10 @@ module.exports = {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
+      width: {
+        two_icons: "120px",
+        number_column: "80px",
+      },
       borderWidth: {
         "1px": "1px",
       },
