@@ -1,0 +1,24 @@
+<%# - 青木 要更新- 20231015 SPA %>
+<%# ¥ 操作後、表示させたいもの - 置き換えるもの %>
+<%
+=begin %>
+<%= turbo_frame_tag "new_service_category" do %>
+  <%# ! scssのみ使用する %>
+  <%= stylesheet_link_tag "login", media: "all", "data-turbolinks-track": "reload" %>
+  <% @title = "商材カテゴリ" %>
+  <%# ---------------------------------- %>
+  <div class="log-form">
+    <h2><%= @title %>を作成</h2>
+    <%# ! data: { turbo: "false" } をつけないと redirect_toがうまく動かない spaにしない場合は falseに設定が必要! %>
+    <%= form_with model: @form, url: "/service_categories" do |f| %>
+      <%= f.text_field :name, placeholder: "例: アパレル", title: "name" %>
+      <%= f.submit "作成", class: "btn" %>
+      <%# <a class="forgot" href="#">Forgot Username?</a> %>
+      <%= link_to "Back", "/service_categories", class: "forgot" %>
+    <% end %>
+  </div>
+<% end %>
+<%# ------------------------------------ %>
+<%
+=end %>
+<%= render "form", service_category: @service_category %>

@@ -88,8 +88,8 @@ gem "sentry-rails", "~> 5.11"
 
 gem 'sassc'
 
-# ERB Formatter/Beautify
-gem 'htmlbeautifier'
+# ERB Formatter/Beautify やたら不具合がおきるため、使用しない
+# gem 'htmlbeautifier'
 
 gem 'erb_lint', require: false
 
@@ -106,3 +106,10 @@ gem 'hotwire-rails'
 gem "kaminari"
 
 gem "ransack"
+
+# gem "erb-formatter"
+
+# ruby formatter
+gem "rufo"
+
+# Format ERB

@@ -8,16 +8,16 @@
     <%# ! turbo_stream.prepend "commodity_categories" では collectionとならないため使えないため条件分岐が必要 %>
     <%# - Determine the value of num_counter based on various conditions %>
     <% if defined?(commodity_category_counter) && commodity_category_counter %>
-    <!-- Turbo stream specific rendering logic -->
+      <!-- Turbo stream specific rendering logic -->
       <% num_counter = commodity_category_counter + 1 %>
     <% elsif local_assigns[:within_turbo_stream_create] %>
-    <!-- Turbo stream specific rendering logic -->
+      <!-- Turbo stream specific rendering logic -->
       <% num_counter = "登録完了" %>
     <% elsif local_assigns[:within_turbo_stream_update] %>
-    <!-- Turbo stream specific rendering logic -->
+      <!-- Turbo stream specific rendering logic -->
       <% num_counter = "更新完了" %>
     <% elsif local_assigns[:go_back] %>
-    <!-- Turbo stream specific rendering logic -->
+      <!-- Turbo stream specific rendering logic -->
       <% num_counter = "編集中止" %>
     <% else %>
       <!-- Your original rendering logic -->
@@ -25,26 +25,64 @@
     <% end %>
     <!-- No. Column -->
     <%# ¥ items-center　border-r border-b  border-gray-300付け足し %>
-    <div class="flex-none flex gap-3 px-6 py-4 w-1/6 border-r border-b  border-gray-300 items-center">
+    <div
+      class="
+        flex-none
+        flex
+        gap-3
+        px-6
+        py-4
+        w-1/6
+        border-r
+        border-b
+        border-gray-300
+        items-center
+      "
+    >
       <%# - _counter で indexを使える!! %>
       <div class="text-sm font-medium text-gray-700"><%= num_counter %></div>
     </div>
     <!-- Name Column -->
     <%# ¥ border-r border-b  border-gray-300　付け足し %>
-    <div class="flex-grow px-6 py-4 border-r border-b  border-gray-300">
-      <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-base font-semibold text-green-600">
+    <div class="flex-grow px-6 py-4 border-r border-b border-gray-300">
+      <span
+        class="
+          inline-flex
+          items-center
+          gap-1
+          rounded-full
+          bg-green-50
+          px-2
+          py-1
+          text-base
+          font-semibold
+          text-green-600
+        "
+      >
         <%# <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span> %>
         <%= commodity_category.name %>
       </span>
     </div>
-
     <!-- Icons Column -->
     <%# ¥ border-r border-b  border-gray-300　付け足し + justify-center %>
-    <div class="flex-none flex justify-center gap-4 px-6 py-4 w-1/6 border-r border-b  border-gray-300">
+    <div
+      class="
+        flex-none
+        flex
+        justify-center
+        gap-4
+        px-6
+        py-4
+        w-1/6
+        border-r
+        border-b
+        border-gray-300
+      "
+    >
       <%# ¥ mr-3を加えた %>
       <%# ブロックと一緒に使うと、ブロック内のコンテンツがリンクのコンテンツになります。この場合の第1引数はURLまたはパスヘルパーで、第2引数はHTMLオプションです： %>
       <%= link_to "/commodity_categories/#{commodity_category.id}/edit", class: "mr-3", data: { tooltip: 'Edit' }  do %>
-      <%# ! NG これだと select * となり意図しない動作となった。 link_to "/commodity_categories/#{commodity_category}/edit", class: "mr-3", data: { tooltip: 'Edit' }  do  %>
+        <%# ! NG これだと select * となり意図しない動作となった。 link_to "/commodity_categories/#{commodity_category}/edit", class: "mr-3", data: { tooltip: 'Edit' }  do %>
         <!-- contents of the link go here -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +92,7 @@
           stroke="currentColor"
           class="h-6 w-6 hover:text-green-400"
           x-tooltip="tooltip"
-          >
+        >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -84,69 +122,3 @@
     </div>
   </div>
 <% end %>
-
-<%
-=begin
-%>
-
-<%= turbo_frame_tag commodity_category do %>
-  <tr class="hover:bg-gray-50">
-    <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
-      <div class="text-sm">
-        <%# - _counter で indexを使える!! %>
-        <div class="font-medium text-gray-700">#<%=  1 %></div>
-      </div>
-    </th>
-    <td class="px-6 py-4">
-      <span
-        class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600"
-      >
-        <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
-        <%= commodity_category.name %>
-      </span>
-    </td>
-    <td class="px-6 py-4">
-      <div class="flex justify-end gap-4">
-        <a x-data="{ tooltip: 'Delete' }" href="#">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="h-6 w-6"
-            x-tooltip="tooltip"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-            />
-          </svg>
-        </a>
-        <a x-data="{ tooltip: 'Edite' }" href="#">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="h-6 w-6"
-            x-tooltip="tooltip"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-            />
-          </svg>
-        </a>
-      </div>
-    </td>
-  </tr>
-<% end %>
-
-
-<%
-=end
-%>

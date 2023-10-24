@@ -1,6 +1,5 @@
 # class CommodityCategoriesController < ApplicationController
 class CommodityCategoriesController < Base
-
   # GET /commodity_categories
   def index
     # @commodity_categories = CommodityCategory.all
@@ -27,11 +26,11 @@ class CommodityCategoriesController < Base
   end
 
   def new
-    if current_account
-      # @form = CommodityCategories::CreateForm.new
-      @commodity_category = CommodityCategory.new
-      render action: 'new'
-    end
+    return unless current_account
+
+    # @form = CommodityCategories::CreateForm.new
+    @commodity_category = CommodityCategory.new
+    render action: 'new'
   end
 
   def edit
@@ -46,16 +45,16 @@ class CommodityCategoriesController < Base
     @commodity_category = CommodityCategory.new(commodity_categories_params)
     if @commodity_category.save
       # flash[:success] = "CommodityCategories successfully created"
-      flash.now.notice = "CommodityCategories successfully created"
+      flash.now.notice = 'CommodityCategories successfully created'
       # redirect_to "/commodity_categories"
-      #^ 青木 ★要更新 - 20231018
+      # ^ 青木 ★要更新 - 20231018
       # respond_to do |format|
       #   format.turbo_stream
       #   format.html { redirect_to "/commodity_categories" }
       # end
       # - フォームがTurboを使用するように設定され、アクション内で応答フォーマットまたはリダイレクトを指定しない場合、Turboのデフォルトの動作はTurbo Stream応答を探すことです。見つからない場合は、次の論理ビューに対応するHTMLレスポンスを期待します。createアクションのコンテキストでは、これは通常、新しく作成されたリソースのshowビューを意味します。
     else
-      flash.now.alert = "Something went wrong(create)"
+      flash.now.alert = 'Something went wrong(create)'
       render 'new', status: :unprocessable_entity
     end
   end
@@ -67,10 +66,10 @@ class CommodityCategoriesController < Base
       puts("update: @commodity_category::: #{@commodity_category}")
 
       # render action: 'show'
-      flash.now.notice = "CommodityCategory was successfully updated"
+      flash.now.notice = 'CommodityCategory was successfully updated'
       # redirect_to @commodity_category
     else
-      flash.now.alert = "Something went wrong(update)"
+      flash.now.alert = 'Something went wrong(update)'
       render :edit, status: :unprocessable_entity
     end
   end
@@ -94,6 +93,4 @@ class CommodityCategoriesController < Base
     # * 例:Parameters: {"commodity_category"=>{"name"=>"abc"}, "commit"=>"登録"}
     params.require(:commodity_category).permit(:name)
   end
-
-
 end

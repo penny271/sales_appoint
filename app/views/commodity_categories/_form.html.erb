@@ -9,15 +9,29 @@
     <%# form_with model: @commodity_category, url: commodity_categories_path do |f|  |||| %>
     <div class="flex">
       <!-- No. Column -->
-      <div class="flex-none flex gap-3 px-6 py-4 w-1/6 border-r border-b border-gray-300 items-center">
+      <div
+        class="
+          flex-none
+          flex
+          gap-3
+          px-6
+          py-4
+          w-1/6
+          border-r
+          border-b
+          border-gray-300
+          items-center
+        "
+      >
         <%# <div class="text-sm font-medium text-gray-700">新規登録</div> %>
         <div class="m-auto">
           <%# <%= f.submit "Submit", class: "apl-btn-blue" %>
-          <%# ¥ ja.ymlで 手動で文字列を設定する方法%>
+          <%# ¥ ja.ymlで 手動で文字列を設定する方法 %>
           <%# <%= f.submit t("commodity_categories.form.add_item"), class: "apl-btn-blue" %>
           <%# ¥ ja.ymlで form_with を使っていた場合に共通のテキストを使用する場合 %>
-          <%= f.submit class: @commodity_category.new_record? ? "apl-btn-blue" : "apl-btn-orange" %>
-          <%= link_to "戻る", commodity_category, class: 'apl-btn-gray' %>
+          <%= f.submit class:
+                     @commodity_category.new_record? ? "apl-btn-blue" : "apl-btn-orange" %>
+          <%= link_to "戻る", commodity_category, class: "apl-btn-gray" %>
         </div>
       </div>
       <!-- Name Column -->
@@ -32,16 +46,32 @@
           </div>
         <% end %>
       </div>
-      <!-- Icons Column - Considering these might be action buttons, I'm keeping them, adjust as needed -->
-      <div class="flex-none flex justify-end gap-4 px-6 py-4 w-1/6 border-r border-b border-gray-300">
-        <!-- You might want to adjust these action buttons based on the form's purpose -->
+      <!-- Icons Column - Considering these might be action buttons, I'm
+      keeping them, adjust as needed -->
+      <div
+        class="
+          flex-none
+          flex
+          justify-end
+          gap-4
+          px-6
+          py-4
+          w-1/6
+          border-r
+          border-b
+          border-gray-300
+        "
+      >
+        <!-- You might want to adjust these action buttons based on the form's
+        purpose -->
         <div class="m-auto">
           <%# <%= f.submit "Submit", class: "apl-btn-blue" %>
-          <%# ¥ ja.ymlで 手動で文字列を設定する方法%>
+          <%# ¥ ja.ymlで 手動で文字列を設定する方法 %>
           <%# <%= f.submit t("commodity_categories.form.add_item"), class: "apl-btn-blue" %>
           <%# ¥ ja.ymlで form_with を使っていた場合に共通のテキストを使用する場合 %>
-          <%= f.submit class: @commodity_category.new_record? ? "apl-btn-blue" : "apl-btn-orange" %>
-          <%= link_to "戻る", commodity_category, class: 'apl-btn-gray' %>
+          <%= f.submit class:
+                     @commodity_category.new_record? ? "apl-btn-blue" : "apl-btn-orange" %>
+          <%= link_to "戻る", commodity_category, class: "apl-btn-gray" %>
         </div>
       </div>
     </div>
@@ -49,33 +79,3 @@
   <% end %>
 <% end %>
 <%# //////////////////////////////// %>
-<%
-=begin
-%>
-<%= turbo_frame_tag "new_commodity_category" do %>
-  <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
-    <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="px-6 py-4 font-medium text-gray-900">商材名</th>
-          <%# delete + edit アイコン用 %>
-          <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-100 border-t border-gray-100">
-        <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4">
-            <%= form_with model: @commodity_category, url: commodity_categories_path do |f| %>
-              <%= f.text_field :name %>
-              <%= f.submit '登録', class: 'apl-btn-blue' %>
-              <%= link_to "キャンセル", commodity_categories_path, class: 'apl-btn-gray' %>
-            <% end %>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-<% end %>
-<%
-=end
-%>

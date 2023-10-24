@@ -1,0 +1,117 @@
+<%# - 青木 要更新- 20231021 SPA %>
+<%# ¥ 操作後変更したいもの - 置き換えられるもの %>
+<%# * 全体を`turbo_frame_tag`で囲う %>
+<%# * 編集リンクをクリックすると、_cat.html.erbの<turbo-frame>部分がこの部分に置換される %>
+<%# ! 注目ポイントはturbo_frame_tagの引数にservice_categoryを利用してる。これでshow.html.erbの<turbo-frame id="service_category_1">とedit.html.erb（内でrenderしている_form.html.erb）の<turbo-frame id="service_category_1">がマッチするようになる。つまり編集リンクをクリックすると、_service_category.html.erbの<turbo-frame id="service_category_1">部分が、_form.html.erbの<turbo-frame id="service_category_1">部分に置換されるようになるよ。 %>
+<%= turbo_frame_tag service_category do %>
+  <%# - 20231022 urlを省くと、railsが自動で create と update を場合分けして urlのルートを決定してくれる %>
+  <%= form_with model: @service_category do |f| %>
+    <%# form_with model: @service_category, url: service_categories_path do |f|  |||| %>
+  <div class="flex py-4 hover:bg-amber-50">
+    <%# No. %>
+    <div class="px-6 flex-none w-number_column font-normal text-gray-900">
+        <%# <%= f.submit "Submit", class: "apl-btn-blue" %>
+      <%# ¥ ja.ymlで 手動で文字列を設定する方法 %>
+      <%# <%= f.submit t("commodity_categories.form.add_item"), class: "apl-btn-blue" %>
+      <%# ¥ ja.ymlで form_with を使っていた場合に共通のテキストを使用する場合 %>
+      <div class="flex flex-col"></div>
+      <%= f.submit class:
+                  @service_category.new_record? ? "apl-btn-blue" : "apl-btn-orange" %>
+      <%= link_to "戻る", service_category, class: "apl-btn-gray" %>
+    </div>
+
+    <%# サービス名 %>
+    <div class="flex gap-3 px-6 w-1/5 font-normal text-gray-900">
+        <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+        <%= f.label :name, class: "sr-only" %>
+        <%= f.text_field :name, class: "w-full", placeholder: "" %>
+        <%# - validationメッセージ %>
+        <% if @service_category.errors[:name].present? %>
+          <div class="text-red-500 mt-2">
+            <%= @service_category.errors.full_messages_for(:name).join(", ") %>
+          </div>
+        <% end %>
+    </div>
+
+    <%# サービス詳細 %>
+    <%# ! classに flex を入れると縦いっぱいに広がる %>
+    <div class="px-6 grow">
+        <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+        <%= f.label :name, class: "sr-only" %>
+        <%= f.text_field :name, class: "w-full", placeholder: "" %>
+    </div>
+
+    <%# 価格 %>
+    <div class="px-6 w-1/5">
+        <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+        <%= f.label :name, class: "sr-only" %>
+        <%= f.text_field :name, class: "w-full", placeholder: "" %>
+        <%# - validationメッセージ %>
+        <% if @service_category.errors[:name].present? %>
+          <div class="text-red-500 mt-2">
+            <%= @service_category.errors.full_messages_for(:name).join(", ") %>
+          </div>
+        <% end %>
+
+      </div>
+
+    <%# 初期費用 %>
+    <div class="px-6 w-1/5">
+      <div class="flex gap-2">
+        <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+        <%= f.label :name, class: "sr-only" %>
+        <%= f.text_field :name, class: "w-full", placeholder: "" %>
+        <%# - validationメッセージ %>
+        <% if @service_category.errors[:name].present? %>
+          <div class="text-red-500 mt-2">
+            <%= @service_category.errors.full_messages_for(:name).join(", ") %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%# edit / delete %>
+
+    <div class="px-6 w-two_icons">
+      <div class="flex justify-end gap-4">
+        <a x-data="{ tooltip: 'Delete' }" href="#">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6"
+            x-tooltip="tooltip"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+            />
+          </svg>
+        </a>
+        <a x-data="{ tooltip: 'Edite' }" href="#">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6"
+            x-tooltip="tooltip"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div><!--  <div class="flex py-4 hover:bg-amber-50">  -->
+    <!-- Add a Submit button -->
+  <% end %>
+<% end %>
+<%# //////////////////////////////// %>
