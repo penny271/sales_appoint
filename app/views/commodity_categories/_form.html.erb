@@ -41,9 +41,7 @@
         <%= f.text_field :name, class: "w-full", placeholder: "商材名を入力してください" %>
         <%# - validationメッセージ %>
         <% if @commodity_category.errors[:name].present? %>
-          <div class="text-red-500 mt-2">
-            <%= @commodity_category.errors.full_messages_for(:name).join(", ") %>
-          </div>
+          <%= render partial: "/shared/validation_errors", locals: { object: @commodity_category, attribute: :name } %>
         <% end %>
       </div>
       <!-- Icons Column - Considering these might be action buttons, I'm

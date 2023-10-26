@@ -1,0 +1,4 @@
+<%# ServiceCategory詳細（`#service_category_1`となる要素）を削除する %>
+<%= turbo_stream.remove @service_category %>
+<%# ¥ flashメッセージを notice か alertかを判断して turbo_streamで表示する %>
+<%= render "/shared/turbo_stream_flash" %>

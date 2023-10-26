@@ -21,4 +21,7 @@
 <%# ------------------------------------ %>
 <%
 =end %>
-<%= render "form", service_category: @service_category %>
+<%# * new.html.erb から @service_category を引き継いでいるため、わざわざ引数で新しく ervice_category: @service_category する必要なし %>
+<%# - そのまま @service_categoryが使える だがわかりやすさ重視で下記のように書いても良さそう %>
+<%# <%= render "form", service_category: @service_category %>
+<%= render "form" %>

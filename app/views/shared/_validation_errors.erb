@@ -1,0 +1,19 @@
+<% if object.errors[attribute].present? %>
+  <div class="text-red-500 mt-2">
+    <%= object.errors.full_messages_for(attribute).join(", ") %>
+  </div>
+<% end %>
+
+<%
+=begin
+%>
+
+<% if @service_category.errors[:name].present? %>
+  <div class="text-red-500 mt-2">
+    <%= @service_category.errors.full_messages_for(:name).join(", ") %>
+  </div>
+<% end %>
+
+<%
+=end
+%>

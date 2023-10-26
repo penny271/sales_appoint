@@ -95,6 +95,6 @@ class ServiceCategoriesController < Base
     # params.require(:service_categories_create_form).permit(:name)
     # - form_withが作る キーを 下記に入力する
     # * 例:Parameters: {"service_category"=>{"name"=>"abc"}, "commit"=>"登録"}
-    params.require(:service_category).permit(:name)
+    params.require(:service_category).permit(:name, :description, :price, :initial_cost, :img_url)
   end
 end

@@ -1,4 +1,4 @@
-<div><%= ServiceCategory.find(1).name %></div>
+<div>余裕があるときにアイコンをアップロードし、表示できるようにする</div>
 <div><%= ServiceCategory.find(1).description %></div>
 <%# - ransack用 検索機能 %>
 <%# ransackを利用した検索フォームでは、form_withの代わりにsearch_form_forを使う %>
@@ -48,35 +48,20 @@ data: {
 <%= turbo_frame_tag "service_category_list" do %>
   <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
     <%# !!!!!!!!!!!! %>
-    <div
-      class="
-        w-full
-        bg-white
-        text-left
-        text-sm
-        text-gray-500
-        divide-y
-        divide-gray-100
-        border-t
-        border-gray-100
-      "
-    >
+    <div class="w-full bg-whitetext-lefttext-sm text-gray-500divide-y divide-gray-100border-t border-gray-100">
       <div class="bg-gray-50 flex py-4">
         <div class="flex-none px-6 font-medium text-blue-600 w-number_column"><%= sort_link(@search, :id, "No.", class: "text-blue-600 border-b border-blue-600") %></div>
-        <div class="flex-none w-1/5 px-6 font-medium text-blue-600 "><%= sort_link(
-            @search,
-            :name,
-            "サービス名",
-            class: "text-blue-600 border-b border-blue-600"
-          ) %></div>
+        <div class="flex-none w-1/5 px-6 font-medium text-blue-600 "><%= sort_link(@search,:name,"サービス名",class: "text-blue-600 border-b border-blue-600") %></div>
         <div class="px-6 grow font-medium text-gray-900">サービス詳細</div>
         <div class="px-6 w-1/5 font-medium text-gray-900">価格/月</div>
         <div class="px-6 w-1/5 font-medium text-gray-900">初期費用</div>
         <div class="flex-none px-6 py-4 font-medium text-gray-900 w-two_icons"></div>
         <!-- edit delete icon -->
       </div>
-      <%= turbo_frame_tag "new_service_category"%>
-      <%= render @service_categories %>
+      <div id="service_categories" class="divide-y divide-gray-100 border-t border-gray-100">
+        <%= turbo_frame_tag "new_service_category"%>
+        <%= render @service_categories %>
+      </div>
     </div>
   </div>
   <%= paginate @service_categories, params: { per_page: params[:per_page] } %>
