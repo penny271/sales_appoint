@@ -15,10 +15,11 @@ module StringNormalizer
     NKF.nkf("-W -w -Z1", text).strip if text
   end
 
+  # 先頭と最後尾の空白を削除 + 複数の空白のつながりを一つの半角空白に変換する
   def normalize_as_name(text)
     if text
       normalized_text = NKF.nkf("-W -w -Z1", text).strip
-      normalized_text.gsub!(/\s+/, ' ')  # This line replaces multiple spaces with a single space
+      normalized_text.gsub!(/\s+/, " ")  # This line replaces multiple spaces with a single space
       normalized_text
     end
   end
@@ -34,4 +35,18 @@ module StringNormalizer
   def normalize_as_phone_number(text)
     NKF.nkf("-W -w -Z1", text).strip if text
   end
-end
+
+  # ! errors.add()をつけたい場合のみ必要 - なくても uniqueness 制約にかかるため実質不要
+  # Check for extra spaces in the original input
+  # - validate がクラスメソッドであるため、下記全体を module ClassMethodsとすることで、
+  # - 他のファイルから クラスメソッドとして直接呼び出せるようになる
+  module ClassMethods
+    def validate_without_extra_spaces(attr1, attr2)
+      validate do
+        if self.send(attr1) != self.send(attr2)
+          errors.add(attr1, "から余分な空白を取り除きました =>")
+        end
+      end
+    end
+  end
+end # end of module
