@@ -1,0 +1,6 @@
+<%# ¥ flashメッセージを notice か alertかを判断して turbo_streamで表示する %>
+<%= render "/shared/turbo_stream_flash" %>
+
+<%= turbo_stream.update 'flash', content: "This is a test message" %>
+
+<% puts("accounts  ^^  動いている??") %>

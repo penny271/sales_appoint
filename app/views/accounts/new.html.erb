@@ -1,3 +1,5 @@
+<%# ! scssのみ使用する %>
+<%= stylesheet_link_tag 'account', media: 'all', 'data-turbolinks-track': 'reload' %>
 <div>
   <h1 class="font-bold text-4xl">Accounts#new</h1>
   <p>Find me in app/views/accounts/new.html.erb</p>
@@ -10,53 +12,76 @@
     <div class="flex justify-center mb-8">
       <img src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png" alt="Logo" class="w-30 h-20">
     </div>
-    <h1 class="text-2xl font-semibold text-center text-gray-500 mt-8 mb-6">Registro</h1>
+    <h1 class="text-2xl font-semibold text-center text-gray-500 mt-8 mb-6">アカウント登録</h1>
 
     <%# post create => accounts_path %>
     <%= form_with model: @account_form, url: accounts_path do |f| %>
 
       <div class="mb-4">
-        <%= f.label :name, "name y name_kana", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.label :name, "名前 <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
         <%= f.text_field :name, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
       </div>
 
       <div class="mb-4">
-        <%= f.label :name_kana, "name_kana", class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :name_kana, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= f.label :name_kana, "名前カナ", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_field :name_kana, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
       </div>
 
       <div class="mb-4">
-        <%= f.label :email, "Correo electrónico", class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.email_field :email, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= f.label :email, "Email", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.email_field :email, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
       </div>
 
       <div class="mb-4">
-        <%= f.label :password, "password", class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.password_field :password, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= f.label :description, "アカウント詳細", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_area :description, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
       </div>
 
       <div class="mb-4">
-        <%= f.label :description, "description", class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :description, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= f.label :gender, "性別", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.select :employment_type,
+              { '男性' => 0, '女性' => 1},
+              { include_blank: '選択してください' },
+              { class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" } %>
       </div>
 
       <div class="mb-4">
-        <%= f.label :gender, "gender", class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :gender, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= f.label :employment_type, "雇用形態", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.select :employment_type,
+              { 'インターン' => 0, '正社員' => 1, 'その他' => 2 },
+              { include_blank: '選択してください' },
+              { class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :is_suspended, "アカウント状態", class: "block mb-2 text-sm text-gray-600" %>
+        <label class="flex items-center">
+          <%= f.check_box :is_suspended, class: "form-checkbox h-5 w-5 text-cyan-500" %>
+          <span class="ml-2 text-gray-600">利用停止中</span>
+        </label>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :is_admin, "アカウントタイプ", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.select :employment_type,
+              { '一般権限' => 0, '管理者' => 1 },
+              { include_blank: '選択してください' },
+              { class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" } %>
       </div>
 
       <%# ! password 確認 %>
       <div class="mb-4">
-        <%= f.label :password, "password", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.label :password, "パスワード <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
         <%= f.password_field :password, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
       </div>
 
       <div class="mb-6">
-        <%= f.label :confirm_password, "Repetir contraseña", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.label :confirm_password, "パスワード(確認) <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
         <%= f.password_field :confirm_password, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
       </div>
+      <%# ! password 確認 %>
 
-      <%= f.submit "Registro", class: "w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" %>
+      <%= f.submit "登録", class: "w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" %>
 
     <% end %>
     <div class="text-center">

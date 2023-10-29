@@ -1,5 +1,7 @@
 # class AccountsController < ApplicationController
 class AccountsController < Base
+  skip_before_action :authorize
+
   def index
     @accounts = Account.all
   end
@@ -16,8 +18,23 @@ class AccountsController < Base
   end
 
   def create
-    @account_form = RegisterForm.new(account_params)
-    # render action: "new"
+    # @form = LoginForm.new(params[:login_form])
+    @form = RegisterForm.new(account_params)
+    # if @form.email.present?
+    #   account = Account.find_by("LOWER(email) = ?", @form.email.downcase)
+    # end
+
+    # ¥ 20231012 app/services を使っている
+    if @form.form_save
+      flash[:notice] = "アカウントを新規作成しました。"
+      redirect_to login_path
+    else
+      flash.now[:alert] = "メールアドレスまたはパスワードが正しくありません。"
+      puts("flash: #{flash.now[:alert]}")
+      # render action: "new"
+      # * For Rails and most Ruby code, it's a convention to use symbols where the value represents a name or identifier that won't change.
+      render action: :new, status: :unprocessable_entity
+    end
   end
 
   def update

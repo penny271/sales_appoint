@@ -3,6 +3,12 @@ span.logo-mark {
   background-color: yellow !important;
 }
 
+// - 入力必須のアスタリスク
+/* Add this class in your stylesheet */
+.required-asterisk {
+  color: red;
+}
+
 //* ページネーション */
 
 .pagination{
