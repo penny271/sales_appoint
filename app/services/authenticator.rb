@@ -9,6 +9,6 @@ class Authenticator
 
   def authenticate(raw_password)
     # すべての条件が満たされていれば true を返す
-    @current_account && !@current_account.suspended? && @current_account.hashed_password && BCrypt::Password.new(@current_account.hashed_password) == raw_password
+    @current_account && @current_account.is_suspended != 1 && @current_account.hashed_password && BCrypt::Password.new(@current_account.hashed_password) == raw_password
   end
 end

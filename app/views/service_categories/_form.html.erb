@@ -53,15 +53,13 @@
 
       <%# 初期費用 %>
       <div class="px-6 w-1/5">
-        <div class="flex gap-2">
-          <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
-          <%= f.label :initial_cost, class: "sr-only" %>
-          <%= f.text_field :initial_cost, class: "w-full", placeholder: "" %>
-          <%# - validationメッセージ %>
-          <% if @service_category.errors[:initial_cost].present? %>
-            <%= render partial: "/shared/validation_errors", locals: { object: @service_category, attribute: :initial_cost } %>
-          <% end %>
-        </div>
+        <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+        <%= f.label :initial_cost, class: "sr-only" %>
+        <%= f.text_field :initial_cost, class: "w-full", placeholder: "" %>
+        <%# - validationメッセージ %>
+        <% if @service_category.errors[:initial_cost].present? %>
+          <%= render partial: "/shared/validation_errors", locals: { object: @service_category, attribute: :initial_cost } %>
+        <% end %>
       </div>
 
       <%# edit / delete %>

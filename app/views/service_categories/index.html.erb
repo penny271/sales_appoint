@@ -50,12 +50,12 @@ data: {
     <%# !!!!!!!!!!!! %>
     <div class="w-full bg-whitetext-lefttext-sm text-gray-500divide-y divide-gray-100border-t border-gray-100">
       <div class="bg-gray-50 flex py-4">
-        <div class="flex-none px-6 font-medium text-blue-600 w-number_column"><%= sort_link(@search, :id, "No.", class: "text-blue-600 border-b border-blue-600") %></div>
-        <div class="flex-none w-1/5 px-6 font-medium text-blue-600 "><%= sort_link(@search,:name,"サービス名",class: "text-blue-600 border-b border-blue-600") %></div>
-        <div class="px-6 grow font-medium text-gray-900">サービス詳細</div>
-        <div class="px-6 w-1/5 font-medium text-gray-900">価格/月</div>
-        <div class="px-6 w-1/5 font-medium text-gray-900">初期費用</div>
-        <div class="flex-none px-6 py-4 font-medium text-gray-900 w-two_icons"></div>
+        <div class="flex justify-center hover:bg-amber-50 items-stretch w-number_column"><%= sort_link(@search, :id, "No.", class: "text-blue-600 border-b border-blue-600 apl-flex_col_center_justify_center w-fit") %></div>
+        <div class="flex px-6 w-1/5 font-normal text-gray-900 "><%= sort_link(@search,:name,"サービス名",class: "text-blue-600 border-b border-blue-600") %></div>
+        <div class="flex px-6 w-1/3 ">サービス詳細</div>
+        <div class="flex px-6 w-1/5 ">価格/月</div>
+        <div class="flex px-6 w-1/5 ">初期費用</div>
+        <div class="flex px-6 w-two_icons text-gray-900"></div>
         <!-- edit delete icon -->
       </div>
       <div id="service_categories" class="divide-y divide-gray-100 border-t border-gray-100">

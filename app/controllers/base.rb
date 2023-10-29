@@ -1,4 +1,13 @@
 class Base < ApplicationController
+  before_action :authorize
+
+  private def authorize
+    unless current_account
+      flash.alert = "ログインしてください。"
+      redirect_to :login
+    end
+  end
+
   private def current_account
     if session[:id]
       @account ||= Account.find_by(id: session[:id])

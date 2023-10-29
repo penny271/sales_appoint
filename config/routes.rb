@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'accounts/index'
+  get 'accounts/show'
+  get 'accounts/edit'
+  get 'accounts/new'
+  get 'accounts/create'
+  get 'accounts/update'
+  get 'accounts/destroy'
   get 'commodity_categories/index'
   # root to: 'admin/top#index'
   root to: 'top#index'
@@ -26,6 +33,9 @@ Rails.application.routes.draw do
   resources :service_categories, path: "service_categories"
 
   resources :commodity_categories, path: "commodity_categories"
+
+  resources :accounts, path: "accounts"
+
 
 
   # # - 20231013 上記の書き換え 厳密には Prefix と URI-Patternが変わる

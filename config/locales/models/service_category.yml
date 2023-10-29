@@ -1,0 +1,20 @@
+ja:
+  activerecord:
+    models: # モデルの属性名
+      service_category: 商材カテゴリ
+    attributes:
+      service_category:
+        name: サービス名
+        description: サービス詳細
+        price: 価格/月
+        initial_cost: 初期費用
+        img_url: 画像url
+    errors:
+      messages:
+        record_invalid: 'バリデーションに失敗しました: %{errors}'
+        restrict_dependent_destroy:
+          has_one: "%{record}が存在しているので削除できません"
+          has_many: "%{record}が存在しているので削除できません"
+  commodity_categories: # マニュアルでテキストを登録する場合の書き方
+    form:
+      add_item: "登録"

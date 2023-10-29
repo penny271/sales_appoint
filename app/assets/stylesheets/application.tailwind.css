@@ -5,27 +5,23 @@
 
 /* - 登録 */
 .apl-btn-blue {
-  @apply bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
+  @apply bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap;
 }
 
 /* - 更新 */
 .apl-btn-orange {
-  @apply bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
+  @apply bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap;
 }
 
 
 /* - 新規作成 */
 .apl-btn-green {
-  @apply bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
+  @apply bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap;
 }
 
 /* - 戻るボタン */
 .apl-btn-gray {
-  @apply bg-gray-400 hover:bg-gray-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
+  @apply bg-gray-400 hover:bg-gray-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap;
 }
 
 /* - リセットボタン */
@@ -38,8 +34,17 @@
  で block要素でもうまく収まるようにしている */
 /* - 用途不定 */
 .apl-btn-purple {
-  @apply bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
+  @apply bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap;
+}
+
+/* - flexで 要素の縦を真ん中に揃え、横は左揃えにする service_categoriesページで使用 */
+.apl-flex_col_center_justify_left {
+  @apply flex flex-col items-start justify-center;;
+}
+
+/* - flexで 要素の縦横を真ん中に揃える service_categoriesページで使用 */
+.apl-flex_col_center_justify_center {
+  @apply flex flex-col items-center justify-center;
 }
 
 
