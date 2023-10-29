@@ -21,45 +21,54 @@
     <!-- Your original rendering logic -->
     <% num_counter = "unknown" %>
   <% end %>
-  <div class="flex py-4 hover:bg-amber-50">
-    <div class="px-6 flex-none w-number_column font-normal text-gray-900">
+  <%# - flex の items-stretch ※ items-centerにすると、真ん中になった要素の高さが最大の高さになり、borderがきれいにならない 途中で線が途切れる %>
+  <%# ¥ 最適解: 1. 親要素をflexにする　 2. 子要素に self-center(align-self: center;)をつけることで中央揃えにできる!!  %>
+
+  <%# ! 本要素内を変更する場合、 index.html.erbの列名部分も調整する必要あり  %>
+  <div class="_service_category_container flex hover:bg-amber-50 border-r border-b border-gray-300 items-stretch">
+    <%# No. %>
+    <div class="px-6 py-8 justify-center w-number_column font-normal text-gray-900 border-r border-b border-gray-300">
       <div class="text-sm">
-        <div class="font-medium text-gray-700"><%= num_counter %></div>
+        <div class="font-medium text-gray-700 text-center"><%= num_counter %></div>
       </div>
     </div>
 
     <%# サービス名 %>
-    <div class="flex gap-3 px-6 w-1/5 font-normal text-gray-900">
-      <div class="relative h-10 w-10">
+    <div class="flex gap-3 px-6 w-1/5 font-normal text-gray-900 border-r border-b border-gray-300  ">
+      <div class="relative h-10 w-10 self-center">
         <img class="h-full w-full rounded-full object-cover object-center" src="<%= service_category.img_url || '/pics/dog_butt.jpg' %>" alt="" />
-        <span class="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span>
       </div>
-      <div class="text-sm">
+      <div class="text-sm self-center">
         <div class="font-medium text-gray-700"><%= service_category.name %></div>
-        <div class="text-gray-400">jobs@sailboatui.com</div>
       </div>
     </div>
 
     <%# サービス詳細 %>
-    <div class="px-6 grow">
-      <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600">
+    <%# ¥ grow ではなく、 実際の幅よりも大きい w-1/3 とすることでループさせて表示させる同じ要素で文字列が少ない or  入っていないものも同じ広い横幅にすることができる %>
+    <div class="flex px-6 w-1/3 border-r border-gray-300">
+      <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-semibold text-green-600 self-center break-all">
         <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
         <%= service_category.description %>
       </span>
     </div>
 
-    <div class="px-6 w-1/5">¥<%= number_with_delimiter(service_category.price) %></div>
+    <%# - 青木 要削除 - 20231028 %>
+    <%# 価格 %>
+    <div class="flex px-6 w-1/5 border-r border-gray-300">
+      <div class="self-center">¥<%= number_with_delimiter(service_category.price) %></div>
+    </div>
 
-    <div class="px-6 w-1/5">
-      <div class="flex gap-2">
+    <%# 初期費用 %>
+    <div class="flex px-6 w-1/5 border-r border-gray-300">
+      <div class="flex gap-2 self-center">
         <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-600">
           ¥<%= number_with_delimiter(service_category.initial_cost) %>
         </span>
       </div>
     </div>
 
-    <div class="px-6 w-two_icons">
-      <div class="flex justify-end gap-4">
+    <div class="flex px-6 w-two_icons">
+      <div class="flex justify-end gap-4 self-center">
         <%# - 編集アイコン %>
         <%# ¥ mr-3を加えた %>
         <%# ブロックと一緒に使うと、ブロック内のコンテンツがリンクのコンテンツになります。この場合の第1引数はURLまたはパスヘルパーで、第2引数はHTMLオプションです： %>

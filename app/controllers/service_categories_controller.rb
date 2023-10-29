@@ -73,7 +73,6 @@ class ServiceCategoriesController < Base
       flash.now.notice = 'ServiceCategory was successfully updated'
       # redirect_to @service_category
     else
-      puts("@service_category.errors.full_messages::: #{@service_category.errors.full_messages}")
       flash.now.alert = 'Something went wrong(update)'
       render :edit, status: :unprocessable_entity
     end
