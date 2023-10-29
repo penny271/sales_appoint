@@ -2,7 +2,6 @@
 <%# ¥ 操作後変更したいもの - 置き換えられるもの %>
 <%= turbo_frame_tag commodity_category do %>
   <%# <div class="flex hover:bg-gray-50"> %>
-  <div class="flex hover:bg-amber-50">
     <%# ¥ turbo_streamを使うかどうかによってアイテムの番号を変化させる %>
     <%# ! _counterは 呼び出し元が render @commodity_categories などの collection時のみ使える %>
     <%# ! turbo_stream.prepend "commodity_categories" では collectionとならないため使えないため条件分岐が必要 %>
@@ -24,6 +23,7 @@
       <% num_counter = "unknown" %>
     <% end %>
     <!-- No. Column -->
+  <div class="flex hover:bg-amber-50">
     <%# ¥ items-center　border-r border-b  border-gray-300付け足し %>
     <div
       class="
@@ -44,7 +44,7 @@
     </div>
     <!-- Name Column -->
     <%# ¥ border-r border-b  border-gray-300　付け足し %>
-    <div class="flex-grow px-6 py-4 border-r border-b border-gray-300">
+    <div class="flex-grow px-6 py-4 border-r border-b border-gray-300 break-all">
       <span
         class="
           inline-flex

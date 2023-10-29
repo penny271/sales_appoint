@@ -21,11 +21,14 @@ class CommodityCategory < ApplicationRecord
   # 商材名: 必須
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
+  # Add validation for the name length
+  validates_length_of :name, maximum: 255, message: "が長すぎます。255文字以内にしてください"
+
   # ! errors.add()をつけたい場合のみ必要 - なくても uniqueness 制約にかかるため実質不要
   # Check for extra spaces in the original input
   def name_without_extra_spaces
     if original_name != name
-      errors.add(:name, "から余分な空白を取り除きました =>")
+      errors.add(:name, "から余分な空白を取り除きました")
     end
   end
 

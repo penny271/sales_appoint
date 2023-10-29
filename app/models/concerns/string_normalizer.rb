@@ -7,6 +7,9 @@ require "nkf"
 module StringNormalizer
   extend ActiveSupport::Concern
 
+  # sqlの型が integer の場合の最大値は 2,147,483,647
+  INTEGER_MAX_VALUE = 2147483647
+
   # -W: Assumes the input is UTF-8.
   # -w: Converts the input to UTF-8.
   # -Z1: Converts half-width Katakana characters to full-width characters.
@@ -36,17 +39,34 @@ module StringNormalizer
     NKF.nkf("-W -w -Z1", text).strip if text
   end
 
+  # * 全角数字を半角数字に変換する 不要 - rails7になったからか全角数字を半角に勝手に変更してくれている
+  # def normalize_zenkaku_number_to_number(zenkaku_number)
+  #   puts("class: #{(zenkaku_number.class)}")
+  #   if zenkaku_number.is_a?(String)
+  #     zenkaku_number.tr("０-９", "0-9")
+  #   else
+  #     zenkaku_number
+  #   end
+  # end
+
   # ! errors.add()をつけたい場合のみ必要 - なくても uniqueness 制約にかかるため実質不要
   # Check for extra spaces in the original input
   # - validate がクラスメソッドであるため、下記全体を module ClassMethodsとすることで、
   # - 他のファイルから クラスメソッドとして直接呼び出せるようになる
   module ClassMethods
+    # * attr1が DBの属性ではなく、ユーザーが元々入力した値を保持するカスタム属性, attr2が実際に存在する属性
     def validate_without_extra_spaces(attr1, attr2)
       validate do
         if self.send(attr1) != self.send(attr2)
-          errors.add(attr1, "から余分な空白を取り除きました =>")
+          # ! 実際に取り除く処理は normalize_as_name(text) でしている
+          errors.add(attr2, "から余分な空白を取り除きました")
         end
       end
+    end
+
+    # * view の number_with_delimiter のように数字をコンマ区切りにする
+    def format_with_delimiter(number)
+      number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
     end
   end
 end # end of module
