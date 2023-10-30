@@ -5,34 +5,42 @@ class Account < ApplicationRecord
 
   attr_accessor :password
 
-  # # ¥ if @commodity_category.saveのタイミングで before_validationが起こる
-  # #  *  @commodity_category = CommodityCategory.new(commodity_categories_params)
-  # # * if @commodity_category.save
-  # before_validation do
-  #   # * 引数の name は、現在のCommodityCategoryのインスタンスのname属性を指し、通常はデータベースのcommodity_categoriesテーブルのnameというカラムに対応する。
-  #   # Store the original name before normalizing
-  #   self.original_name = name
-  #   # Normalize the name
-  #   self.name = normalize_as_name(name)
+  # ¥ if @commodity_category.saveのタイミングで before_validationが起こる
+  #  *  @commodity_category = CommodityCategory.new(commodity_categories_params)
+  # * if @commodity_category.save
+  before_validation do
+    # * 引数の name は、現在のCommodityCategoryのインスタンスのname属性を指し、通常はデータベースのcommodity_categoriesテーブルのnameというカラムに対応する。
+    # Store the original name before normalizing
+    # self.original_name = name
+    # Normalize the name
+    self.name = normalize_as_name(name)
 
-  #   self.password = password
-  #   # Normalize the name
-  #   self.name = normalize_as_name(name)
+    self.name_kana = normalize_as_furigana(name_kana)
 
-  #   # ! # Normalize the 価格 rails7になったからか全角数字を半角に勝手に変更してくれている
-  #   # self.price = normalize_zenkaku_number_to_number(price)
-  #   # # Normalize the 初期費用
-  #   # self.initial_cost = normalize_zenkaku_number_to_number(initial_cost)
-  # end
+    self.email = normalize_as_email(email)
 
-  # # 余分な空白があった場合、取り除き、取り除いた旨のエラーメッセージを表示させる
+
+
+    self.password = password
+    # Normalize the name
+    self.name = normalize_as_name(name)
+
+    # ! # Normalize the 価格 rails7になったからか全角数字を半角に勝手に変更してくれている
+    # self.price = normalize_zenkaku_number_to_number(price)
+    # # Normalize the 初期費用
+    # self.initial_cost = normalize_zenkaku_number_to_number(initial_cost)
+  end
+
+  # 余分な空白があった場合、取り除き、取り除いた旨のエラーメッセージを表示させる
   # validate_without_extra_spaces(:original_name, :name)
 
-  # # 商材名: 必須
-  # validates :name, presence: true, uniqueness: { case_sensitive: false }
+  # 必須
+  validates :name, presence: true
 
-  # # 文字制限 type text でない限り VARCHAR(255)
-  # validates_length_of :name, maximum: 255, message: "が長すぎます。255文字以内にしてください"
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+
+  # 文字制限 type text でない限り VARCHAR(255)
+  validates_length_of :name, maximum: 255, message: "が長すぎます。255文字以内にしてください"
 
   # # 正の整数限定 sqlの型が integer の場合の最大値は 2,147,483,647
   # # ! This validation declaration is evaluated in the class contextのため、format_with_delimiterは

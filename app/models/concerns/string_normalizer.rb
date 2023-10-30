@@ -14,8 +14,9 @@ module StringNormalizer
   # -w: Converts the input to UTF-8.
   # -Z1: Converts half-width Katakana characters to full-width characters.
 
+  # utf-8にし、大文字は小文字にする
   def normalize_as_email(text)
-    NKF.nkf("-W -w -Z1", text).strip if text
+    NKF.nkf("-W -w -Z1", text).strip.downcase if text
   end
 
   # 先頭と最後尾の空白を削除 + 複数の空白のつながりを一つの半角空白に変換する

@@ -25,10 +25,18 @@
           <%= render "shared/header" %>
           <%= render "shared/sidebar", page: 'not dashboard' %>
         <% end %>
+        <%# ¥ turbo_streamを使う場合用のflash %>
         <div id="flash">
           <%# ¥ update.turbo_stream.erbで .updateしているため中身は不要 %>
           <%# <%= render "flash" %>
         </div>
+        <%# ¥ turbo_streamを使わない場合用のflash %>
+        <% if flash[:notice] && params[:controller] == "sessions" %>
+          <%= render 'shared/flash_notice', msg: flash[:notice] %>
+        <% end %>
+        <% if flash[:alert] && params[:controller] == "sessions" %>
+          <%= render 'shared/flash_alert', msg: flash[:alert] %>
+        <% end %>
         <%= yield %>
       </div>
       <%# footer削除 %>
