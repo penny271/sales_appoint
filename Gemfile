@@ -14,6 +14,8 @@ gem "mysql2", "~> 0.5"
 
 group :development, :test do
   gem "planetscale_rails"
+  #¥ N + 1問題を教えてくれる
+  gem 'bullet'
 end
 
 # Use the Puma web server [https://github.com/puma/puma]

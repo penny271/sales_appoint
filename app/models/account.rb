@@ -3,7 +3,7 @@ class Account < ApplicationRecord
 
   has_many :appointments
 
-  attr_accessor :password
+  attr_accessor :password, :confirm_password, :test
 
   # ¥ if @commodity_category.saveのタイミングで before_validationが起こる
   #  *  @commodity_category = CommodityCategory.new(commodity_categories_params)
@@ -19,9 +19,9 @@ class Account < ApplicationRecord
 
     self.email = normalize_as_email(email)
 
+    # self.password = password
+    # self.confirm_password = confirm_password
 
-
-    self.password = password
     # Normalize the name
     self.name = normalize_as_name(name)
 
@@ -31,8 +31,16 @@ class Account < ApplicationRecord
     # self.initial_cost = normalize_zenkaku_number_to_number(initial_cost)
   end
 
+
   # 余分な空白があった場合、取り除き、取り除いた旨のエラーメッセージを表示させる
   # validate_without_extra_spaces(:original_name, :name)
+
+
+  # Validations
+  validates :password, presence: true, confirmation: true
+  validates :password_confirmation, presence: true
+
+  validate :passwords_match
 
   # 必須
   validates :name, presence: true
@@ -41,6 +49,21 @@ class Account < ApplicationRecord
 
   # 文字制限 type text でない限り VARCHAR(255)
   validates_length_of :name, maximum: 255, message: "が長すぎます。255文字以内にしてください"
+
+  private
+
+  def passwords_match
+    puts("password ::: #{password}")
+    puts("confirm_password ::: #{confirm_password}")
+    puts("name ::: #{name}")
+    puts("is_admin ::: #{is_admin}")
+    puts("test ::: #{test}")
+
+    unless password == confirm_password
+      puts("passwordが一致しません。")
+      errors.add(:confirm_password, "パスワードが一致しません。")
+    end
+  end
 
   # # 正の整数限定 sqlの型が integer の場合の最大値は 2,147,483,647
   # # ! This validation declaration is evaluated in the class contextのため、format_with_delimiterは

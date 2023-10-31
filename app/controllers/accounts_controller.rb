@@ -21,9 +21,14 @@ class AccountsController < Base
   def create
     # @form = LoginForm.new(params[:login_form])
     @form = RegisterForm.new(account_params)
-    # if @form.email.present?
-    #   account = Account.find_by("LOWER(email) = ?", @form.email.downcase)
-    # end
+
+    if @form.valid?  # This will check validations without saving
+      puts "Form is valid. Here are the parameters:"
+      puts account_params.inspect # This will show what parameters are being passed to the form object
+    else
+      puts "Form is invalid. Here are the errors:"
+      puts @form.errors.full_messages
+    end
 
     # ¥ 20231012 app/services を使っている
     if @form.form_save
@@ -61,13 +66,9 @@ class AccountsController < Base
   def destroy
   end
 
-  private # Helper to return a JavaScript redirect action for Turbo Streams
-  def turbo_stream_action_redirect_to(path)
-    "<script type='text/javascript'>Turbo.visit('#{path}');</script>"
-  end
-
+  private
   def account_params
     # - <input type="text" name="register_form[email]" id="register_form_email">
-    params.require(:register_form).permit(:name, :name_kana, :email, :tel, :password, :description, :gender, :employment_type, :is_suspended, :is_admin)
+    params.require(:register_form).permit(:name, :name_kana, :email, :tel, :password, :description, :gender, :employment_type, :is_suspended, :is_admin, :confirm_password, :test)
   end
 end
