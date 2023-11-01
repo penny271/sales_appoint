@@ -84,4 +84,6 @@ Rails.application.configure do
   # ¥ update 20231009
   config.assets.compile = true
 
+  # - better_errors をしようするために追加 20231102
+  BetterErrors::Middleware.allow_ip! '0.0.0.0/0' # 任意のIPからのアクセスを許可
 end

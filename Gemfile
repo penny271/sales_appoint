@@ -109,9 +109,25 @@ gem "kaminari"
 
 gem "ransack"
 
-# gem "erb-formatter"
+# ¥ Format ERB https://tinyurl.com/yp8nffkn
+# my devで vscode を開くと使えない... gemfileに入っているのに bundleしろと言われる
+gem "erb-formatter"
 
 # ruby formatter
 gem "rufo"
 
-# Format ERB
+# ! デバックツール 一度サーバーのrestartが必要 rails7だと対話シェルの入力が正しく行われないため使用しない
+# 使い方 https://tinyurl.com/ylpt74du
+# gem 'pry-rails'
+
+#! デバックツール 一度サーバーのrestartが必要 rails7だと対話シェルの入力が正しく行われないため使用しない
+# group :development, :test do
+#   gem 'byebug'
+# end
+
+#  ¥ binding_of_caller は動いてなさそう
+# https://tinyurl.com/yse2cxy8
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end

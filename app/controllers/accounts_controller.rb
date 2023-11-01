@@ -19,19 +19,18 @@ class AccountsController < Base
   end
 
   def create
-    # @form = LoginForm.new(params[:login_form])
-    @form = RegisterForm.new(account_params)
+    @account_form = RegisterForm.new(account_params)
 
-    if @form.valid?  # This will check validations without saving
+    if @account_form.valid?  # This will check validations without saving
       puts "Form is valid. Here are the parameters:"
       puts account_params.inspect # This will show what parameters are being passed to the form object
     else
       puts "Form is invalid. Here are the errors:"
-      puts @form.errors.full_messages
+      puts @account_form.errors.full_messages
     end
 
     # ¥ 20231012 app/services を使っている
-    if @form.form_save
+    if @account_form.form_save
       flash[:notice] = "アカウントを新規作成しました。ログインしてください。"
       # ! recirect_toすると turbo_streamによる flash表示はされない(別で設定してある通常のflashは動く)
       # ! => create.turbo_stream.erb 自体が動かない
@@ -52,7 +51,8 @@ class AccountsController < Base
     else
       flash.now[:alert] = "メールアドレスまたはパスワードが正しくありません。"
       puts("flash: #{flash.now[:alert]}")
-
+      # ! render しないと バリデーションメッセージは表示されない!!
+      render :new, status: :unprocessable_entity
       # respond_to do |format|
       #   format.html { render :new, status: :unprocessable_entity }
       #   format.turbo_stream { render :new, status: :unprocessable_entity }

@@ -41,7 +41,7 @@ class RegisterForm
 
     unless password == confirm_password
       puts("222 - passwordが一致しません。")
-      errors.add(:confirm_password, "パスワードが一致しません。")
+      errors.add(:confirm_password, "とパスワードが一致しません。")
     end
   end
 

@@ -1,5 +1,5 @@
 <%# ! scssのみ使用する %>
-<%= stylesheet_link_tag 'account', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= stylesheet_link_tag "account", media: "all", "data-turbolinks-track": "reload" %>
 <div>
   <h1 class="font-bold text-4xl">Accounts#new</h1>
   <p>Find me in app/views/accounts/new.html.erb</p>
@@ -10,50 +10,93 @@
 <div class="flex items-center justify-center">
   <div class="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
     <div class="flex justify-center mb-8">
-      <img src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png" alt="Logo" class="w-30 h-20">
+      <img
+        src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png"
+        alt="Logo"
+        class="w-30 h-20"
+      >
     </div>
     <h1 class="text-2xl font-semibold text-center text-gray-500 mt-8 mb-6">アカウント登録</h1>
 
     <%# post create => accounts_path %>
-    <%= form_with model: @account_form, url: accounts_path do |f| %>
+    <%= form_with model: @account_form, url: accounts_path, local:true do |f| %>
+
+      <%# - 青木 要削除 - 20231102 %>
+      <% puts("@account_form.errors ::: #{@account_form.errors}") %>
+      <% if @account_form.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@account_form.errors.count, "error") %>
+            prohibited this account from being saved:</h2>
+
+          <ul>
+            <% @account_form.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <h2><%= pluralize(@account_form.errors.count, "error") %>
+          No validation error messages?:</h2>
+      <% end %>
 
       <div class="mb-4">
-        <%= f.label :name, "名前 <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :name, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= f.label :name,
+                "名前 <span class='required-asterisk'>*</span>".html_safe,
+                class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_field :name,
+                     class:
+                       "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500",
+                     required: true %>
       </div>
       <% if @account_form.errors[:name].present? %>
-        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :name } %>
+        <%= render partial: "/shared/validation_errors",
+        locals: {
+          object: @account_form,
+          attribute: :name
+        } %>
       <% end %>
 
       <div class="mb-4">
         <%= f.label :name_kana, "名前カナ", class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :name_kana, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+        <%= f.text_field :name_kana,
+                     class:
+                       "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
       </div>
 
       <div class="mb-4">
         <%= f.label :email, "Email", class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.email_field :email, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+        <%= f.email_field :email,
+                      class:
+                        "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
       </div>
 
       <div class="mb-4">
         <%= f.label :description, "アカウント詳細", class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_area :description, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+        <%= f.text_area :description,
+                    class:
+                      "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
       </div>
 
       <div class="mb-4">
         <%= f.label :gender, "性別", class: "block mb-2 text-sm text-gray-600" %>
         <%= f.select :gender,
-              { '男性' => 0, '女性' => 1},
-              { include_blank: '選択してください' },
-              { class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" } %>
+                 { "男性" => 0, "女性" => 1 },
+                 { include_blank: "選択してください" },
+                 {
+                   class:
+                     "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                 } %>
       </div>
 
       <div class="mb-4">
         <%= f.label :employment_type, "雇用形態", class: "block mb-2 text-sm text-gray-600" %>
         <%= f.select :employment_type,
-              { 'インターン' => 0, '正社員' => 1, 'その他' => 2 },
-              { include_blank: '選択してください' },
-              { class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" } %>
+                 { "インターン" => 0, "正社員" => 1, "その他" => 2 },
+                 { include_blank: "選択してください" },
+                 {
+                   class:
+                     "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                 } %>
       </div>
 
       <div class="mb-4">
@@ -67,46 +110,78 @@
       <div class="mb-4">
         <%= f.label :is_admin, "アカウントタイプ", class: "block mb-2 text-sm text-gray-600" %>
         <%= f.select :is_admin,
-              { '一般' => 0, '管理者' => 1 },
-              { include_blank: '選択してください' },
-              { class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" } %>
+                 { "一般" => 0, "管理者" => 1 },
+                 { include_blank: "選択してください" },
+                 {
+                   class:
+                     "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                 } %>
       </div>
 
       <%# ! password 確認 %>
       <div class="mb-4">
-        <%= f.label :password, "パスワード <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :password, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= f.label :password,
+                "パスワード <span class='required-asterisk'>*</span>".html_safe,
+                class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_field :password,
+                     class:
+                       "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500",
+                     required: true %>
       </div>
       <% if @account_form.errors[:password].present? %>
-        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :password } %>
+        <%= render partial: "/shared/validation_errors",
+        locals: {
+          object: @account_form,
+          attribute: :password
+        } %>
       <% end %>
 
       <div class="mb-6">
-        <%= f.label :confirm_password, "パスワード(確認) <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :confirm_password, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= f.label :confirm_password,
+                "パスワード(確認) <span class='required-asterisk'>*</span>".html_safe,
+                class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_field :confirm_password,
+                     class:
+                       "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500",
+                     required: true %>
+        <% if @account_form.errors[:confirm_password].present? %>
+          <%= render partial: "/shared/validation_errors",
+          locals: {
+            object: @account_form,
+            attribute: :confirm_password
+          } %>
+        <% end %>
       </div>
-      <% if @account_form.errors[:confirm_password].present? %>
-        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :confirm_password } %>
-      <% end %>
       <%# ! password 確認 %>
 
       <%# ¥ test %>
       <div class="mb-6">
-        <%= f.label :test, "確認用 <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :test, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= f.label :test,
+                "確認用 <span class='required-asterisk'>*</span>".html_safe,
+                class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_field :test,
+                     class:
+                       "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500",
+                     required: true %>
       </div>
       <% if @account_form.errors[:test].present? %>
-        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :test } %>
+        <%= render partial: "/shared/validation_errors",
+        locals: {
+          object: @account_form,
+          attribute: :test
+        } %>
       <% end %>
-      <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :test } %>
 
       <%# ¥ test %>
 
-      <%= f.submit "登録", class: "w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" %>
+      <%= f.submit "登録",
+               class:
+                 "w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" %>
 
     <% end %>
     <div class="text-center">
-      <p class="text-sm">¿Ya tienes una cuenta? <a href="#" class="text-cyan-600">Inicia sesión</a></p>
+      <p class="text-sm">¿Ya tienes una cuenta?
+        <a href="#" class="text-cyan-600">Inicia sesión</a></p>
     </div>
     <p class="text-xs text-gray-600 text-center mt-8">&copy; 2023 WCS LAT</p>
   </div>
