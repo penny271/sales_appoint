@@ -1,17 +1,44 @@
 ---
 ja:
   activerecord:
-    models: # モデルの属性名
+    models:
       commodity_category: 商材カテゴリ
+      # account: アカウント
     attributes:
       commodity_category:
         name: 商材名
-    errors:
-      messages:
-        record_invalid: 'バリデーションに失敗しました: %{errors}'
-        restrict_dependent_destroy:
-          has_one: "%{record}が存在しているので削除できません"
-          has_many: "%{record}が存在しているので削除できません"
+      # account:
+      #   name: 名前
+      #   name_kana: 名前カナ
+      #   email: E-mail
+      #   tel: 電話番号
+      #   description: アカウント詳細
+      #   gender: 性別
+      #   employment_type: 雇用形態
+      #   is_suspended: アカウント状態
+      #   is_admin: アカウントタイプ
+      #   created_at: 作成日
+      #   updated_at: 更新日
+# ここから下に下記のコードを追記
+#- フォームオブジェクトの場合、下記のように記述する必要愛r activeModelであるため
+#¥ attribute_accessorsと一致する必要あり
+# https://tinyurl.com/yr77mtcp
+  # activemodel:
+  #   attributes:
+  #     register_form:
+  #       name: 名前
+  #       name_kana: 名前カナ
+  #       email: E-mail
+  #       tel: 電話番号
+  #       description: アカウント詳細
+  #       gender: 性別
+  #       employment_type: 雇用形態
+  #       is_suspended: アカウント状態
+  #       is_admin: アカウントタイプ
+  #       created_at: 作成日
+  #       updated_at: 更新日
+  #       password: パスワード
+  #       password_confirmation: 確認用パスワード
   commodity_categories: # マニュアルでテキストを登録する場合の書き方
     form:
       add_item: "登録"

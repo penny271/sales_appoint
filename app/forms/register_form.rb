@@ -1,49 +1,59 @@
 class RegisterForm
   # ¥ ch1.8.2 ポイントは2つあります。1つは ActiveRecord::Base クラスを継承しないこと、もう1つは ActiveModel::Model を include することです。これで、 form_with の model オプションに指定できるようになります。 attr_accessor で定義している属性は、そのままフォームのフィールド名となります
   include ActiveModel::Model
+  #! ActiveModel::Modelは自動的に validationをしないため、手動で valid? メソッドを記述しvalidationを行わせる必要がある!!
 
   # * password が DBにはないカスタム属性 hashed_password化するために必要
   # * 同じパスワードが入力されているかを確認するため confirm_pasword 追加
-  attr_accessor :name, :name_kana, :email, :tel, :password, :hashed_passowrd, :description, :gender, :employment_type, :is_suspended, :is_admin, :confirm_password, :test
+  attr_accessor :name, :name_kana, :email, :tel, :password, :hashed_password, :description, :gender, :employment_type, :is_suspended, :is_admin, :password_confirmation
+
+  # ! フォームオブジェクトで validationを効かせるためには 手動で valid? メソッドを記述する必要あり!!
+  # ¥ RegisterFormオブジェクトのバリデーションが失敗した場合（例えば、パスワードとpassword_confirmationが一致しない場合）、フォームオブジェクト自体が無効なので、Accountモデルを保存しようとする必要すらありません。ですからこの場合、Accountモデルのエラーをフォームオブジェクトのエラーに追加する必要はありません。
+
+  # ¥ しかし、Account モデルの保存を試みなければ判断できないような他の検証エラー (データベース内の電子メールの一意性など) がある場合は、それらのエラーを Account モデルから RegisterForm オブジェクトに転送する必要があります。これは、RegisterFormがデータベースレベルの制約やAccountモデルに固有のその他の検証を知らないために必要です。
+  # Validations
+  # validates :password, presence: true, confirmation: true
+  validates :password, presence: true, confirmation: true
 
   # Assuming the account model has all these attributes except for :password which is :hashed_password in the account model
   def form_save
+    # ¥ フォームオブジェクトでvalidationさせるために必須! valid?
+    # Ensures the form object is valid before proceeding.
+    return false unless valid?
+
+    # Builds the account object from the form data.
     account = build_account()
 
-    # Attempt to save the account instance to the database
+    # Attempts to save the account object to the database.
+    #! 1. DB側のユニーク制約や account.rbに記述してあるvalidation処理で .saveが失敗する可能性がある。
     if account.save
-      true # Return true if the save was successful
+      # Returns true if the account was saved successfully.
+      true
     else
-      # self.errors.messages.merge!(account.errors.messages) # Merge the account model's errors into the form object's errors
-      account.errors.each do |error|
-        # Add the error to the form object. The `error.attribute` gives you the attribute name,
-        # and `error.message` gives you the associated message.
-        #  ! 不要だった。 なくてもエラーメッセージは表示された
-        # self.errors.add(error.attribute, error.message)
-        puts("error.attribute ::: #{error.attribute}")
-        puts("error.message ::: #{error.message}")
-      end
-
-      false # Return false if the save was unsuccessful
-
+      # If the save fails, transfer the account errors back to the form object
+      # and return false to indicate the save did not succeed.
+      #! 2. 1で書いた要因でsaveできなかった場合、account.rb側のエラーメッセージを フォームオブジェクトに引き継ぎ、それらを画面上に表示する必要がある
+      transfer_errors_from(account)
+      false
     end
   end
 
-  validate :passwords_match
-
-
   private
-  def passwords_match
-    puts("222 - password ::: #{password}")
-    puts("222 - confirm_password ::: #{confirm_password}")
-    puts("222 - name ::: #{name}")
-    puts("222 - is_admin ::: #{is_admin}")
-    puts("222 - test ::: #{test}")
 
-    unless password == confirm_password
-      puts("222 - passwordが一致しません。")
-      errors.add(:confirm_password, "とパスワードが一致しません。")
+  def transfer_errors_from(account)
+    # Add the error to the form object. The `error.attribute` gives you the attribute name,
+    # and `error.message` gives you the associated message.
+    #  ! 必要!! フォームオブジェクト(RegisterForm)は直接Accountモデルに関連付けられていないので、自動的にaccount.errorsを知ることはできません。したがって、ActiveRecordモデルと同じようにアクセスできるようにするには、手動でAccountオブジェクトのエラーをRegisterFormオブジェクトに追加する必要があります。
+    account.errors.each do |error|
+      self.errors.add(error.attribute, error.message)
     end
+    puts("self.errors ::: #{self.errors}")
+    # self.errors.messages
+    # => {
+    #      :email => ["has already been taken"],
+    #      :name => ["can't be blank"],
+    #      :password => ["doesn't match confirmation", "is too short (minimum is 6 characters)"]
+    #    }
   end
 
   def build_account
@@ -61,8 +71,7 @@ class RegisterForm
       is_admin: is_admin,
       # ¥ virtual attributes
       password: password,
-      confirm_password: confirm_password,
-      test: test
+      password_confirmation: password_confirmation,
     )
   end
 

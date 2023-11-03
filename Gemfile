@@ -118,7 +118,7 @@ gem "rufo"
 
 # ! デバックツール 一度サーバーのrestartが必要 rails7だと対話シェルの入力が正しく行われないため使用しない
 # 使い方 https://tinyurl.com/ylpt74du
-# gem 'pry-rails'
+gem 'pry-rails'
 
 #! デバックツール 一度サーバーのrestartが必要 rails7だと対話シェルの入力が正しく行われないため使用しない
 # group :development, :test do

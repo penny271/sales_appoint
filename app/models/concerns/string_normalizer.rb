@@ -36,6 +36,7 @@ module StringNormalizer
     NKF.nkf("-W -w -Z1", text).strip.gsub(/-/, "") if text
   end
 
+  # 全角は半角にする ３３３(全角) => 333(半角)
   def normalize_as_phone_number(text)
     NKF.nkf("-W -w -Z1", text).strip if text
   end

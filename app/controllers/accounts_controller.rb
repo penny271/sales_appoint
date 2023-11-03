@@ -69,6 +69,6 @@ class AccountsController < Base
   private
   def account_params
     # - <input type="text" name="register_form[email]" id="register_form_email">
-    params.require(:register_form).permit(:name, :name_kana, :email, :tel, :password, :description, :gender, :employment_type, :is_suspended, :is_admin, :confirm_password, :test)
+    params.require(:register_form).permit(:name, :name_kana, :email, :tel, :password, :description, :gender, :employment_type, :is_suspended, :is_admin, :password_confirmation)
   end
 end

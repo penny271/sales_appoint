@@ -65,6 +65,15 @@ span.logo-mark {
 }
 
 // * form validationエラー
-.field_with_errors {
+/* Target only input, textarea, select, etc., inside .field_with_errors */
+.field_with_errors input,
+.field_with_errors textarea,
+.field_with_errors select {
   border: 2px #ff8b8b solid;
 }
+
+/* Ensure labels within .field_with_errors are not styled with a border */
+// .field_with_errors > label {
+//   border: none; /* or you could use "all: unset;" if you want to reset all styles */
+// }
+

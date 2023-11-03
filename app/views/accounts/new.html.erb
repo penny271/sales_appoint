@@ -36,21 +36,28 @@
       <% end %>
 
       <div class="mb-4">
-        <%= f.label :name, "名前 <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
+        <%# ¥  f.label :name, "名前 <span ...></span> の代わり %>
+        <%= f.label :name, "#{t("activemodel.attributes.register_form.name")} <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
         <%= f.text_field :name, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
       </div>
-      <% if @account_form.errors[:name].present? %>
-        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :name } %>
-      <% end %>
+      <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :name } %>
 
       <div class="mb-4">
         <%= f.label :name_kana, "名前カナ", class: "block mb-2 text-sm text-gray-600" %>
         <%= f.text_field :name_kana, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :name_kana } %>
       </div>
 
       <div class="mb-4">
         <%= f.label :email, "Email", class: "block mb-2 text-sm text-gray-600" %>
         <%= f.email_field :email, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :email } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :tel, "電話番号", class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_field :tel, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :tel } %>
       </div>
 
       <div class="mb-4">
@@ -84,31 +91,16 @@
       <%# ! password 確認 %>
       <div class="mb-4">
         <%= f.label :password, "パスワード <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :password, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
-      </div>
-      <% if @account_form.errors[:password].present? %>
+        <%= f.password_field :password, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
         <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :password } %>
-      <% end %>
+      </div>
 
       <div class="mb-6">
-        <%= f.label :confirm_password, "パスワード(確認) <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :confirm_password, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
-        <% if @account_form.errors[:confirm_password].present? %>
-          <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :confirm_password } %>
-        <% end %>
+        <%= f.label :password_confirmation, "パスワード(確認) <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.password_field :password_confirmation, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :password_confirmation } %>
       </div>
       <%# ! password 確認 %>
-
-      <%# ¥ test %>
-      <div class="mb-6">
-        <%= f.label :test, "確認用 <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
-        <%= f.text_field :test, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
-      </div>
-      <% if @account_form.errors[:test].present? %>
-        <%= render partial: "/shared/validation_errors", locals: { object: @account_form, attribute: :test } %>
-      <% end %>
-
-      <%# ¥ test %>
 
       <%= f.submit "登録", class: "w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" %>
 
@@ -120,3 +112,8 @@
     <p class="text-xs text-gray-600 text-center mt-8">&copy; 2023 WCS LAT</p>
   </div>
 </div>
+
+<%# 複数行のコメントアウトのworkaround %>
+<% if false %>
+  ああああ
+<% end %>
