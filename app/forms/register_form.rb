@@ -18,7 +18,8 @@ class RegisterForm
       account.errors.each do |error|
         # Add the error to the form object. The `error.attribute` gives you the attribute name,
         # and `error.message` gives you the associated message.
-        self.errors.add(error.attribute, error.message)
+        #  ! 不要だった。 なくてもエラーメッセージは表示された
+        # self.errors.add(error.attribute, error.message)
         puts("error.attribute ::: #{error.attribute}")
         puts("error.message ::: #{error.message}")
       end
