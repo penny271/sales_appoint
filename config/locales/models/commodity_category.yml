@@ -1,0 +1,7 @@
+ja:
+  activerecord:
+    models:
+      commodity_category: 商材カテゴリ
+    attributes:
+      commodity_category:
+        name: 商材名

@@ -1,12 +1,12 @@
 ---
 ja:
-  activerecord:
-    models:
-      commodity_category: 商材カテゴリ
-      # account: アカウント
-    attributes:
-      commodity_category:
-        name: 商材名
+  # activerecord:
+  #   models:
+  #     commodity_category: 商材カテゴリ
+  #     # account: アカウント
+  #   attributes:
+  #     commodity_category:
+  #       name: 商材名
       # account:
       #   name: 名前
       #   name_kana: 名前カナ

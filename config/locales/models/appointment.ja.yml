@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      appointment: アポイントメント
+    attributes:
+      appointment:
+        id: アポイントメントID
+        account_id: 自社担当 ID
+        service_category_id: サービスカテゴリ ID
+        commodity_category_id: 商材カテゴリ ID
+        duplication: 重複確認
+        company_name: 会社名
+        company_tel: 電話番号
+        company_url: 会社URL
+        instagram_url: インスタURL
+        content: Result
+        call_date: コール日
+        next_call_date: 再度連絡日
+        sent_material_date: 資料送付日
+        is_next_call: 後日連絡
+        end_date: END日

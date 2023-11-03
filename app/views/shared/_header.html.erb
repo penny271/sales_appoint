@@ -1,16 +1,19 @@
 <%= stylesheet_link_tag "header", "data-turbo-track": "reload" %>
-<header>
+<header class="min-w-max min-w-full">
   <span class="logo-mark">営業アポ管理</span>
-  <span>: current_account.present?: <%= current_account.present? %></span>
-  <%=
-    if current_account.present?
-      link_to "ログアウト", :session, data: { turbo_method: :delete }, class: "apl-btn-orange"
-    elsif params[:controller] != "sessions"
-      link_to "ログイン", :login, class: "apl-btn-blue"
-    end
-  %>
-  <span> | controller: <%= params[:controller] %></span>
+  <span>: current_account.present?:
+    <%= current_account.present? %></span>
+  <%= if current_account.present?
+    link_to "ログアウト", :session, data: { turbo_method: :delete }, class: "apl-btn-orange"
+  elsif params[:controller] != "sessions"
+    link_to "ログイン", :login, class: "apl-btn-blue"
+  end %>
+  <span>
+    | controller:
+    <%= params[:controller] %>
+    | params[:action]:
+    <%= params[:action] %></span>
 </header>
 <!--
-  <%= content_tag(:span, flash[:alert], class: "alert") if flash[:alert]  %>
-  -->
+<%= content_tag(:span, flash[:alert], class: "alert") if flash[:alert] %>
+-->

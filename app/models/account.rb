@@ -59,11 +59,11 @@ class Account < ApplicationRecord
   # }
 
   # # - ransackを使用するため検索に使用する属性を定義する必要あり
-  # def self.ransackable_attributes(auth_object = nil)
-  #   %w(id name description price initial_cost img_url created_at updated_at)
-  # end
+  def self.ransackable_attributes(auth_object = nil)
+    %w(id name name_kana gender email tel hashed_password employment_type description is_suspended is_admin)
+  end
 
-  # def self.ransackable_associations(auth_object = nil)
-  #   %w(appointments)
-  # end
+  def self.ransackable_associations(auth_object = nil)
+    %w(appointments)
+  end
 end

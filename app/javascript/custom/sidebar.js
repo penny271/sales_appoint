@@ -12,14 +12,32 @@ import $ from 'jquery';
 
 //- 青木 ★要更新 - 20231015
 // ¥ turbo:loadイベントは、Turboがページを読み込むたびに発生します。
-document.addEventListener('turbo:load', () => {
-  $('.logo-mark')
-    .off('click')
-    .on('click', function () {
-      $('#sidebar').toggle(0, function () {
-        console.log('Toggle completed');
-      });
+// ! NG: renderした場合、下記は効かなくなる。直接イベントをつけていた要素がなくなるため
+// document.addEventListener('turbo:load', () => {
+//   $('.logo-mark')
+//     .off('click')
+//     .on('click', function () {
+//       $('#sidebar').toggle(0, function () {
+//         console.log('Toggle completed');
+//       });
+//     });
+//   console.log('sidebar.js');
+//   console.log('#####2222');
+// });
+
+$(document)
+  .off('click', '.logo-mark')
+  .on('click', '.logo-mark', function () {
+    $('#sidebar').toggle(0, function () {
+      console.log('Toggle completed');
     });
-  console.log('sidebar.js');
-  console.log('#####2222');
-});
+  });
+
+// ¥ event delegationを使ったバイ、正常に動く!
+$(document)
+  .off('click')
+  .on('click', '.logo-mark', function () {
+    $('#sidebar').toggle(0, function () {
+      console.log('Toggle completed');
+    });
+  });

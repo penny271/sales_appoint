@@ -23,19 +23,20 @@
       <div id="application__wrapper">
         <% unless @hide_header %>
           <%= render "shared/header" %>
-          <%= render "shared/sidebar", page: 'not dashboard' %>
+          <%= render "shared/sidebar", page: "not dashboard" %>
         <% end %>
         <%# ¥ turbo_streamを使う場合用のflash %>
         <div id="flash">
           <%# ¥ update.turbo_stream.erbで .updateしているため中身は不要 %>
           <%# <%= render "flash" %>
         </div>
+        <% normal_flash_allowed_condition = params[:controller] == "sessions" || (controller_name == "accounts" && (action_name == "create" || action_name == "new")) %>
         <%# ¥ turbo_streamを使わない場合用のflash %>
-        <% if flash[:notice] && params[:controller] == "sessions" %>
-          <%= render 'shared/flash_notice', msg: flash[:notice] %>
+        <% if flash[:notice] && normal_flash_allowed_condition %>
+          <%= render "shared/flash_notice", msg: flash[:notice] %>
         <% end %>
-        <% if flash[:alert] && params[:controller] == "sessions" %>
-          <%= render 'shared/flash_alert', msg: flash[:alert] %>
+        <% if flash[:alert] && normal_flash_allowed_condition %>
+          <%= render "shared/flash_alert", msg: flash[:alert] %>
         <% end %>
         <%= yield %>
       </div>

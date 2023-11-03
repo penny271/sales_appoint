@@ -23,9 +23,7 @@
   <% end %>
   <%= form_tag(request.path, method: :get, id: 'per_page_form') do %>
     Display:
-    <%= select_tag "per_page",
-    options_for_select([3, 5, 10, 20, 30, 50], params[:per_page].to_i),
-    onchange: "this.form.submit()" %>
+    <%= select_tag "per_page", options_for_select([3, 5, 10, 20, 30, 50], params[:per_page].to_i), onchange: "this.form.submit()" %>
     items per page
     <%= paginate @service_categories, params: { per_page: params[:per_page] } %>
   <% end %>
@@ -39,19 +37,14 @@
 <%# ¥ 20231018 spi用のtrubo_frame使用している %>
 <%# - 青木 要更新- 20231021 SPA %>
 <%# ¥ 操作後変更したいもの - data: { turbo_frame: dom_id(ServiceCategory.new) } で操作後変更したい箇所を指定している %>
-<%= link_to "新規作成",
-"/service_categories/new",
-class: "apl-btn-green inline-block mx-5 my-2",
-data: {
-  turbo_frame: dom_id(ServiceCategory.new)
-} %>
+<%= link_to "新規作成", "/service_categories/new", class: "apl-btn-green inline-block mx-5 my-2", data: { turbo_frame: dom_id(ServiceCategory.new) } %>
 <%= turbo_frame_tag "service_category_list" do %>
   <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
     <%# !!!!!!!!!!!! %>
     <div class="w-full bg-whitetext-lefttext-sm text-gray-500divide-y divide-gray-100border-t border-gray-100">
       <div class="bg-gray-50 flex py-4">
         <div class="flex-none px-6 font-medium text-blue-600 w-number_column"><%= sort_link(@search, :id, "No.", class: "text-blue-600 border-b border-blue-600") %></div>
-        <div class="flex-none w-1/5 px-6 font-medium text-blue-600 "><%= sort_link(@search,:name,"サービス名",class: "text-blue-600 border-b border-blue-600") %></div>
+        <div class="flex-none w-1/5 px-6 font-medium text-blue-600 "><%= sort_link(@search, :name, "サービス名", class: "text-blue-600 border-b border-blue-600") %></div>
         <div class="px-6 grow font-medium text-gray-900">サービス詳細</div>
         <div class="px-6 w-1/5 font-medium text-gray-900">価格/月</div>
         <div class="px-6 w-1/5 font-medium text-gray-900">初期費用</div>
@@ -59,7 +52,7 @@ data: {
         <!-- edit delete icon -->
       </div>
       <div id="service_categories" class="divide-y divide-gray-100 border-t border-gray-100">
-        <%= turbo_frame_tag "new_service_category"%>
+        <%= turbo_frame_tag "new_service_category" %>
         <%= render @service_categories %>
       </div>
     </div>

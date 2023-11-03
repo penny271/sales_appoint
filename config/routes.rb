@@ -34,7 +34,12 @@ Rails.application.routes.draw do
 
   resources :commodity_categories, path: "commodity_categories"
 
+
   resources :accounts, path: "accounts"
+
+
+  # 検証用
+  get 'html/scroll_x'
 
 
 
