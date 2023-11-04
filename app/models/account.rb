@@ -30,6 +30,9 @@ class Account < ApplicationRecord
     # self.initial_cost = normalize_zenkaku_number_to_number(initial_cost)
   end
 
+  # This callback hashes the password before saving (both create and update)
+  before_save :hash_password_if_present
+
   # 余分な空白があった場合、取り除き、取り除いた旨のエラーメッセージを表示させる
   # validate_without_extra_spaces(:original_name, :name)
 
@@ -43,10 +46,14 @@ class Account < ApplicationRecord
   validates :name_kana, format: { with: KATAKANA_REGEXP, message: "はカタカナで入力してください", allow_blank: true }
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
-  validates :tel, format: { with: /\A\d+\z/, message: 'は数字以外を含めないでください', allow_blank: true }
+  validates :tel, format: { with: /\A\d+\z/, message: "は数字以外を含めないでください", allow_blank: true }
 
   # 文字制限 type text でない限り VARCHAR(255)
   validates_length_of :name, maximum: 255, message: "が長すぎます。255文字以内にしてください"
+
+  # validates :password, presence: true, confirmation: true
+  #- Validates password presence and confirmation only if it's present, mostly for updates.
+  validates :password, presence: true, confirmation: true, if: :password_present?
 
   # # 正の整数限定 sqlの型が integer の場合の最大値は 2,147,483,647
   # # ! This validation declaration is evaluated in the class contextのため、format_with_delimiterは
@@ -65,5 +72,24 @@ class Account < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     %w(appointments)
+  end
+
+  private
+
+  # This method will be true if password is present, triggering the validation
+  def password_present?
+    !password.blank?
+  end
+
+  # Hashes the password using bcrypt
+  def hash_password(password)
+    puts("BCrypt::Password.create(password): #{BCrypt::Password.create(password)}")
+    BCrypt::Password.create(password)
+  end
+
+  # Hashes the password if it's present, ensuring it's only done when needed
+  def hash_password_if_present
+    puts("hash_password(password) ::: #{hash_password(password)}")
+    self.hashed_password = hash_password(password) if password_present?
   end
 end

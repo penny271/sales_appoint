@@ -48,84 +48,90 @@
 <%# ¥ 操作後変更したいもの - data: { turbo_frame: dom_id(ServiceCategory.new) } で操作後変更したい箇所を指定している %>
 
 <%# #################### コメントアウトの代わり #################### %>
-<% if true %>
 
-  <%= link_to "新規作成", :new_account, class: "apl-btn-green inline-block mx-5 my-2", data: { turbo_frame: dom_id(ServiceCategory.new) } %>
-  <%= turbo_frame_tag "service_category_list" do %>
-    <div class="rounded-lg border border-gray-200 shadow-md m-5">
-      <%# !!!!!!!!!!!! %>
-      <div class="w-full bg-whitetext-left text-sm text-gray-500divide-y divide-gray-100border-t border-gray-100">
-        <%# ! min-w-full が必要!!!! %>
-        <div class="flex bg-gray-50 py-4 min-w-max">
-          <%# !!!!!!!!!!!!!!!!!!!11 %>
-          <%# 1 %>
-          <div class="flex-none px-6 py-4 font-medium text-blue-600 w-number_column">
-            <%= sort_link(@search, :id, "No.", class: "text-blue-600 border-b border-blue-600") %>
-          </div>
+<%# <%= link_to "新規作成", :new_account, class: "apl-btn-green inline-block mx-5 my-2", data: { turbo_frame: dom_id("Account.new") } %>
+<%= link_to "新規作成(使用不可)", new_account_path, class: "apl-btn-purple inline-block mx-5 my-2", data: { turbo_frame: "new_account_form" } %>
 
-          <%# 2 %>
-          <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
-            <%= sort_link(@search, :name, t("activerecord.attributes.account.name"), class: "text-blue-600 border-b border-blue-600") %>
-          </div>
-
-          <%# 3 %>
-          <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
-            <%= sort_link(@search, :name_kana, t("activerecord.attributes.account.name_kana"), class: "text-blue-600 border-b border-blue-600") %>
-          </div>
-
-          <%# 4 %>
-          <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
-            <%= sort_link(@search, :email, t("activerecord.attributes.account.email"), class: "text-blue-600 border-b border-blue-600") %>
-          </div>
-
-          <%# 5 %>
-          <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
-            <%= sort_link(@search, :tel, t("activerecord.attributes.account.tel"), class: "text-blue-600 border-b border-blue-600") %>
-          </div>
-
-          <%# 6 %>
-          <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
-            <%= sort_link(@search, :description, t("activerecord.attributes.account.description"), class: "text-blue-600 border-b border-blue-600") %>
-          </div>
-
-          <%# 7 %>
-          <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
-            <%= sort_link(@search, :gender, t("activerecord.attributes.account.gender"), class: "text-blue-600 border-b border-blue-600") %>
-          </div>
-
-          <%# 8 %>
-          <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
-            <%= sort_link(@search, :employment_type, t("activerecord.attributes.account.employment_type"), class: "text-blue-600 border-b border-blue-600") %>
-          </div>
-
-          <%# 9 %>
-          <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
-            <%= sort_link(@search, :is_suspended, t("activerecord.attributes.account.is_suspended"), class: "text-blue-600 border-b border-blue-600") %>
-          </div>
-
-          <%# 10 %>
-          <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
-            <%= sort_link(@search, :is_admin, t("activerecord.attributes.account.is_admin"), class: "text-blue-600 border-b border-blue-600") %>
-          </div>
-
-          <%# 11 %>
-          <div class="flex-none px-6 py-4 font-medium text-gray-900 w-two_icons">
-            edit
-          </div>
-
-          <%# !!!!!!!!!!!!!!!!!!1 %>
-
+<%= turbo_frame_tag "service_category_list" do %>
+<%# marginが view-port内で効いてしまうため、ここにもmin-x-maxが必要!!  %>
+  <div class="rounded-lg border border-gray-200 shadow-md m-5 min-w-max">
+    <%# !!!!!!!!!!!! %>
+    <div class="min-w-max bg-whitetext-left text-sm text-gray-500divide-y divide-gray-100 border-t border-gray-100">
+      <%# ! min-w-max が必要!!!! %>
+      <div class="flex bg-gray-50 py-4 min-w-max">
+        <%# !!!!!!!!!!!!!!!!!!!11 %>
+        <%# 1 edit + delete %>
+        <div class="flex-none px-6 py-4 font-medium text-gray-900 w-two_icons">
+          edit
         </div>
-        <div id="service_categories" class="divide-y divide-gray-100 border-t border-gray-100">
-          <%= turbo_frame_tag "new_service_category" %>
-          <%= render @accounts %>
+
+        <%# 2 %>
+        <div class="flex-none px-6 py-4 font-medium text-blue-600 w-number_column">
+          <%= sort_link(@search, :id, "No.", class: "text-blue-600 border-b border-blue-600") %>
         </div>
+
+        <%# 3 %>
+        <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
+          <%= sort_link(@search, :name, t("activerecord.attributes.account.name"), class: "text-blue-600 border-b border-blue-600") %>
+        </div>
+
+        <%# 4 %>
+        <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
+          <%= sort_link(@search, :name_kana, t("activerecord.attributes.account.name_kana"), class: "text-blue-600 border-b border-blue-600") %>
+        </div>
+
+        <%# 5 %>
+        <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
+          <%= sort_link(@search, :email, t("activerecord.attributes.account.email"), class: "text-blue-600 border-b border-blue-600") %>
+        </div>
+
+        <%# 6 %>
+        <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
+          <%= sort_link(@search, :tel, t("activerecord.attributes.account.tel"), class: "text-blue-600 border-b border-blue-600") %>
+        </div>
+
+        <%# 7 %>
+        <div class="flex-shrink-0 px-6 py-4 w-[600px] font-medium text-blue-600">
+          <%= sort_link(@search, :description, t("activerecord.attributes.account.description"), class: "text-blue-600 border-b border-blue-600") %>
+        </div>
+
+        <%# 8 %>
+        <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
+          <%= sort_link(@search, :gender, t("activerecord.attributes.account.gender"), class: "text-blue-600 border-b border-blue-600") %>
+        </div>
+
+        <%# 9 %>
+        <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
+          <%= sort_link(@search, :employment_type, t("activerecord.attributes.account.employment_type"), class: "text-blue-600 border-b border-blue-600") %>
+        </div>
+
+        <%# 10 %>
+        <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
+          <%= sort_link(@search, :is_suspended, t("activerecord.attributes.account.is_suspended"), class: "text-blue-600 border-b border-blue-600") %>
+        </div>
+
+        <%# 11 %>
+        <div class="flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600">
+          <%= sort_link(@search, :is_admin, t("activerecord.attributes.account.is_admin"), class: "text-blue-600 border-b border-blue-600") %>
+        </div>
+
+        <%# 12 %>
+        <div class="flex-none px-6 py-4 font-medium text-gray-900 w-two_icons">
+          edit
+        </div>
+
+        <%# !!!!!!!!!!!!!!!!!!1 %>
+
+      </div>
+      <div id=accounts" class="min-w-max divide-y divide-gray-100 border-t border-gray-100">
+        <%= turbo_frame_tag "new_account_form" %>
+        <%= render @accounts %>
       </div>
     </div>
-    <%= paginate @accounts, params: { per_page: params[:per_page] } %>
-  <% end %>
-
+  </div>
+  <%= paginate @accounts, params: { per_page: params[:per_page] } %>
 <% end %>
+
 <%# ####################  コメントアウト END  #################### %>
 
 <%# --------------- %>

@@ -1,5 +1,22 @@
+<%= stylesheet_link_tag "header", "data-turbo-track": "reload" %>
+<header class="min-w-max min-w-full min-w-[9000px]">
+  <span class="logo-mark">営業アポ管理 min-widthを手動で9000pxにすることでその幅分、背景色が適用される</span>
+  <span>: current_account.present?:
+    <%= current_account.present? %></span>
+  <%= if current_account.present?
+    link_to "ログアウト", :session, data: { turbo_method: :delete }, class: "apl-btn-orange"
+  elsif params[:controller] != "sessions"
+    link_to "ログイン", :login, class: "apl-btn-blue"
+  end %>
+  <span>
+    | controller:
+    <%= params[:controller] %>
+    | params[:action]:
+    <%= params[:action] %></span>
+</header>
+
 <div class="rounded-lg border border-gray-200 shadow-md m-5">
-  <div class="w-full overflow-x-auto bg-white text-left text-sm text-gray-500 divide-y divide-gray-100 border-t border-gray-100">
+  <div class="w-full bg-white text-left text-sm text-gray-500 divide-y divide-gray-100 border-t border-gray-100">
     <!-- Ensure the background color extends with the content -->
     <div class="flex bg-gray-500 min-w-max min-w-full ">
       <%# !!!!!!!!!!!!!!!!!!!11 %>

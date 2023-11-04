@@ -63,7 +63,8 @@ class RegisterForm
       name_kana: name_kana,
       email: email,
       tel: tel,
-      hashed_password: hash_password(password), # You will define this method to hash the password
+      # account.rb の hash_password_if_present でsaveする前に設定するため空白にする
+      hashed_password:'',
       description: description,
       gender: gender,
       employment_type: employment_type,
@@ -76,8 +77,8 @@ class RegisterForm
   end
 
   # Hashes the password using bcrypt
-  def hash_password(password)
-    puts("BCrypt::Password.create(password): #{BCrypt::Password.create(password)}")
-    BCrypt::Password.create(password)
-  end
+  # def hash_password(password)
+  #   puts("BCrypt::Password.create(password): #{BCrypt::Password.create(password)}")
+  #   BCrypt::Password.create(password)
+  # end
 end

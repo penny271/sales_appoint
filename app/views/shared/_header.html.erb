@@ -12,7 +12,10 @@
     | controller:
     <%= params[:controller] %>
     | params[:action]:
-    <%= params[:action] %></span>
+    <%= params[:action] %>
+    | current_account.name:
+    <%= current_account.name %>
+  </span>
 </header>
 <!--
 <%= content_tag(:span, flash[:alert], class: "alert") if flash[:alert] %>

@@ -30,8 +30,13 @@
           <%# ¥ update.turbo_stream.erbで .updateしているため中身は不要 %>
           <%# <%= render "flash" %>
         </div>
-        <% normal_flash_allowed_condition = params[:controller] == "sessions" || (controller_name == "accounts" && (action_name == "create" || action_name == "new")) %>
+        <%# ################## 通常flashを表示させるための条件分岐変数 ################## %>
+        <% normal_flash_allowed_condition =
+          params[:controller] == "sessions" || (controller_name == "accounts" && (action_name == "create" || action_name == "new" || action_name == "update" || action_name == "edit")) %>
+        <%# ###################################################################### %>
+
         <%# ¥ turbo_streamを使わない場合用のflash %>
+
         <% if flash[:notice] && normal_flash_allowed_condition %>
           <%= render "shared/flash_notice", msg: flash[:notice] %>
         <% end %>
@@ -39,6 +44,11 @@
           <%= render "shared/flash_alert", msg: flash[:alert] %>
         <% end %>
         <%= yield %>
+
+        <%# !!!!!!!!!!!!!!!!!!!!!!! %>
+        <% puts("aaaaaaaaaaaaaaaaaaa: #{normal_flash_allowed_condition}") %>
+
+        <%# !!!!!!!!!!!!!!!!!!!!!!! %>
       </div>
       <%# footer削除 %>
     </main>

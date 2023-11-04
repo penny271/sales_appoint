@@ -25,20 +25,36 @@ class AccountsController < Base
   def show
   end
 
-  def edit
-  end
-
   def new
     @account_form = RegisterForm.new
     render action: "new"
   end
 
+  def edit
+    @account = Account.find(params[:id])
+  end
+
+  def update
+    @account = Account.find(params[:id])
+    if @account.update(account_update_params)
+      flash[:notice] = "更新しました。"
+      puts("flash[:success]: #{flash[:success]}")
+      redirect_to action: :edit
+    else
+      puts @account.errors.full_messages
+      flash[:alert] = "入力に誤りがあります。"
+      # ! flashを出す出さないに関わらず、 status: は必須 ないと
+      #! turbo.es2017-esm.js:2406 Error: Form responses must redirect to another location が発生する
+      render "edit", status: :unprocessable_entity
+    end
+  end
+
   def create
-    @account_form = RegisterForm.new(account_params)
+    @account_form = RegisterForm.new(account_new_params)
 
     if @account_form.valid? # This will check validations without saving
       puts "Form is valid. Here are the parameters:"
-      puts account_params.inspect # This will show what parameters are being passed to the form object
+      puts account_new_params.inspect # This will show what parameters are being passed to the form object
     else
       puts "Form is invalid. Here are the errors:"
       puts @account_form.errors.full_messages
@@ -66,18 +82,60 @@ class AccountsController < Base
       # ! render しないと バリデーションメッセージは表示されない!!
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def update
+    puts("通常 create完了")
   end
 
   def destroy
+    @account = Account.find(params[:id])
+    if @account.destroy
+      flash[:notice] = "Object was successfully deleted."
+      # redirect_to objects_url
+    else
+      flash[:alert] = "Something went wrong"
+      # redirect_to objects_url
+    end
+  end
+
+  # ///////////////////////////////////////////////////////////////
+  # * パスワード変更処理
+  # ///////////////////////////////////////////////////////////////
+  def change_password
+    @account = Account.find(params[:id])
+  end
+
+  # PATCH /accounts/:id/update_password
+  def update_password
+    @account = Account.find(params[:id])
+    # additional logic for authorization and security checks
+
+    if @account.update(account_password_params)
+      # handle a successful password change
+      flash[:notice] = "パスワードを変更しました。"
+      redirect_to root_path
+    else
+      flash.now[:alert] = "パスワードを変更できませんでした。"
+      render :change_password
+    end
   end
 
   private
 
-  def account_params
+  def account_new_params
     # - <input type="text" name="register_form[email]" id="register_form_email">
     params.require(:register_form).permit(:name, :name_kana, :email, :tel, :password, :description, :gender, :employment_type, :is_suspended, :is_admin, :password_confirmation)
+  end
+
+  # ¥ passwordはupdateしない
+  def account_update_params
+    # - <input type="text" name="register_form[email]" id="register_form_email">
+    # params.require(:account).permit(:name, :name_kana, :email, :tel, :password, :description, :gender, :employment_type, :is_suspended, :is_admin, :password_confirmation)
+    params.require(:account).permit(:name, :name_kana, :email, :tel, :description, :gender, :employment_type, :is_suspended, :is_admin)
+  end
+
+  # ¥ passwordの変更用
+  def account_password_params
+    # - <input type="text" name="register_form[email]" id="register_form_email">
+    # params.require(:account).permit(:name, :name_kana, :email, :tel, :password, :description, :gender, :employment_type, :is_suspended, :is_admin, :password_confirmation)
+    params.require(:account).permit(:password, :password_confirmation)
   end
 end

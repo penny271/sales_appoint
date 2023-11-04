@@ -1,11 +1,13 @@
 <%# `#commodity_categories`の先頭に登録された@commodity_categoryを追加する %>
 <%# turbo_stream.prepend "commodity_categories", @commodity_category %>
-<%# ! commodity_category_counter は 部分テンプレートで使えない collection: でないため %>
-<%= turbo_stream.prepend "commodity_categories" do %>
-  <%= render partial: 'commodity_category', locals: { commodity_category: @commodity_category, within_turbo_stream_create: true } %>
-<% end %>
+<%# ! accountsではturboを使用しない %>
+<%= turbo_stream.prepend "new_cat_form" %>
 <%# ¥ 登録の入力フォームを空にする(下記のように要素内の中身が空になる) 結果、新規登録のフォームがなくなる %>
 <%#  turbo-frame id="new_commodity_category" src="http://127.0.0.1:3000/commodity_categories/new" complete=""></turbo-frame> %>
-<%= turbo_stream.update CommodityCategory.new, "" %>
+<%# <%= turbo_stream.update CommodityCategory.new, "" %>
+<%= puts("account create 1") %>
+<%= turbo_stream.update "new_cat_form", "" %>
+<%= puts("account create 2") %>
+
 <%# ¥ flashメッセージを notice か alertかを判断して turbo_streamで表示する %>
 <%= render "/shared/turbo_stream_flash" %>

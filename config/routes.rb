@@ -34,9 +34,12 @@ Rails.application.routes.draw do
 
   resources :commodity_categories, path: "commodity_categories"
 
-
-  resources :accounts, path: "accounts"
-
+  resources :accounts, path: "accounts" do
+    member do
+      get 'change_password', to: 'accounts#change_password' # for displaying the password change form
+      patch 'update_password'  # for submitting the password change form
+    end
+  end
 
   # 検証用
   get 'html/scroll_x'
