@@ -4,7 +4,7 @@ class AccountsController < Base
   # skip_before_action :authorize
 
   def index
-    @accounts = Account.all
+    # @accounts = Account.all
     # GET /service_categories
     # @service_categories = ServiceCategory.all
     # - service_categoriesに対してページネートできるようにする

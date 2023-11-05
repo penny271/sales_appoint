@@ -33,4 +33,10 @@ class Appointment < ApplicationRecord
       super
     end
   end
+
+
+  # # - ransackを使用するため検索に使用する属性を定義する必要あり
+  def self.ransackable_attributes(auth_object = nil)
+    %w(id account_id service_category_id commodity_category_id duplication company_name company_tel company_url instagram_url content call_date next_call_date sent_material_date is_next_call end_date)
+  end
 end

@@ -5,9 +5,9 @@ ja:
     attributes:
       appointment:
         id: アポイントメントID
-        account_id: 自社担当 ID
-        service_category_id: サービスカテゴリ ID
-        commodity_category_id: 商材カテゴリ ID
+        account_id: 自社担当
+        service_category_id: サービスカテゴリ
+        commodity_category_id: 商材カテゴリ
         duplication: 重複確認
         company_name: 会社名
         company_tel: 電話番号

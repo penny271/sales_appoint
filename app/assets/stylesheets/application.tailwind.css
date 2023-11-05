@@ -52,49 +52,78 @@
 
 @layer utilities {
   /* ¥ --- tableの代わりに使っているflexの列幅に関係するもの */
+
+  /* - 主に .apl_*クラスの中で使用する共通クラス utl_から始まるクラス */
+  /* *tableのようなカラムのセルのpadding関係 */
+  .utl_cel_px {
+    @apply px-5;
+  }
+  .utl_cel_py {
+    @apply py-4;
+  }
+
   /* * プロジェクト共通 */
   /* edit ・ delete アイコンセット */
   .apl_project_common_header_col_style--w_two_icons {
-    @apply flex-none px-6 py-4 font-medium text-gray-900 w-two_icons;
+    @apply self-center flex-none font-medium text-gray-900 utl_cel_py utl_cel_px w-two_icons;
   }
   /* No. カラム ヘッダー */
   .apl_project_common_header_col_style--w_number_column {
-    @apply flex-none px-6 py-4 font-medium text-blue-600 w-number_column;
+    @apply self-center flex-none font-medium text-blue-600 utl_cel_py utl_cel_px w-number_column;
   }
   /* - table like flex 列名 header行 */
   .apl_project_common_header_col_style--w_100px {
-    @apply flex-shrink-0 px-6 py-4 w-[100px] font-medium text-blue-600;
+    @apply self-center flex-shrink-0 utl_cel_px utl_cel_py w-[100px] font-medium text-blue-600;
+  }
+  /* *主に日付欄に使用 */
+  .apl_project_common_header_col_style--w_120px {
+    @apply self-center flex-shrink-0 utl_cel_px utl_cel_py w-[120px] font-medium text-blue-600;
+  }
+  .apl_project_common_header_col_style--w_150px {
+    @apply self-center flex-shrink-0 utl_cel_px utl_cel_py w-[150px] font-medium text-blue-600;
   }
   .apl_project_common_header_col_style--w_200px {
-    @apply flex flex-shrink-0 px-6 w-[300px] border-r border-gray-300;
+    @apply self-center flex-shrink-0 utl_cel_px w-[200px] border-r border-gray-300;
   }
   .apl_project_common_header_col_style--w_300px {
-    @apply flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600;
+    @apply self-center flex-shrink-0 utl_cel_px utl_cel_py w-[300px] font-medium text-blue-600;
   }
   .apl_project_common_header_col_style--w_600px {
-    @apply flex-shrink-0 px-6 py-4 w-[600px] font-medium text-blue-600;
+    @apply self-center flex-shrink-0 utl_cel_px utl_cel_py w-[600px] font-medium text-blue-600;
   }
   /* - table like flex 列名 content(cel) */
   /* edit ・ delete アイコンセット */
   .apl_project_common_cel_style--w_two_icons {
-    @apply flex justify-center px-6 font-normal text-gray-900 border-b border-r border-gray-300 w-two_icons;
+    @apply flex justify-center font-normal text-gray-900 border-b border-r border-gray-300 utl_cel_px w-two_icons;
   }
   /* No. カラム のcel */
   .apl_project_common_cel_style--w_number_cel {
-    @apply flex justify-center px-6 py-8 font-normal text-gray-900 border-b border-r border-gray-300 w-number_column;
+    @apply flex justify-center py-8 font-normal text-gray-900 border-b border-r border-gray-300 utl_cel_px w-number_column;
   }
   .apl_project_common_cel_style--w_100px {
-    @apply flex flex-shrink-0 px-6 w-[100px] border-r border-gray-300;
+    @apply flex flex-shrink-0 utl_cel_px w-[100px] border-r border-gray-300;
+  }
+  /* *主に日付欄に使用 */
+  .apl_project_common_cel_style--w_120px {
+    @apply flex flex-shrink-0 utl_cel_px w-[120px] border-r border-gray-300;
+  }
+  .apl_project_common_cel_style--w_150px {
+    @apply flex flex-shrink-0 utl_cel_px w-[150px] border-r border-gray-300;
   }
   .apl_project_common_cel_style--w_200px {
-    @apply flex flex-shrink-0 px-6 w-[200px] border-r border-gray-300;
+    @apply flex flex-shrink-0 utl_cel_px w-[200px] border-r border-gray-300;
   }
   .apl_project_common_cel_style--w_300px {
-    @apply flex flex-shrink-0 px-6 w-[300px] border-r border-gray-300;
+    @apply flex flex-shrink-0 utl_cel_px w-[300px] border-r border-gray-300;
   }
   /* * 主に詳細情報表示に使用する */
   .apl_project_common_cel_style--w_600px {
-    @apply flex flex-shrink-0 px-6 w-[600px] border-r border-gray-300;
+    @apply flex flex-shrink-0 utl_cel_px w-[600px] border-r border-gray-300;
+  }
+
+  /* - table like flex 列名 content(cel内text) */
+  .apl_project_common_cel_text {
+    @apply inline-flex items-center self-center text-sm text-gray-900 break-all;
   }
 }
 

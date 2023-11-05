@@ -1,14 +1,15 @@
+
 <%# - 青木 要更新- 20231015 SPA %>
 <%# ¥ 操作後変更したいもの - 置き換えられるもの %>
-<%= turbo_frame_tag account do %>
+<%= turbo_frame_tag appointment do %>
   <%# <div class="flex hover:bg-gray-50"> %>
   <%# ¥ turbo_streamを使うかどうかによってアイテムの番号を変化させる %>
   <%# ! _counterは 呼び出し元が render @service_categories などの collection時のみ使える %>
   <%# ! turbo_stream.prepend "service_categories" では collectionとならないため使えないため条件分岐が必要 %>
   <%# - Determine the value of num_counter based on various conditions %>
-  <% if defined?(account_counter) && account_counter %>
+  <% if defined?(appointment_counter) && appointment_counter %>
   <!-- Turbo stream specific rendering logic -->
-    <% num_counter = account_counter + 1 %>
+    <% num_counter = appointment_counter + 1 %>
   <% elsif local_assigns[:within_turbo_stream_create] %>
   <!-- Turbo stream specific rendering logic -->
     <% num_counter = "登録完了" %>
@@ -25,7 +26,7 @@
   <%# ¥ 最適解: 1. 親要素をflexにする　 2. 子要素に self-center(align-self: center;)をつけることで中央揃えにできる!!  %>
 
   <%# ! 本要素内を変更する場合、 index.html.erbの列名部分も調整する必要あり  %>
-  <div class="flex items-stretch border-b border-r border-gray-300 _account_container min-w-max hover:bg-amber-50">
+  <div class="flex items-stretch border-b border-r border-gray-300 _appointment_container min-w-max hover:bg-amber-50">
 
     <%# 1. edit + delete %>
     <div class="apl_project_common_cel_style--w_two_icons">
@@ -34,8 +35,8 @@
         <%# ¥ mr-3を加えた %>
         <%# ブロックと一緒に使うと、ブロック内のコンテンツがリンクのコンテンツになります。この場合の第1引数はURLまたはパスヘルパーで、第2引数はHTMLオプションです： %>
         <%# ! turbo: false で turboを使わない %>
-        <%= link_to "/accounts/#{account.id}/edit", class: "mr-3", data: { turbo: false, tooltip: 'Edit' } do %>
-          <%# ! NG これだと select * となり意図しない動作となった。 link_to "/service_categories/#{account}/edit", class: "mr-3", data: { tooltip: 'Edit' }  do %>
+        <%= link_to "/appointments/#{appointment.id}/edit", class: "mr-3", data: { turbo: false, tooltip: 'Edit' } do %>
+          <%# ! NG これだと select * となり意図しない動作となった。 link_to "/service_categories/#{appointment}/edit", class: "mr-3", data: { tooltip: 'Edit' }  do %>
           <!-- contents of the link go here -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +56,7 @@
         <% end %>
 
         <%# - 削除アイコン %>
-        <%= button_to account_path(account), method: :delete, data: { tooltip: 'Delete', turbo_confirm: '本当に削除しますか？' } do %>
+        <%= button_to appointment_path(appointment), method: :delete, data: { tooltip: 'Delete', turbo_confirm: '本当に削除しますか？' } do %>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -75,103 +76,111 @@
       </div>
     </div>
 
-    <%# 2. No. %>
+    <%# 2. :id (No.) %>
     <div class="apl_project_common_cel_style--w_number_cel">
-      <div class="text-sm w-number_column">
-        <div class="font-medium text-center text-gray-700"><%= num_counter %></div>
-      </div>
-    </div>
-
-    <%# 2. 名前 %>
-    <div class="apl_project_common_cel_style--w_300px">
-      <div class="apl_project_common_cel_text">
-        <div class="font-medium text-gray-700"><%= account.name %></div>
-      </div>
-    </div>
-
-    <%# 2. 名前カナ %>
-    <%# ¥ grow ではなく、 実際の幅よりも大きい w-1/3 とすることでループさせて表示させる同じ要素で文字列が少ない or  入っていないものも同じ広い横幅にすることができる %>
-    <div class="apl_project_common_cel_style--w_300px">
       <span class="apl_project_common_cel_text">
-        <%= account.name_kana %>
+        <%= num_counter %>
       </span>
     </div>
 
-    <%# 3. email %>
-    <div class="apl_project_common_cel_style--w_300px">
+    <%# 3. :account_id %>
+    <div class="apl_project_common_cel_style--w_150px">
       <span class="apl_project_common_cel_text">
-        <%= account.email %>
+        <%= appointment.account.name %>
       </span>
     </div>
 
-    <%# 4. 電話番号 %>
-    <div class="apl_project_common_cel_style--w_300px">
+    <%# 3. :service_category_id %>
+    <div class="apl_project_common_cel_style--w_150px">
       <span class="apl_project_common_cel_text">
-        <%= account.tel %>
+        <%= appointment.service_category.name %>
       </span>
     </div>
 
-    <%# 5. アカウント詳細 %>
+    <%# 4. :commodity_category_id %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.commodity_category.name %>
+      </span>
+    </div>
+
+    <%# 5. :duplication %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.duplication %>
+      </span>
+    </div>
+
+    <%# 6. :company_name %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.company_name %>
+      </span>
+    </div>
+
+    <%# 7. :company_tel %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.company_tel %>
+      </span>
+    </div>
+
+    <%# 8. :company_url %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.company_url %>
+      </span>
+    </div>
+
+    <%# 9. :instagram_url %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.instagram_url %>
+      </span>
+    </div>
+
+    <%# 10. :content %>
     <div class="apl_project_common_cel_style--w_600px">
       <span class="apl_project_common_cel_text">
-        <%= account.description&.truncate(255) %>
+        <%= appointment.content %>
       </span>
     </div>
 
-    <%# 6. 性別 %>
-    <div class="apl_project_common_cel_style--w_300px">
+    <%# 11. :call_date %>
+    <div class="apl_project_common_cel_style--w_120px">
       <span class="apl_project_common_cel_text">
-        <% if account.gender == 0 %>
-          <%= "男性" %>
-        <% elsif account.gender == 1 %>
-          <%= "女性" %>
-        <% elsif account.gender == 2 %>
-          <%= "その他" %>
-        <% end %>
+        <%= appointment.call_date %>
       </span>
     </div>
 
-
-    <%# 7. 雇用形態 %>
-    <div class="apl_project_common_cel_style--w_300px">
+    <%# 12. :next_call_date %>
+    <div class="apl_project_common_cel_style--w_120px">
       <span class="apl_project_common_cel_text">
-        <% if account.employment_type == 0 %>
-          <%= "インターン" %>
-        <% elsif account.employment_type == 1 %>
-          <%= "正社員" %>
-        <% elsif account.employment_type == 2 %>
-          <%= "その他" %>
-        <% end %>
+        <%= appointment.next_call_date %>
       </span>
     </div>
 
-
-    <%# 8. アカウント状態 %>
-    <div class="apl_project_common_cel_style--w_300px">
+    <%# 13. :sent_material_date %>
+    <div class="apl_project_common_cel_style--w_120px">
       <span class="apl_project_common_cel_text">
-        <% if account.is_suspended == 0 %>
-          <%= "利用可能" %>
-        <% elsif account.is_suspended == 1 %>
-          <%= "停止中" %>
-        <% elsif account.is_suspended == 2 %>
-          <%= "その他" %>
-        <% end %>
+        <%= appointment.sent_material_date %>
       </span>
     </div>
 
-
-    <%# 9. アカウントタイプ %>
-    <div class="apl_project_common_cel_style--w_300px">
+    <%# 14. :is_next_call %>
+    <div class="apl_project_common_cel_style--w_120px">
       <span class="apl_project_common_cel_text">
-        <% if account.is_admin == 0 %>
-          <%= "一般" %>
-        <% elsif account.is_admin == 1 %>
-          <%= "管理者" %>
-        <% elsif account.is_admin == 2 %>
-          <%= "その他" %>
-        <% end %>
+        <%= appointment.is_next_call ? 'Yes' : 'No' %>
       </span>
     </div>
+
+    <%# 15. :end_date %>
+    <div class="apl_project_common_cel_style--w_120px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.end_date %>
+      </span>
+    </div>
+
 
     <%# 10. edit + delete %>
     <div class="apl_project_common_cel_style--w_two_icons">
@@ -180,8 +189,8 @@
         <%# ¥ mr-3を加えた %>
         <%# ブロックと一緒に使うと、ブロック内のコンテンツがリンクのコンテンツになります。この場合の第1引数はURLまたはパスヘルパーで、第2引数はHTMLオプションです： %>
         <%# ! turbo: false で turboを使わない %>
-        <%= link_to "/accounts/#{account.id}/edit", class: "mr-3", data: { turbo: false, tooltip: 'Edit' } do %>
-          <%# ! NG これだと select * となり意図しない動作となった。 link_to "/service_categories/#{account}/edit", class: "mr-3", data: { tooltip: 'Edit' }  do %>
+        <%= link_to "/appointments/#{appointment.id}/edit", class: "mr-3", data: { turbo: false, tooltip: 'Edit' } do %>
+          <%# ! NG これだと select * となり意図しない動作となった。 link_to "/service_categories/#{appointment}/edit", class: "mr-3", data: { tooltip: 'Edit' }  do %>
           <!-- contents of the link go here -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +210,7 @@
         <% end %>
 
         <%# - 削除アイコン %>
-        <%= button_to account_path(account), method: :delete, data: { tooltip: 'Delete', turbo_confirm: '本当に削除しますか？' } do %>
+        <%= button_to appointment_path(appointment), method: :delete, data: { tooltip: 'Delete', turbo_confirm: '本当に削除しますか？' } do %>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

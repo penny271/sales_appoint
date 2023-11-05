@@ -25,7 +25,7 @@
 
     <div class="">
       <%# - 値を指定しないとransackがデフォルトで検索という文字列を使う %>
-      <%= f.submit class: "apl-btn-blue", data: { turbo_frame: "service_category_list" } %>
+      <%= f.submit class: "apl-btn-blue", data: { turbo_frame: "account_list" } %>
       <%# 検索結果と検索フォームをクリアする %>
       <%= link_to "クリア", accounts_path, class: "apl-btn-reset" %>
     </div>
@@ -37,8 +37,8 @@
     <%= paginate @accounts, params: { per_page: params[:per_page] } %>
   <% end %>
 </div>
-
 <%# - ransack用 END %>
+
 <%= link_to :new_account, class: "apl-btn-green inline-block mx-5 my-2" do %>
   <!-- contents of the link go here -->
   <button class="">新規作成(normal)</button>
@@ -50,9 +50,10 @@
 <%# #################### コメントアウトの代わり #################### %>
 
 <%# <%= link_to "新規作成", :new_account, class: "apl-btn-green inline-block mx-5 my-2", data: { turbo_frame: dom_id("Account.new") } %>
-<%= link_to "新規作成(使用不可)", new_account_path, class: "apl-btn-purple inline-block mx-5 my-2", data: { turbo_frame: "new_account_form" } %>
+<%# ! 条件分岐する予定 %>
+<%= link_to "新規作成(使用不可)", new_appointment_path, class: "apl-btn-purple inline-block mx-5 my-2", data: { turbo_frame: "new_appointment" } %>
 
-<%= turbo_frame_tag "service_category_list" do %>
+<%= turbo_frame_tag "account_list" do %>
   <%# marginが view-port内で効いてしまうため、ここにもmin-x-maxが必要!! %>
   <div class="m-5 border border-gray-200 rounded-lg shadow-md min-w-max">
     <%# !!!!!!!!!!!! %>

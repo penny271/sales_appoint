@@ -10,16 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_17_213611) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_05_085253) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "name_kana", default: ""
     t.string "email", default: "", null: false
     t.string "tel", default: ""
     t.string "hashed_password"
-    t.boolean "suspended", default: false, null: false
     t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at"
+    t.text "description"
+    t.integer "gender"
+    t.string "employment_type"
+    t.integer "is_suspended"
+    t.integer "is_admin"
   end
 
   create_table "appointments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -40,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_17_213611) do
     t.date "end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "company_url"
     t.index ["account_id"], name: "index_appointments_on_account_id"
     t.index ["commodity_category_id"], name: "index_appointments_on_commodity_category_id"
     t.index ["company_name", "service_category_id"], name: "index_appointments_on_company_name_and_service_category_id", unique: true
