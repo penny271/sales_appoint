@@ -1,0 +1,79 @@
+<%# - 青木 要更新- 20231021 SPA %>
+<%# ¥ 操作後変更したいもの - 置き換えられるもの %>
+<%# * 全体を`turbo_frame_tag`で囲う %>
+<%# * 編集リンクをクリックすると、_cat.html.erbの<turbo-frame>部分がこの部分に置換される %>
+<%# ! 注目ポイントはturbo_frame_tagの引数にcommodity_categoryを利用してる。これでshow.html.erbの<turbo-frame id="commodity_category_1">とedit.html.erb（内でrenderしている_form.html.erb）の<turbo-frame id="commodity_category_1">がマッチするようになる。つまり編集リンクをクリックすると、_commodity_category.html.erbの<turbo-frame id="commodity_category_1">部分が、_form.html.erbの<turbo-frame id="commodity_category_1">部分に置換されるようになるよ。 %>
+<%= turbo_frame_tag commodity_category do %>
+  <%# - 20231022 urlを省くと、railsが自動で create と update を場合分けして urlのルートを決定してくれる %>
+  <%= form_with model: @commodity_category do |f| %>
+    <%# form_with model: @commodity_category, url: commodity_categories_path do |f|  |||| %>
+    <div class="flex">
+      <!-- No. Column -->
+      <div
+        class="
+          flex-none
+          flex
+          gap-3
+          px-6
+          py-4
+          w-1/6
+          border-r
+          border-b
+          border-gray-300
+          items-center
+        "
+      >
+        <%# <div class="text-sm font-medium text-gray-700">新規登録</div> %>
+        <div class="m-auto">
+          <%# <%= f.submit "Submit", class: "apl-btn-blue" %>
+          <%# ¥ ja.ymlで 手動で文字列を設定する方法 %>
+          <%# <%= f.submit t("commodity_categories.form.add_item"), class: "apl-btn-blue" %>
+          <%# ¥ ja.ymlで form_with を使っていた場合に共通のテキストを使用する場合 %>
+          <%= f.submit class:
+                     @commodity_category.new_record? ? "apl-btn-blue" : "apl-btn-orange" %>
+          <%= link_to "戻る", commodity_category, class: "apl-btn-gray" %>
+        </div>
+      </div>
+      <!-- Name Column -->
+      <div class="flex-grow px-6 py-4 border-r border-b border-gray-300">
+        <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+        <%= f.label :name, class: "sr-only" %>
+        <%= f.text_field :name, class: "w-full", placeholder: "商材名を入力してください" %>
+        <%# - validationメッセージ %>
+        <% if @commodity_category.errors[:name].present? %>
+          <%= render partial: "/shared/validation_errors", locals: { object: @commodity_category, attribute: :name } %>
+        <% end %>
+      </div>
+      <!-- Icons Column - Considering these might be action buttons, I'm
+      keeping them, adjust as needed -->
+      <div
+        class="
+          flex-none
+          flex
+          justify-end
+          gap-4
+          px-6
+          py-4
+          w-1/6
+          border-r
+          border-b
+          border-gray-300
+        "
+      >
+        <!-- You might want to adjust these action buttons based on the form's
+        purpose -->
+        <div class="m-auto">
+          <%# <%= f.submit "Submit", class: "apl-btn-blue" %>
+          <%# ¥ ja.ymlで 手動で文字列を設定する方法 %>
+          <%# <%= f.submit t("commodity_categories.form.add_item"), class: "apl-btn-blue" %>
+          <%# ¥ ja.ymlで form_with を使っていた場合に共通のテキストを使用する場合 %>
+          <%= f.submit class:
+                     @commodity_category.new_record? ? "apl-btn-blue" : "apl-btn-orange" %>
+          <%= link_to "戻る", commodity_category, class: "apl-btn-gray" %>
+        </div>
+      </div>
+    </div>
+    <!-- Add a Submit button -->
+  <% end %>
+<% end %>
+<%# //////////////////////////////// %>

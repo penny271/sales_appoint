@@ -1,0 +1,78 @@
+<%# - 青木 要更新- 20231021 SPA %>
+<%# ¥ 操作後変更したいもの - 置き換えられるもの %>
+<%# * 全体を`turbo_frame_tag`で囲う %>
+<%# * 編集リンクをクリックすると、_cat.html.erbの<turbo-frame>部分がこの部分に置換される %>
+<%# ! 注目ポイントはturbo_frame_tagの引数にservice_categoryを利用してる。これでshow.html.erbの<turbo-frame id="service_category_1">とedit.html.erb（内でrenderしている_form.html.erb）の<turbo-frame id="service_category_1">がマッチするようになる。つまり編集リンクをクリックすると、_service_category.html.erbの<turbo-frame id="service_category_1">部分が、_form.html.erbの<turbo-frame id="service_category_1">部分に置換されるようになるよ。 %>
+<%= turbo_frame_tag @service_category do %>
+  <%# - 20231022 urlを省くと、railsが自動で create と update を場合分けして urlのルートを決定してくれる %>
+  <%= form_with model: @service_category do |f| %>
+    <%# form_with model: @service_category, url: service_categories_path do |f|  |||| %>
+    <div class="flex py-4 hover:bg-amber-50">
+      <%# No. %>
+      <div class="px-6 flex-none w-number_column font-normal text-gray-900">
+        <%# <%= f.submit "Submit", class: "apl-btn-blue" %>
+        <%# ¥ ja.ymlで 手動で文字列を設定する方法 %>
+        <%# <%= f.submit t("commodity_categories.form.add_item"), class: "apl-btn-blue" %>
+        <%# ¥ ja.ymlで form_with を使っていた場合に共通のテキストを使用する場合 %>
+        <div class="flex flex-col">
+          <%= f.submit class:
+                    @service_category.new_record? ? "apl-btn-blue" : "apl-btn-orange" %>
+          <%= link_to "戻る", @service_category, class: "apl-btn-gray" %>
+        </div>
+      </div>
+
+      <%# サービス名 %>
+      <div class=" gap-3 px-6 w-1/5 font-normal text-gray-900">
+        <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+        <%= f.label :name, class: "sr-only" %>
+        <%= f.text_field :name, class: "w-full", placeholder: "" %>
+        <%# - validationメッセージ %>
+        <% if @service_category.errors[:name].present? %>
+          <%= render partial: "/shared/validation_errors", locals: { object: @service_category, attribute: :name } %>
+        <% end %>
+      </div>
+
+      <%# サービス詳細 %>
+      <%# ! classに flex を入れると縦いっぱいに広がる %>
+      <div class="px-6 grow">
+        <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+        <%= f.label :description, class: "sr-only" %>
+        <%= f.text_area :description, class: "w-full", placeholder: "" %>
+      </div>
+
+      <%# 価格 %>
+      <div class="px-6 w-1/5">
+        <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+        <%= f.label :price, class: "sr-only" %>
+        <%= f.text_field :price, class: "w-full", placeholder: "" %>
+        <%# - validationメッセージ %>
+        <% if @service_category.errors[:price].present? %>
+          <%= render partial: "/shared/validation_errors", locals: { object: @service_category, attribute: :price } %>
+        <% end %>
+      </div>
+
+      <%# 初期費用 %>
+      <div class="px-6 w-1/5">
+        <div class="flex gap-2">
+          <%# sr-only は tailwindが用意しているscreen reader用で画面には表示されない %>
+          <%= f.label :initial_cost, class: "sr-only" %>
+          <%= f.text_field :initial_cost, class: "w-full", placeholder: "" %>
+          <%# - validationメッセージ %>
+          <% if @service_category.errors[:initial_cost].present? %>
+            <%= render partial: "/shared/validation_errors", locals: { object: @service_category, attribute: :initial_cost } %>
+          <% end %>
+        </div>
+      </div>
+
+      <%# edit / delete %>
+      <div class="flex flex-col px-6 w-two_icons">
+        <%= f.submit class:
+                  @service_category.new_record? ? "apl-btn-blue" : "apl-btn-orange" %>
+        <%= link_to "戻る", @service_category, class: "apl-btn-gray" %>
+      </div>
+    </div>
+    <!--  <div class="flex py-4 hover:bg-amber-50">  -->
+    <!-- Add a Submit button -->
+  <% end %>
+<% end %>
+<%# //////////////////////////////// %>

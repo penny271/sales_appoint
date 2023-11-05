@@ -10,3 +10,12 @@ Rails.application.config.assets.version = "1.0"
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
+
+Rails.application.config.assets.precompile += %w(
+  layout.css
+  application.css
+  login.css
+)
+
+# memo: こんなふうにもかける rails7からはimportmap.rbを使うためjsファイルの記述不要
+# custom/*.js

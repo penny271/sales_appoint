@@ -1,0 +1,16 @@
+<%# ! scssのみ使用する %>
+<%= stylesheet_link_tag "account", media: "all", "data-turbolinks-track": "reload" %>
+<div>
+  <h1 class="text-4xl font-bold">Accounts#new</h1>
+  <p>Find me in app/views/accounts/new.html.erb</p>
+</div>
+
+<%# ¥ 下記変数を _form.html.erbに送る %>
+<% @conditional_title = "アカウント登録" %>
+<% @conditional_btn_txt = "登録" %>
+<% @conditional_form_with_path = accounts_path %>
+<%# form_with model: にわたすオブジェクト %>
+<% @model_or_form_object = @account_form %>
+<% @background_color = "bg-white" %>
+
+<%= render "form" %>

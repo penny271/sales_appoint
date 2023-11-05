@@ -13,13 +13,21 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /tmp/mysql.sock
 
+# 更新 20231009 planetScale使用
+# development:
+#   <<: *default
+#   database: <%= ENV['ENABLE_PSDB'] ? 'manage' : 'manage_development' %>
+#   port: <%= ENV['ENABLE_PSDB'] ? 3305 : ENV.fetch("DB_PORT", 3306) %>
+
+# - 更新 20231008 local使用
 development:
   <<: *default
-  database: sales_appointment_development
+  database: sales_appointment_development # mySQLWorkBenchの sale_appointmentの中のdb
+  username: root
+  password: penny
+  socket: /tmp/mysql.sock
+  port: 3306
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -48,8 +56,18 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+
+# production:
+#   <<: *default
+#   database: sales_appointment_production
+#   username: sales_appointment
+#   password: <%= ENV["SALES_APPOINTMENT_DATABASE_PASSWORD"] %>
+
+# 更新 20231008 planetScale使用
 production:
   <<: *default
-  database: sales_appointment_production
-  username: sales_appointment
-  password: <%= ENV["SALES_APPOINTMENT_DATABASE_PASSWORD"] %>
+  username: <%= Rails.application.credentials.planetscale&.fetch(:username) %>
+  password: <%= Rails.application.credentials.planetscale&.fetch(:password) %>
+  database: <%= Rails.application.credentials.planetscale&.fetch(:database) %>
+  host: <%= Rails.application.credentials.planetscale&.fetch(:host) %>
+  ssl_mode: verify_identity

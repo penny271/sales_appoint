@@ -1,0 +1,79 @@
+// - 共通のスタイルを記述する
+span.logo-mark {
+  background-color: yellow !important;
+}
+
+// - 入力必須のアスタリスク
+/* Add this class in your stylesheet */
+.required-asterisk {
+  color: red;
+}
+
+//* ページネーション */
+
+.pagination{
+  margin: 20px auto 0;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+
+  // - 特定の条件下では、ホバーをさせない
+  span:not(.current, .pagination_disabled) {
+    &:hover {
+      background-color: #c1d9fb;
+    }
+  }
+
+  .pagination_disabled {
+    color: rgb(157, 157, 157);
+  }
+
+  > span{
+      position: relative; // Add this line
+      text-align: center;
+      width: 50px;
+      border: 1px solid rgb(171, 171, 171);
+      padding: 8px;
+      // ¥ spanタグ全体をaタグのクリック対象にする
+      a{
+          // display: block;
+          // width: 100%;
+          // height: 100%;
+          position: absolute; // * spanタグ全体をaタグのクリック対象にする
+          top: 0;             // * spanタグ全体をaタグのクリック対象にする
+          right: 0;           // * spanタグ全体をaタグのクリック対象にする
+          bottom: 0;          // * spanタグ全体をaタグのクリック対象にする
+          left: 0;            // * spanタグ全体をaタグのクリック対象にする
+          display: block;
+          display: flex;            // * aタグの中の数字やアイコンを中央揃えにする
+          align-items: center;      // * aタグの中の数字やアイコンを中央揃えにする
+          justify-content: center;  // * aタグの中の数字やアイコンを中央揃えにする
+      }
+      // &.disabled {
+      //   color:rgb(208, 208, 208);
+      // }
+  }
+}
+
+.current{
+  color: #ffffff;
+  background-color: #008CFF;
+}
+
+.gap{
+  background-color: white !important;
+}
+
+// * form validationエラー
+/* Target only input, textarea, select, etc., inside .field_with_errors */
+.field_with_errors input,
+.field_with_errors textarea,
+.field_with_errors select {
+  border: 2px #ff8b8b solid;
+}
+
+/* Ensure labels within .field_with_errors are not styled with a border */
+// .field_with_errors > label {
+//   border: none; /* or you could use "all: unset;" if you want to reset all styles */
+// }
+

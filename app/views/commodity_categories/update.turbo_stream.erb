@@ -1,0 +1,6 @@
+<%# - #commodity_category_1（id属性がcommodity_category_1の要素）を<template>...<template>のコンテンツでreplace（置換する）する、という意味になる。これはTurbo Framesで処理するのと同じような置換処理になる %>
+<%= turbo_stream.replace @commodity_category do %>
+  <%= render partial: 'commodity_category', locals: { commodity_category: @commodity_category, within_turbo_stream_update: true } %>
+<% end %>
+<%# ¥ flashメッセージを notice か alertかを判断して turbo_streamで表示する %>
+<%= render "/shared/turbo_stream_flash" %>

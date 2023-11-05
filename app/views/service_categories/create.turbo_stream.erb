@@ -1,0 +1,15 @@
+<% puts("ugoiteiru??") %>
+
+<%# - 1. 新規作成で作成で登録したときにリストの一番上にたった今登録した内容を表示させる %>
+<%# - 2. 作成後、入力フォームを削除する %>
+<%# `#service_categories`の先頭に登録された@service_categoryを追加する %>
+<%# turbo_stream.prepend "service_categories", @service_category %>
+<%# ! service_category_counter は 部分テンプレートで使えない collection: でないため %>
+<%= turbo_stream.prepend "service_categories" do %>
+  <%= render partial: 'service_category', locals: { service_category: @service_category, within_turbo_stream_create: true } %>
+<% end %>
+<%# ¥ 登録の入力フォームを空にする(下記のように要素内の中身が空になる) 結果、新規登録のフォームがなくなる %>
+<%#  turbo-frame id="new_service_category" src="http://127.0.0.1:3000/service_categories/new" complete=""></turbo-frame> %>
+<%= turbo_stream.update ServiceCategory.new, "" %>
+<%# ¥ flashメッセージを notice か alertかを判断して turbo_streamで表示する %>
+<%= render "/shared/turbo_stream_flash" %>

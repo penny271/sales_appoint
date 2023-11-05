@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      service_category: 商材カテゴリ
+    attributes:
+      service_category:
+        service_category_id: 商材カテゴリID
+        name: 商材名
+        description: 詳細
+        price: 価格
+        initial_cost: 初期費用
+        img_url: 表示画像

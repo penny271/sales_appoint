@@ -1,0 +1,13 @@
+<div>
+  <h1 class="text-4xl font-bold">Accounts#<%= action_name %></h1>
+  <p>Find me in app/views/accounts/<%= action_name %>.html.erb</p>
+</div>
+
+<%# ¥ 下記変数を _form.html.erbに送る %>
+<% @conditional_title = "アカウント編集" %>
+<% @conditional_btn_txt = "変更" %>
+<% @conditional_form_with_path = account_path(@account) %>
+<% @model_or_form_object = @account %>
+<% @background_color = "bg-green-100" %>
+
+<%= render "form" %>

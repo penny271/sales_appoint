@@ -1,0 +1,123 @@
+<%# ! 下記で画面全体に表示 - headerも隠れる %>
+<%# <div class="flex items-center justify-center min-h-screen"> %>
+<div class="flex items-center justify-center">
+  <div class="w-full max-w-md p-6 <%= @background_color %> rounded-lg shadow-lg">
+    <div class="flex justify-center mb-8">
+      <img src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png" alt="Logo" class="h-20 w-30">
+    </div>
+    <h1 class="mt-8 mb-6 text-2xl font-semibold text-center text-gray-500"><%= @conditional_title %></h1>
+
+    <%# post create => accounts_path %>
+    <%# ! Setting local: false ensures that the form submission is handled by Turbo. %>
+    <%= form_with model: @model_or_form_object, url: @conditional_form_with_path, local:true do |f| %>
+      <%# - 青木 要削除 - 20231102 %>
+      <% puts("@model_or_form_object.errors ::: #{@model_or_form_object.errors}") %>
+      <% if @model_or_form_object.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@model_or_form_object.errors.count, "error") %>
+            prohibited this account from being saved:</h2>
+
+          <ul>
+            <% @model_or_form_object.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <h2><%= pluralize(@model_or_form_object.errors.count, "error") %>
+          No validation error messages?:</h2>
+      <% end %>
+
+      <div class="mb-4">
+        <%# ¥  f.label :name, "名前 <span ...></span> の代わり %>
+        <%= f.label :name, "#{t("activemodel.attributes.register_form.name")} <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_field :name, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+      </div>
+      <%= render partial: "/shared/validation_errors", locals: { object: @model_or_form_object, attribute: :name } %>
+
+      <div class="mb-4">
+        <%= f.label :name_kana, t("activemodel.attributes.register_form.name_kana"), class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_field :name_kana, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+        <%= render partial: "/shared/validation_errors", locals: { object: @model_or_form_object, attribute: :name_kana } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :email, "#{t("activemodel.attributes.register_form.email")} <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.email_field :email, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+        <%= render partial: "/shared/validation_errors", locals: { object: @model_or_form_object, attribute: :email } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :tel, t("activemodel.attributes.register_form.tel"), class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_field :tel, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+        <%= render partial: "/shared/validation_errors", locals: { object: @model_or_form_object, attribute: :tel } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :description, t("activemodel.attributes.register_form.description"), class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.text_area :description, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :gender, t("activemodel.attributes.register_form.gender"), class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.select :gender, { "男性" => 0, "女性" => 1 }, { include_blank: "選択してください" }, { class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :employment_type, t("activemodel.attributes.register_form.employment_type"), class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.select :employment_type, { "インターン" => 0, "正社員" => 1, "その他" => 2 }, { include_blank: "選択してください" }, { class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :is_suspended, t("activemodel.attributes.register_form.is_suspended"), class: "block mb-2 text-sm text-gray-600" %>
+        <label class="flex items-center">
+          <%= f.check_box :is_suspended, class: "form-checkbox h-5 w-5 text-cyan-500" %>
+          <span class="ml-2 text-gray-600">利用停止中</span>
+        </label>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :is_admin, t("activemodel.attributes.register_form.is_admin"), class: "block mb-2 text-sm text-gray-600" %>
+        <%= f.select :is_admin, { "一般" => 0, "管理者" => 1 }, { include_blank: "選択してください" }, { class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" } %>
+      </div>
+
+      <%# * 新規作成の場合のみ、パスワード関係入力欄を標示する %>
+      <% if controller_name == "accounts" && action_name == "new" %>
+        <%# ! password 確認 %>
+        <div class="mb-4">
+          <%= f.label :password, "#{t("activemodel.attributes.register_form.password")} <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
+          <%= f.password_field :password, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+          <%= render partial: "/shared/validation_errors", locals: { object: @model_or_form_object, attribute: :password } %>
+        </div>
+
+        <div class="mb-6">
+          <%= f.label :password_confirmation, "#{t("activemodel.attributes.register_form.password_confirmation")} <span class='required-asterisk'>*</span>".html_safe, class: "block mb-2 text-sm text-gray-600" %>
+          <%= f.password_field :password_confirmation, class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500", required: true %>
+          <%= render partial: "/shared/validation_errors", locals: { object: @model_or_form_object, attribute: :password_confirmation } %>
+        </div>
+        <%# ! password 確認 %>
+      <% end %>
+
+      <div class="flex justify-center mt-7">
+        <%= f.submit @conditional_btn_txt,
+                 class: "w-32 bg-gradient-to-r from-orange-400 to-orange-600 text-white py-2 rounded-lg block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2 mr-6 cursor-pointer" %>
+
+        <%= link_to "一覧",
+        accounts_path,
+        class: "text-center w-32 bg-gradient-to-r from-sky-400 to-sky-600 text-white py-2 rounded-lg block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2" %>
+      </div>
+
+      <%# #################### コメントアウトの代わり #################### %>
+      <% if false %>
+        <div class="mb-2 text-white cursor-pointer from-orange-400 to-orange-950 focus:ring-cyan-500 "></div>
+      <% end %>
+      <%# ####################  コメントアウト END  #################### %>
+
+    <% end %>
+    <div class="text-center">
+      <p class="text-sm">¿Ya tienes una cuenta?
+        <a href="#" class="text-cyan-600">Inicia sesión</a></p>
+    </div>
+    <p class="mt-8 text-xs text-center text-gray-600">&copy; 2023 WCS LAT</p>
+  </div>
+</div>

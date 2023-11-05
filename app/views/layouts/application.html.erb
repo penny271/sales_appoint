@@ -1,16 +1,56 @@
+<%# - 20231014 htmlbeautifierが動かなくなったときの対処法 %>
+<%# - VSCode Shell Environment: %>
+<%# ! Sometimes VSCode might not source your shell profile correctly. To ensure it does: %>
+<%# Close all VSCode instances. %>
+<%# Open a regular terminal. %>
+<%# ¥ Launch VSCode from this terminal by typing code and hit enter. This will inherit the shell's environment variables. %>
+<%# encoding: UTF-8 %>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SalesAppointment</title>
+    <% title = Rails.env.development? ? "開発" : "営業アポ管理" %>
+    <title><%= title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%# ! 20231012 動いていない? %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
-    <%= yield %>
+    <main class="main__container">
+      <div id="application__wrapper">
+        <% unless @hide_header %>
+          <%= render "shared/header" %>
+          <%= render "shared/sidebar", page: "not dashboard" %>
+        <% end %>
+        <%# ¥ turbo_streamを使う場合用のflash %>
+        <div id="flash">
+          <%# ¥ update.turbo_stream.erbで .updateしているため中身は不要 %>
+          <%# <%= render "flash" %>
+        </div>
+        <%# ################## 通常flashを表示させるための条件分岐変数 ################## %>
+        <% normal_flash_allowed_condition =
+          params[:controller] == "sessions" || (controller_name == "accounts" && (action_name == "create" || action_name == "new" || action_name == "update" || action_name == "edit")) %>
+        <%# ###################################################################### %>
+
+        <%# ¥ turbo_streamを使わない場合用のflash %>
+
+        <% if flash[:notice] && normal_flash_allowed_condition %>
+          <%= render "shared/flash_notice", msg: flash[:notice] %>
+        <% end %>
+        <% if flash[:alert] && normal_flash_allowed_condition %>
+          <%= render "shared/flash_alert", msg: flash[:alert] %>
+        <% end %>
+        <%= yield %>
+
+        <%# !!!!!!!!!!!!!!!!!!!!!!! %>
+        <% puts("aaaaaaaaaaaaaaaaaaa: #{normal_flash_allowed_condition}") %>
+
+        <%# !!!!!!!!!!!!!!!!!!!!!!! %>
+      </div>
+      <%# footer削除 %>
+    </main>
   </body>
 </html>

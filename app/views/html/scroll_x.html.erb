@@ -1,0 +1,67 @@
+<%= stylesheet_link_tag "header", "data-turbo-track": "reload" %>
+<header class="min-w-max min-w-full min-w-[9000px]">
+  <span class="logo-mark">営業アポ管理 min-widthを手動で9000pxにすることでその幅分、背景色が適用される</span>
+  <span>: current_account.present?:
+    <%= current_account.present? %></span>
+  <%= if current_account.present?
+    link_to "ログアウト", :session, data: { turbo_method: :delete }, class: "apl-btn-orange"
+  elsif params[:controller] != "sessions"
+    link_to "ログイン", :login, class: "apl-btn-blue"
+  end %>
+  <span>
+    | controller:
+    <%= params[:controller] %>
+    | params[:action]:
+    <%= params[:action] %></span>
+</header>
+
+<div class="m-5 border border-gray-200 rounded-lg shadow-md">
+  <div class="w-full text-sm text-left text-gray-500 bg-white border-t border-gray-100 divide-y divide-gray-100 ">
+    <!-- Ensure the background color extends with the content -->
+    <div class="flex min-w-full bg-gray-500 min-w-max">
+      <%# !!!!!!!!!!!!!!!!!!!11 %>
+      <div class="flex-none px-6 py-4 font-medium text-blue-600 w-number_column">
+        <div>検証ZZZZZZZZ</div>
+      </div>
+
+      <%# 2 %>
+      <div class="flex-shrink-0 px-6 py-4 w-1/2 w-[1700px] font-medium text-blue-600">
+        <div>検証ZZZZZZZZ</div>
+      </div>
+
+      <%# 3 %>
+      <div class="flex-shrink-0 px-6 py-4 w-1/2 w-[1700px] font-medium text-blue-600">
+        <div>検証ZZZZZZZZ</div>
+      </div>
+
+      <%# 4 %>
+      <div class="flex-shrink-0 px-6 py-4 w-1/2 w-[1700px] font-medium text-blue-600">
+        <div>検証ZZZZZZZZ</div>
+      </div>
+
+      <%# 11 %>
+      <div class="flex-none px-6 py-4 font-medium text-gray-900 w-two_icons">
+        edit
+      </div>
+
+      <%# !!!!!!!!!!!!!!!!!!1 %>
+
+    </div>
+    <div id="service_categories" class="flex border-t border-gray-100 divide-y divide-gray-100 min-w-max">
+      <%= turbo_frame_tag "new_service_category" %>
+      <%# <%= render @accounts %>
+      <div class="flex-none px-6 py-4 font-medium text-blue-600 w-number_column">
+        <div>中身ZZZZZZZZ</div>
+      </div>
+      <div class="flex-shrink-0 w-1/2 px-6 py-4 font-medium text-blue-600">
+        <div>中身ZZZZZZZZ</div>
+      </div>
+      <div class="flex-shrink-0 w-1/2 px-6 py-4 font-medium text-blue-600">
+        <div>中身ZZZZZZZZ</div>
+      </div>
+      <div class="flex-shrink-0 w-1/2 px-6 py-4 font-medium text-blue-600">
+        <div>中身ZZZZZZZZ</div>
+      </div>
+    </div>
+  </div>
+</div>

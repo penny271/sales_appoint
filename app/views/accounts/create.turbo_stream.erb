@@ -1,0 +1,45 @@
+<%# ¥ flashメッセージを notice か alertかを判断して turbo_streamで表示する %>
+
+<% puts("アカウントaccounts  ^^  動いている??") %>
+<%# アカウント作成時には ログイン画面にredirect する設定にしているため、実際は使わない  %>
+<%= render "/shared/turbo_stream_flash" %>
+
+<%
+=begin
+%>
+
+<% if flash[:notice] %>
+  <%= turbo_stream.update 'flash', partial: 'shared/flash_notice', locals: { msg: flash.notice } %>
+<% end %>
+<% if flash[:alert] %>
+  <%= turbo_stream.update 'flash', partial: 'shared/flash_alert', locals: { msg: flash.alert } %>
+<% end %>
+
+<%
+=end
+%>
+
+<%# - 動いた %>
+<%
+=begin
+%>
+
+<% if flash[:notice].present? %>
+  <%= turbo_stream.update 'flash' do %>
+    <div id="flash" class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+<% end %>
+
+<% if flash[:alert].present? %>
+  <%= turbo_stream.update 'flash' do %>
+    <div id="flash" class="alert alert-danger">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+<% end %>
+
+<%
+=end
+%>
