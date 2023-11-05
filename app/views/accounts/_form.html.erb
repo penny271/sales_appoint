@@ -1,11 +1,11 @@
 <%# ! 下記で画面全体に表示 - headerも隠れる %>
-<%# <div class="min-h-screen flex items-center justify-center"> %>
+<%# <div class="flex items-center justify-center min-h-screen"> %>
 <div class="flex items-center justify-center">
-  <div class="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
+  <div class="w-full max-w-md p-6 <%= @background_color %> rounded-lg shadow-lg">
     <div class="flex justify-center mb-8">
-      <img src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png" alt="Logo" class="w-30 h-20">
+      <img src="https://www.emprenderconactitud.com/img/POC%20WCS%20(1).png" alt="Logo" class="h-20 w-30">
     </div>
-    <h1 class="text-2xl font-semibold text-center text-gray-500 mt-8 mb-6"><%= @conditional_title %></h1>
+    <h1 class="mt-8 mb-6 text-2xl font-semibold text-center text-gray-500"><%= @conditional_title %></h1>
 
     <%# post create => accounts_path %>
     <%# ! Setting local: false ensures that the form submission is handled by Turbo. %>
@@ -109,7 +109,7 @@
 
       <%# #################### コメントアウトの代わり #################### %>
       <% if false %>
-        <div class="cursor-pointer from-orange-400 to-orange-950 text-white focus:ring-cyan-500 mb-2 "></div>
+        <div class="mb-2 text-white cursor-pointer from-orange-400 to-orange-950 focus:ring-cyan-500 "></div>
       <% end %>
       <%# ####################  コメントアウト END  #################### %>
 
@@ -118,6 +118,6 @@
       <p class="text-sm">¿Ya tienes una cuenta?
         <a href="#" class="text-cyan-600">Inicia sesión</a></p>
     </div>
-    <p class="text-xs text-gray-600 text-center mt-8">&copy; 2023 WCS LAT</p>
+    <p class="mt-8 text-xs text-center text-gray-600">&copy; 2023 WCS LAT</p>
   </div>
 </div>

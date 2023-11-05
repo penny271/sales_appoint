@@ -1,7 +1,7 @@
 # class AccountsController < ApplicationController
 # - turbo_frame or turbo_streamは使わない
 class AccountsController < Base
-  skip_before_action :authorize
+  # skip_before_action :authorize
 
   def index
     @accounts = Account.all

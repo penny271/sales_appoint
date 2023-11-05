@@ -3,51 +3,106 @@
 @tailwind utilities;
 /* styles.css or application.css */
 
-/* - 登録 */
-.apl-btn-blue {
-  @apply bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
+/* ! なぜかimportできない... 使えない */
+@import "tailwind_components/table_like_width/table_like_width.css";
+@import "tailwind_components/table_like_width/another_file.css";
+
+/* .apl-account-common-header-col-style {
+  @apply flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600;
+} */
+
+/* * @layerで定めることで上書きされる順序を決めることができる */
+@layer components {
+  /* ¥ ------------ ボタン ---------------*/
+  /* - 登録 */
+  .apl-btn-blue {
+    @apply inline-block px-4 py-2 text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600 w-fit whitespace-nowrap ;
+  }
+
+  /* - 更新 */
+  .apl-btn-orange {
+    @apply inline-block px-4 py-2 text-white bg-orange-500 rounded cursor-pointer hover:bg-orange-600 w-fit whitespace-nowrap ;
+  }
+
+
+  /* - 新規作成 */
+  .apl-btn-green {
+    @apply inline-block px-4 py-2 text-white bg-green-500 rounded cursor-pointer hover:bg-green-600 w-fit whitespace-nowrap ;
+  }
+
+  /* - 戻るボタン */
+  .apl-btn-gray {
+    @apply inline-block px-4 py-2 text-white bg-gray-400 rounded cursor-pointer hover:bg-gray-600 w-fit whitespace-nowrap ;
+  }
+
+  /* - リセットボタン */
+  .apl-btn-reset {
+    @apply inline-block px-4 py-2 text-gray-500 bg-white border border-gray-600 rounded cursor-pointer hover:bg-gray-200 hover:text-gray-800 w-fit whitespace-nowrap;
+  }
+
+  /* test用 w-fit whitespace-nowrap
+  で block要素でもうまく収まるようにしている */
+  /* - 用途不定 */
+  .apl-btn-purple {
+    @apply inline-block px-4 py-2 text-white bg-purple-500 rounded cursor-pointer hover:bg-purple-600 w-fit whitespace-nowrap ;
+  }
+  /* ... */
 }
 
-/* - 更新 */
-.apl-btn-orange {
-  @apply bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
+
+@layer utilities {
+  /* ¥ --- tableの代わりに使っているflexの列幅に関係するもの */
+  /* * プロジェクト共通 */
+  /* edit ・ delete アイコンセット */
+  .apl_project_common_header_col_style--w_two_icons {
+    @apply flex-none px-6 py-4 font-medium text-gray-900 w-two_icons;
+  }
+  /* No. カラム ヘッダー */
+  .apl_project_common_header_col_style--w_number_column {
+    @apply flex-none px-6 py-4 font-medium text-blue-600 w-number_column;
+  }
+  /* - table like flex 列名 header行 */
+  .apl_project_common_header_col_style--w_100px {
+    @apply flex-shrink-0 px-6 py-4 w-[100px] font-medium text-blue-600;
+  }
+  .apl_project_common_header_col_style--w_200px {
+    @apply flex flex-shrink-0 px-6 w-[300px] border-r border-gray-300;
+  }
+  .apl_project_common_header_col_style--w_300px {
+    @apply flex-shrink-0 px-6 py-4 w-[300px] font-medium text-blue-600;
+  }
+  .apl_project_common_header_col_style--w_600px {
+    @apply flex-shrink-0 px-6 py-4 w-[600px] font-medium text-blue-600;
+  }
+  /* - table like flex 列名 content(cel) */
+  /* edit ・ delete アイコンセット */
+  .apl_project_common_cel_style--w_two_icons {
+    @apply flex justify-center px-6 font-normal text-gray-900 border-b border-r border-gray-300 w-two_icons;
+  }
+  /* No. カラム のcel */
+  .apl_project_common_cel_style--w_number_cel {
+    @apply flex justify-center px-6 py-8 font-normal text-gray-900 border-b border-r border-gray-300 w-number_column;
+  }
+  .apl_project_common_cel_style--w_100px {
+    @apply flex flex-shrink-0 px-6 w-[100px] border-r border-gray-300;
+  }
+  .apl_project_common_cel_style--w_200px {
+    @apply flex flex-shrink-0 px-6 w-[200px] border-r border-gray-300;
+  }
+  .apl_project_common_cel_style--w_300px {
+    @apply flex flex-shrink-0 px-6 w-[300px] border-r border-gray-300;
+  }
+  /* * 主に詳細情報表示に使用する */
+  .apl_project_common_cel_style--w_600px {
+    @apply flex flex-shrink-0 px-6 w-[600px] border-r border-gray-300;
+  }
 }
-
-
-/* - 新規作成 */
-.apl-btn-green {
-  @apply bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
-}
-
-/* - 戻るボタン */
-.apl-btn-gray {
-  @apply bg-gray-400 hover:bg-gray-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
-}
-
-/* - リセットボタン */
-.apl-btn-reset {
-  @apply bg-white hover:bg-gray-200 hover:text-gray-800 text-gray-500 py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
- border border-gray-600;
-}
-
-/* test用 w-fit whitespace-nowrap
- で block要素でもうまく収まるようにしている */
-/* - 用途不定 */
-.apl-btn-purple {
-  @apply bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded cursor-pointer inline-block w-fit whitespace-nowrap
-;
-}
-
 
 /*
 
 @layer components {
   .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+    @apply px-4 py-2 bg-blue-200;
   }
 }
 
