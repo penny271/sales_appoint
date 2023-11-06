@@ -29,6 +29,10 @@ Rails.application.routes.draw do
   #^ 青木 ★要更新 - 20231014 /appointments/new => /apo/new  のように変更可能!
   resources :appointments, path: "appo"
 
+  # ¥ 単一継承でも下記のように記載する必要あり
+  resources :smm_appointments # This will generate smm_appointments_path among others
+  resources :cx_appointments # This will generate cmm_appointments_path among others
+
   #^ 青木 ★要更新 - 20231014 /appointments/new => /apo/new  のように変更可能!
   resources :service_categories, path: "service_categories"
 

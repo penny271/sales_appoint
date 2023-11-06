@@ -18,3 +18,4 @@ $(function () {
 // ¥ production用の書き方
 // import 'custom/test';
 import 'custom/sidebar';
+import 'custom/appointment';
