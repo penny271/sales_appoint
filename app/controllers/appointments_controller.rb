@@ -7,25 +7,49 @@ class AppointmentsController < Base
   def index
     # Outputs the IDs of the appointments in the log/console
     Rails.logger.info "@appointments.pluck(:id): #{@appointments.pluck(:id)}"
+    @appointments = set_search_and_appointments
   end
 
   def new
     @appointment = SmmAppointment.new # Assuming SmmAppointment is the default
   end
 
+  # 通常サーチ
+  def search
+    @appointments = Appointment.all
+
+    if params[:company_name_partial].present?
+      @appointments = @appointments.where("company_name LIKE ?", "%#{params[:company_name_partial]}%")
+    end
+
+    if params[:company_name_exact].present?
+      @appointments = @appointments.where(company_name: params[:company_name_exact])
+    end
+
+    # Rest of your search logic
+
+    render :index # or wherever you want to render the search results
+  end
+
   private
 
   def set_service_category_type
     @service_category_type = params[:service_category_type].presence || "smm"
+    @service_category_id = case @service_category_type
+      when "smm" then 1
+      when "cx" then 2
+      when "all" then 3
+      else 3 # Default to the base model if no valid type is given
+      end
   end
 
   def set_search_and_appointments
     model = case @service_category_type
-            when "smm" then SmmAppointment
-            when "cx" then CxAppointment
-            when "all" then Appointment
-            else Appointment # Default to the base model if no valid type is given
-            end
+      when "smm" then SmmAppointment
+      when "cx" then CxAppointment
+      when "all" then Appointment
+      else Appointment # Default to the base model if no valid type is given
+      end
 
     @search = model.ransack(params[:q])
     set_default_sort(@search)
@@ -33,13 +57,13 @@ class AppointmentsController < Base
 
     # You might need to adjust the following line if service_category_id is not a valid column
     # for SmmAppointment and CxAppointment, or handle the condition differently.
-    appointments = appointments.where(service_category_id: @service_category_type) unless @service_category_type == "all"
+    appointments = appointments.where(service_category_id: @service_category_id) unless @service_category_type == "all"
 
     @appointments = paginated_results(appointments)
   end
 
   def set_default_sort(search)
-    search.sorts = 'id desc' if search.sorts.empty?
+    search.sorts = "id desc" if search.sorts.empty?
   end
 
   def paginated_results(appointments)

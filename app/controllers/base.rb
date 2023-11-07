@@ -8,16 +8,21 @@ class Base < ApplicationController
     end
   end
 
-  private def current_account
+  private
+
+  def current_account
     if session[:id]
       @account ||= Account.find_by(id: session[:id])
     end
   end
 
+  def sort_direction(column = nil)
+    column && params[:sort] == column.to_s ? (params[:direction] == "asc" ? "desc" : "asc") : "asc"
+  end
+
   helper_method :current_account
-
+  helper_method :sort_direction
 end
-
 
 # Base コントローラでは、current_account メソッドは @account インスタンス変数と ||= 演算子を使用して、データベースクエリ Account.find_by(id: session[:id]) の結果を "メモする" あるいはキャッシュします。これにより、一旦@accountの値が(データベースへのクエリによって)設定されると、同じリクエスト-レスポンスサイクル中のcurrent_accountへのその後の呼び出しは、再度データベースを呼び出すことなく、単に@accountインスタンス変数から以前に取得された値を返します。
 

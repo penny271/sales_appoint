@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
-  get 'accounts/index'
-  get 'accounts/show'
-  get 'accounts/edit'
-  get 'accounts/new'
-  get 'accounts/create'
-  get 'accounts/update'
-  get 'accounts/destroy'
-  get 'commodity_categories/index'
+  get "accounts/index"
+  get "accounts/show"
+  get "accounts/edit"
+  get "accounts/new"
+  get "accounts/create"
+  get "accounts/update"
+  get "accounts/destroy"
+  get "commodity_categories/index"
   # root to: 'admin/top#index'
-  root to: 'top#index'
+  root to: "top#index"
 
   # get "login" => "sessions#new", as: :login
   # post "session" => "sessions#create", as: :session
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   # delete 'session', to: 'sessions#destroy'
 
   scope controller: :sessions do
-    get 'login', action: :new, as: :login
+    get "login", action: :new, as: :login
     # post 'session', action: :create, as: :session
     # delete 'session', action: :destroy
     # - 20231014 第一引数が urlにあたる
@@ -27,7 +27,11 @@ Rails.application.routes.draw do
   end
 
   #^ 青木 ★要更新 - 20231014 /appointments/new => /apo/new  のように変更可能!
-  resources :appointments, path: "appo"
+  resources :appointments, path: "appointments" do
+    collection do
+      get :search
+    end
+  end
 
   # ¥ 単一継承でも下記のように記載する必要あり
   resources :smm_appointments # This will generate smm_appointments_path among others
@@ -40,15 +44,13 @@ Rails.application.routes.draw do
 
   resources :accounts, path: "accounts" do
     member do
-      get 'change_password', to: 'accounts#change_password' # for displaying the password change form
-      patch 'update_password'  # for submitting the password change form
+      get "change_password", to: "accounts#change_password" # for displaying the password change form
+      patch "update_password"  # for submitting the password change form
     end
   end
 
   # 検証用
-  get 'html/scroll_x'
-
-
+  get "html/scroll_x"
 
   # # - 20231013 上記の書き換え 厳密には Prefix と URI-Patternが変わる
   # * Prefix: login => login_session   |   Uri-Pattern: /login  =>   /session/login
@@ -82,4 +84,3 @@ end
 # - <%= link_to "ログイン", login_path(tracking: "001") %>
 # この場合、次のようなHTMLコードが生成されます。
 # - <a href="/login?tracking=001">ログイン</a>
-
