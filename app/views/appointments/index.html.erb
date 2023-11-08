@@ -199,23 +199,22 @@
 
 <%# ¥ ソート機能を自前で作成中 %>
 <% sortable_columns = {
-  id: ["No.", "col_width_150px"],
+  id: ["No.", "col_width_120px"],
   account_id: [t("activerecord.attributes.appointment.account_id"), "col_width_150px"],
   service_category_id: [t("activerecord.attributes.appointment.service_category_id"), "col_width_150px"],
   commodity_category_id: [t("activerecord.attributes.appointment.commodity_category_id"), "col_width_150px"],
   duplication: [t("activerecord.attributes.appointment.duplication"), "col_width_150px"],
-  company_name: [t("activerecord.attributes.appointment.company_name"), "col_width_200px"],
-  company_tel: [t("activerecord.attributes.appointment.company_tel"), "col_width_200px"],
-  company_url: [t("activerecord.attributes.appointment.company_url"), "col_width_200px"],
-  instagram_url: [t("activerecord.attributes.appointment.instagram_url"), "col_width_200px"],
-  content: [t("activerecord.attributes.appointment.content"), "col_width_200px"],
-  call_date: [t("activerecord.attributes.appointment.call_date"), "col_width_200px"],
-  next_call_date: [t("activerecord.attributes.appointment.next_call_date"), "col_width_200px"],
-  sent_material_date: [t("activerecord.attributes.appointment.sent_material_date"), "col_width_200px"],
-  is_next_call: [t("activerecord.attributes.appointment.is_next_call"), "col_width_200px"],
-  end_date: [t("activerecord.attributes.appointment.end_date"), "col_width_200px"]
+  company_name: [t("activerecord.attributes.appointment.company_name"), "col_width_150px"],
+  company_tel: [t("activerecord.attributes.appointment.company_tel"), "col_width_150px"],
+  company_url: [t("activerecord.attributes.appointment.company_url"), "col_width_150px"],
+  instagram_url: [t("activerecord.attributes.appointment.instagram_url"), "col_width_150px"],
+  content: [t("activerecord.attributes.appointment.content"), "col_width_600px"],
+  call_date: [t("activerecord.attributes.appointment.call_date"), "col_width_120px"],
+  next_call_date: [t("activerecord.attributes.appointment.next_call_date"), "col_width_120px"],
+  sent_material_date: [t("activerecord.attributes.appointment.sent_material_date"), "col_width_120px"],
+  is_next_call: [t("activerecord.attributes.appointment.is_next_call"), "col_width_120px"],
+  end_date: [t("activerecord.attributes.appointment.end_date"), "col_width_120px"]
 } %>
-
 
 <%# 1 edit + delete: Static, no sorting %>
 <div class="apl_project_common_header_col_style--w_two_icons">

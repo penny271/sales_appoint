@@ -55,14 +55,34 @@
 
   /* - 主に .apl_*クラスの中で使用する共通クラス utl_から始まるクラス */
   /* *tableのようなカラムのセルのpadding関係 */
-  .utl_cel_px {
-    @apply px-5;
-  }
-  .utl_cel_py {
-    @apply py-4;
-  }
+  .utl_cel_px { @apply px-5;}
+  .utl_cel_py { @apply py-4; }
+
+  /* column width */
+  .col_width_100px { @apply w-[100px]; }
+  .col_width_120px { @apply w-[120px]; }   /* w-two_icons */
+  .col_width_150px { @apply w-[150px]; }
+  .col_width_200px { @apply w-[200px]; }
+  .col_width_250px { @apply w-[250px]; }
+  .col_width_300px { @apply w-[300px]; }
+  .col_width_350px { @apply w-[350px]; }
+  .col_width_400px { @apply w-[400px]; }
+  .col_width_450px { @apply w-[450px]; }
+  .col_width_500px { @apply w-[500px]; }
+  .col_width_550px { @apply w-[550px]; }
+  .col_width_600px { @apply w-[600px]; }
+  .col_width_650px { @apply w-[650px]; }
+  .col_width_700px { @apply w-[700px]; }
+  .col_width_750px { @apply w-[750px]; }
+  .col_width_800px { @apply w-[800px]; }
 
   /* * プロジェクト共通 */
+  .apl_project_common_header_col_style {
+    @apply self-center flex-none font-medium text-gray-900 utl_cel_py utl_cel_px;
+  }
+
+
+  /* ! 横幅の設定を削除する */
   /* edit ・ delete アイコンセット */
   .apl_project_common_header_col_style--w_two_icons {
     @apply self-center flex-none font-medium text-gray-900 utl_cel_py utl_cel_px w-two_icons;
@@ -92,6 +112,7 @@
     @apply self-center flex-shrink-0 utl_cel_px utl_cel_py w-[600px] font-medium text-blue-600;
   }
   /* - table like flex 列名 content(cel) */
+  /* ! 横幅の設定を削除する * /
   /* edit ・ delete アイコンセット */
   .apl_project_common_cel_style--w_two_icons {
     @apply flex justify-center font-normal text-gray-900 border-b border-r border-gray-300 utl_cel_px w-two_icons;
