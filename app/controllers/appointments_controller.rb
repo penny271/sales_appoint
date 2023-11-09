@@ -1,22 +1,43 @@
 # app/controllers/appointments_controller.rb
 # app/controllers/appointments_controller.rb
 class AppointmentsController < Base
-  before_action :set_service_category_type, only: [:index]
-  before_action :set_search_and_appointments, only: [:index]
+  # before_action :set_service_category_type, only: [:index]
+  # before_action :set_search_and_appointments, only: [:index]
 
   def index
+    # ! 一つの関数にまとめる
+    if params[:service_category_type] == "smm"
+      @appointments = paginated_results(Appointment.where(service_category_id: 1))
+    elsif params[:service_category_type] == "cx"
+      @appointments = paginated_results(Appointment.where(service_category_id: 2))
+    else
+      @appointments = paginated_results(Appointment.all)
+    end
+
     # Outputs the IDs of the appointments in the log/console
-    Rails.logger.info "@appointments.pluck(:id): #{@appointments.pluck(:id)}"
-    @appointments = set_search_and_appointments
+    # Rails.logger.info "@appointments.pluck(:id): #{@appointments.pluck(:id)}"
+    # @appointments = set_search_and_appointments
+    # if
+
+    # end
+
+
   end
 
-  def new
-    @appointment = SmmAppointment.new # Assuming SmmAppointment is the default
-  end
+  # def new
+  #   @appointment = SmmAppointment.new # Assuming SmmAppointment is the default
+  # end
 
   # 通常サーチ
   def search
-    @appointments = Appointment.all
+    # ! 一つの関数にまとめる
+    if params[:service_category_type] == "smm"
+      @appointments = paginated_results(Appointment.where(service_category_id: 1))
+    elsif params[:service_category_type] == "cx"
+      @appointments = paginated_results(Appointment.where(service_category_id: 2))
+    else
+      @appointments = paginated_results(Appointment.all)
+    end
 
     if params[:company_name_partial].present?
       @appointments = @appointments.where("company_name LIKE ?", "%#{params[:company_name_partial]}%")

@@ -76,31 +76,111 @@
       </div>
     </div>
 
-    <%# ¥ ソート機能を自前で作成中 %>
-    <% sortable_columns = {
-      id: [num_counter, "col_width_number", ""],
-      account_id: [appointment.account.name, "col_width_normal", ""],
-      service_category_id: [appointment.service_category.name, "col_width_normal", ""],
-      commodity_category_id: [appointment.commodity_category.name, "col_width_normal", ""],
-      duplication: [appointment.duplication, "col_width_normal", ""],
-      company_name: [appointment.company_name, "col_width_normal", ""],
-      company_tel: [appointment.company_tel, "col_width_normal", ""],
-      company_url: [appointment.company_url, "col_width_normal", ""],
-      instagram_url: [appointment.instagram_url, "col_width_normal", ""],
-      content: [appointment.content, "col_width_description", " text-left"],
-      call_date: [appointment.call_date, "col_width_date", ""],
-      next_call_date: [appointment.next_call_date, "col_width_date", ""],
-      sent_material_date: [appointment.sent_material_date, "col_width_date", ""],
-      is_next_call: [appointment.is_next_call ? 'Yes' : 'No', "col_width_date", ""],
-      end_date: [appointment.end_date, "col_width_date", ""]
-    } %>
-    <%# Dynamic sorting links 列名 %>
-    <%# ¥ {sort: column, direction: sort_direction(column)}は、urlのparamとして渡される 20231108 %>
-    <% sortable_columns.each do |column, (title, width_class, span_class)| %>
-      <div class="apl_project_common_cel_style <%= width_class %>">
-        <span class="apl_project_common_cel_text <%= span_class %>"><%= title %></span>
-      </div>
-    <% end %>
+    <%# 2. :id (No.) %>
+    <div class="apl_project_common_cel_style--w_number_cel">
+      <span class="apl_project_common_cel_text">
+        <%= num_counter %>
+      </span>
+    </div>
+
+    <%# 3. :account_id %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.account.name %>
+      </span>
+    </div>
+
+    <%# 3. :service_category_id %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.service_category.name %>
+      </span>
+    </div>
+
+    <%# 4. :commodity_category_id %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.commodity_category.name %>
+      </span>
+    </div>
+
+    <%# 5. :duplication %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.duplication %>
+      </span>
+    </div>
+
+    <%# 6. :company_name %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.company_name %>
+      </span>
+    </div>
+
+    <%# 7. :company_tel %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.company_tel %>
+      </span>
+    </div>
+
+    <%# 8. :company_url %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.company_url %>
+      </span>
+    </div>
+
+    <%# 9. :instagram_url %>
+    <div class="apl_project_common_cel_style--w_150px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.instagram_url %>
+      </span>
+    </div>
+
+    <%# 10. :content %>
+    <div class="apl_project_common_cel_style--w_600px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.content %>
+      </span>
+    </div>
+
+    <%# 11. :call_date %>
+    <div class="apl_project_common_cel_style--w_120px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.call_date %>
+      </span>
+    </div>
+
+    <%# 12. :next_call_date %>
+    <div class="apl_project_common_cel_style--w_120px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.next_call_date %>
+      </span>
+    </div>
+
+    <%# 13. :sent_material_date %>
+    <div class="apl_project_common_cel_style--w_120px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.sent_material_date %>
+      </span>
+    </div>
+
+    <%# 14. :is_next_call %>
+    <div class="apl_project_common_cel_style--w_120px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.is_next_call ? 'Yes' : 'No' %>
+      </span>
+    </div>
+
+    <%# 15. :end_date %>
+    <div class="apl_project_common_cel_style--w_120px">
+      <span class="apl_project_common_cel_text">
+        <%= appointment.end_date %>
+      </span>
+    </div>
+
 
     <%# 10. edit + delete %>
     <div class="apl_project_common_cel_style--w_two_icons">

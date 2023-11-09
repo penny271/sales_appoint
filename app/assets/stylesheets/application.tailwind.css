@@ -59,6 +59,12 @@
   .utl_cel_py { @apply py-4; }
 
   /* column width */
+  .col_width_number { @apply w-[80px]; }
+  .col_width_2_icons { @apply w-[120px]; }
+  .col_width_date { @apply w-[120px]; }
+  .col_width_normal { @apply w-[150px]; }
+  .col_width_description { @apply w-[600px]; }
+
   .col_width_100px { @apply w-[100px]; }
   .col_width_120px { @apply w-[120px]; }   /* w-two_icons */
   .col_width_150px { @apply w-[150px]; }
@@ -112,7 +118,12 @@
     @apply self-center flex-shrink-0 utl_cel_px utl_cel_py w-[600px] font-medium text-blue-600;
   }
   /* - table like flex 列名 content(cel) */
-  /* ! 横幅の設定を削除する * /
+  .apl_project_common_cel_style {
+    @apply flex font-normal text-gray-900 border-b border-r border-gray-300 utl_cel_px;
+  }
+
+
+
   /* edit ・ delete アイコンセット */
   .apl_project_common_cel_style--w_two_icons {
     @apply flex justify-center font-normal text-gray-900 border-b border-r border-gray-300 utl_cel_px w-two_icons;

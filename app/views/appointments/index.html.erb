@@ -1,41 +1,8 @@
 <h1>アポイントメント管理一覧</h1>
-<% if false %>
-  <%= form_with url: appointments_path, method: :get, local: true, id: 'service_category_form', data: { turbo_frame: 'appointment_list' } do |form| %>
-    <%= form.label :service_category_type, "サービスタイプ: " %>
-    <%= form.select :service_category_type,
-                options_for_select([%w[SMM smm], %w[CX cx], %w[All all]], selected: params[:service_category_type]),
-                { include_blank: "Please Select" },
-                id: "service_category_select" %>
-    <%= form.submit id: "test_submit", class: "apl-btn-blue", data: { turbo_frame: "appointment_list" } %>
-  <% end %>
-
-<% end %>
 
 
-<%# #################### コメントアウトの代わり #################### %>
-<% if false %>
-  <%# ransackを利用した検索フォームでは、form_withの代わりにsearch_form_forを使う %>
-  <div class="flex items-end mx-5">
-  <%= search_form_for @search, html: { class: 'flex items-end' } do |f| %>
-    <div class="flex flex-col mr-2">
-      <%# `カラム名_cont`とすることで、カラムに対してLIKEを使った曖昧一致検索ができる %>
-      <%= f.label :company_name_cont, "会社名(部分)" %>
-      <%= f.search_field :company_name_cont %>
-    </div>
-    <div class="flex flex-col mr-2">
-      <%# `カラム名_eq`とすることで、カラムに対して完全一致検索ができる %>
-      <%= f.label :company_name_eq, "会社名(完全)" %>
-      <%= f.search_field :company_name_eq %>
-    </div>
 
-    <div class="">
-      <%# - 値を指定しないとransackがデフォルトで検索という文字列を使う %>
-      <%= f.submit class: "apl-btn-blue", data: { turbo_frame: "appointment_list" } %>
-      <%# 検索結果と検索フォームをクリアする %>
-      <%= link_to "クリア", accounts_path, class: "apl-btn-reset" %>
-    </div>
-  <% end %>
-  <%# - ransack用 検索機能 END %>Í
+  <%# - pagination 表示数 %>
   <%= form_tag(request.path, method: :get, id: 'per_page_form') do %>
     Display:
     <%= select_tag "per_page", options_for_select([3, 5, 10, 20, 30, 50], params[:per_page].to_i), onchange: "this.form.submit()" %>
@@ -44,10 +11,16 @@
     <%= paginate @appointments, params: { per_page: params[:per_page] } %>
   <% end %>
 
+  <%= form_with url: search_appointments_path, method: :get, id: 'service_category_form', data: { turbo_frame: 'appointment_list' } do |form| %>
+    <%= form.label :service_category_type, "サービスタイプ: " %>
+    <%= form.select :service_category_type,
+            options_for_select([%w[SMM smm], %w[CX cx], %w[All all]], selected: params[:service_category_type]),
+            { include_blank: "Please Select" },
+            id: "service_category_select" %>
+    <%= form.submit "検索", id: "test_submit", class: "apl-btn-blue", data: { turbo_frame: "appointment_list" } %>
+  <% end %>
 
-<% end %>
-<%# ####################  コメントアウト END  #################### %>
-
+  params一覧: <%= params %>
 
   <%# ¥¥¥ new 20231108 turboを使うには local: true 必須　¥¥¥ %>
   <%= form_with url: search_appointments_path, method: :get, local: true, html: { class: 'flex items-end' } do %>
@@ -66,6 +39,28 @@
     </div>
   <% end %>
   <%# ¥¥¥ new 20231108 ¥¥¥ %>
+
+  <%= form_with url: search_appointments_path, method: :get, id: 'combined_search_form', local: true, data: { turbo_frame: 'appointment_list' }, html: { class: 'flex items-end' } do |form| %>
+  <%= form.label :service_category_type, "サービスタイプ: " %>
+  <%= form.select :service_category_type,
+          options_for_select([['SMM', 'smm'], ['CX', 'cx'], ['All', 'all']], selected: params[:service_category_type]),
+          { include_blank: "Please Select" },
+          id: "service_category_select" %>
+
+  <div class="flex flex-col mr-2">
+    <%= form.label :company_name_partial, "会社名(部分)" %>
+    <%= form.search_field :company_name_partial, id: "company_name_partial" %>
+  </div>
+  <div class="flex flex-col mr-2">
+    <%= form.label :company_name_exact, "会社名(完全)" %>
+    <%= form.search_field :company_name_exact, id: "company_name_exact" %>
+  </div>
+
+  <div class="">
+    <%= form.submit "検索", id: "test_submit", class: "apl-btn-blue" %>
+    <%= link_to "クリア", search_appointments_path, class: "apl-btn-reset", data: { turbo_frame: "appointment_list" } %>
+  </div>
+<% end %>
 
 
 </div>
@@ -94,91 +89,43 @@
       <div class="flex bg-gray-50 min-w-max">
         <%# !!!!!!!!!!!!!!!!!!!11 %>
         <%# 1 edit + delete %>
-        <div class="apl_project_common_header_col_style--w_two_icons">
+
+        <%# ¥ ソート機能を自前で作成中 %>
+        <% sortable_columns = {
+          id: ["No.", "col_width_number"],
+          account_id: [t("activerecord.attributes.appointment.account_id"), "col_width_normal"],
+          service_category_id: [t("activerecord.attributes.appointment.service_category_id"), "col_width_normal"],
+          commodity_category_id: [t("activerecord.attributes.appointment.commodity_category_id"), "col_width_normal"],
+          duplication: [t("activerecord.attributes.appointment.duplication"), "col_width_normal"],
+          company_name: [t("activerecord.attributes.appointment.company_name"), "col_width_normal"],
+          company_tel: [t("activerecord.attributes.appointment.company_tel"), "col_width_normal"],
+          company_url: [t("activerecord.attributes.appointment.company_url"), "col_width_normal"],
+          instagram_url: [t("activerecord.attributes.appointment.instagram_url"), "col_width_normal"],
+          content: [t("activerecord.attributes.appointment.content"), "col_width_description"],
+          call_date: [t("activerecord.attributes.appointment.call_date"), "col_width_date"],
+          next_call_date: [t("activerecord.attributes.appointment.next_call_date"), "col_width_date"],
+          sent_material_date: [t("activerecord.attributes.appointment.sent_material_date"), "col_width_date"],
+          is_next_call: [t("activerecord.attributes.appointment.is_next_call"), "col_width_date"],
+          end_date: [t("activerecord.attributes.appointment.end_date"), "col_width_date"]
+        } %>
+
+        <%# 1 edit + delete: Static, no sorting %>
+        <div class="apl_project_common_header_col_style col_width_2_icons">
           edit
         </div>
 
-        <%# 2. :id (No.) %>
-        <div class="apl_project_common_header_col_style--w_number_column">
-          <%= sort_link(@search, :id, "No.", class: "text-blue-600 border-b border-blue-600") %>
-        </div>
+        <%# Dynamic sorting links 列名 %>
+        <%# ¥ {sort: column, direction: sort_direction(column)}は、urlのparamとして渡される 20231108 %>
+        <% sortable_columns.each do |column, (title, width_class)| %>
+          <div class="apl_project_common_header_col_style <%= width_class %>">
+            <%= link_to title, { sort: column, direction: sort_direction(column) }, class: "text-blue-600 border-b border-blue-600" %>
+          </div>
+        <% end %>
 
-        <%# 3. :account_id %>
-        <div class="apl_project_common_header_col_style--w_150px">
-          <%= sort_link(@search, :account_id, t("activerecord.attributes.appointment.account_id"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 4. :service_category_id %>
-        <div class="apl_project_common_header_col_style--w_150px">
-          <%= sort_link(@search, :service_category_id, t("activerecord.attributes.appointment.service_category_id"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 5. :commodity_category_id %>
-        <div class="apl_project_common_header_col_style--w_150px">
-          <%= sort_link(@search, :commodity_category_id, t("activerecord.attributes.appointment.commodity_category_id"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 6. :duplication %>
-        <div class="apl_project_common_header_col_style--w_150px">
-          <%= sort_link(@search, :duplication, t("activerecord.attributes.appointment.duplication"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 7. :company_name %>
-        <div class="apl_project_common_header_col_style--w_150px">
-          <%= sort_link(@search, :company_name, t("activerecord.attributes.appointment.company_name"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 8. :company_tel %>
-        <div class="apl_project_common_header_col_style--w_150px">
-          <%= sort_link(@search, :company_tel, t("activerecord.attributes.appointment.company_tel"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 9. :company_url %>
-        <div class="apl_project_common_header_col_style--w_150px">
-          <%= sort_link(@search, :company_url, t("activerecord.attributes.appointment.company_url"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 10. :instagram_url %>
-        <div class="apl_project_common_header_col_style--w_150px">
-          <%= sort_link(@search, :instagram_url, t("activerecord.attributes.appointment.instagram_url"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 11. :content %>
-        <div class="apl_project_common_header_col_style--w_600px">
-          <%= sort_link(@search, :content, t("activerecord.attributes.appointment.content"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 12. :call_date %>
-        <div class="apl_project_common_header_col_style--w_120px">
-          <%= sort_link(@search, :call_date, t("activerecord.attributes.appointment.call_date"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 13. :next_call_date %>
-        <div class="apl_project_common_header_col_style--w_120px">
-          <%= sort_link(@search, :next_call_date, t("activerecord.attributes.appointment.next_call_date"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 14. :sent_material_date %>
-        <div class="apl_project_common_header_col_style--w_120px">
-          <%= sort_link(@search, :sent_material_date, t("activerecord.attributes.appointment.sent_material_date"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 15. :is_next_call %>
-        <div class="apl_project_common_header_col_style--w_120px">
-          <%= sort_link(@search, :is_next_call, t("activerecord.attributes.appointment.is_next_call"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 16. :end_date %>
-        <div class="apl_project_common_header_col_style--w_120px">
-          <%= sort_link(@search, :end_date, t("activerecord.attributes.appointment.end_date"), class: "text-blue-600 border-b border-blue-600") %>
-        </div>
-
-        <%# 17. edit + delete %>
-        <div class="apl_project_common_header_col_style--w_two_icons">
+        <%# 17 edit + delete: Static, no sorting %>
+        <div class="apl_project_common_header_col_style col_width_2_icons">
           edit
         </div>
-
-        <%# !!!!!!!!!!!!!!!!!!1 %>
 
       </div>
       <div id="accounts" class="border-t border-gray-100 divide-y divide-gray-100 min-w-max">
@@ -196,40 +143,3 @@
 <!-- component -->
 <%# - 青木 要更新- 20231015 %>
 <%# https://tinyurl.com/yst2dmtx %>
-
-<%# ¥ ソート機能を自前で作成中 %>
-<% sortable_columns = {
-  id: ["No.", "col_width_120px"],
-  account_id: [t("activerecord.attributes.appointment.account_id"), "col_width_150px"],
-  service_category_id: [t("activerecord.attributes.appointment.service_category_id"), "col_width_150px"],
-  commodity_category_id: [t("activerecord.attributes.appointment.commodity_category_id"), "col_width_150px"],
-  duplication: [t("activerecord.attributes.appointment.duplication"), "col_width_150px"],
-  company_name: [t("activerecord.attributes.appointment.company_name"), "col_width_150px"],
-  company_tel: [t("activerecord.attributes.appointment.company_tel"), "col_width_150px"],
-  company_url: [t("activerecord.attributes.appointment.company_url"), "col_width_150px"],
-  instagram_url: [t("activerecord.attributes.appointment.instagram_url"), "col_width_150px"],
-  content: [t("activerecord.attributes.appointment.content"), "col_width_600px"],
-  call_date: [t("activerecord.attributes.appointment.call_date"), "col_width_120px"],
-  next_call_date: [t("activerecord.attributes.appointment.next_call_date"), "col_width_120px"],
-  sent_material_date: [t("activerecord.attributes.appointment.sent_material_date"), "col_width_120px"],
-  is_next_call: [t("activerecord.attributes.appointment.is_next_call"), "col_width_120px"],
-  end_date: [t("activerecord.attributes.appointment.end_date"), "col_width_120px"]
-} %>
-
-<%# 1 edit + delete: Static, no sorting %>
-<div class="apl_project_common_header_col_style--w_two_icons">
-  edit
-</div>
-
-<%# Dynamic sorting links %>
-<%# ¥ {sort: column, direction: sort_direction(column)}は、urlのparamとして渡される 20231108 %>
-<% sortable_columns.each do |column, (title, width_class)| %>
-  <div class="apl_project_common_header_col_style <%= width_class %>">
-    <%= link_to title, { sort: column, direction: sort_direction(column) }, class: "text-blue-600 border-b border-blue-600" %>
-  </div>
-<% end %>
-
-<%# 17 edit + delete: Static, no sorting %>
-<div class="apl_project_common_header_col_style--w_two_icons">
-  edit
-</div>
